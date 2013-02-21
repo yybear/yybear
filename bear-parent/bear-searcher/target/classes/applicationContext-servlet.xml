@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+       http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+    <context:annotation-config/>
+
+    <context:component-scan base-package="org.bear.searcher.web"/>
+
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
+        <property name="useSuffixPatternMatch" value="false"/>
+        <!-- <property name="interceptors">
+        	<list>
+        		<bean class="sanyuan.any123.framework.security.web.SecContextInterceptor" >
+        			<property name="redirectUrl" value="http://i.any123.com/login/index?callback=" />
+        			<property name="needLogins">
+        				<array>
+        					<value>/**</value>
+        				</array>
+        			</property>
+        		</bean>
+        		<bean class="sanyuan.any123.framework.security.web.AuthorizationInterceptor">
+        			<property name="identityService" ref="identityService"/>
+        			<property name="authorizationService" ref="authorizationService"/>
+        			<property name="redirectUrl" value="/auth_error.jsp" />
+        			<property name="privilegeSet">
+        				<list>
+        					<bean class="sanyuan.any123.api.type.Privilege">
+        						<property name="resource" value="CONSOLE"/>
+        						<property name="operations">
+        							<set><value>VIEW</value></set>
+        						</property>
+        					</bean>
+        				</list>
+        			</property>
+        		</bean>
+        	</list>
+        </property> -->
+    </bean>
+
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+        <property name="messageConverters">
+            <list>
+                <bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter"/>
+                <bean class="org.springframework.http.converter.StringHttpMessageConverter"/>
+                <!-- <ref bean="jsonMessageConverter"/> -->
+            </list>
+        </property>
+    </bean>
+
+    <!-- <bean class="org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver">
+        <property name="messageConverters" ref="jsonMessageConverter"/>
+    </bean> -->
+
+    <!-- <bean id="jsonMessageConverter"
+          class="sanyuan.any123.framework.support.spring.MappingFastjsonHttpMessageConverter"/> -->
+
+    <mvc:resources mapping="/static/**" location="/static/" cache-period="3600"/>
+
+    <mvc:default-servlet-handler/>
+
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/views/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="-1"/>
+    </bean>
+
+    <bean name="/searcherService" class="org.bear.framework.support.avro.AvroHttpServiceExporter">
+        <property name="service" ref="searcherService"/>
+        <property name="serviceInterface" value="org.bear.api.SearcherService"/>
+        <property name="serviceRegistry" ref="serviceRegistry"></property>
+    </bean>
+</beans>

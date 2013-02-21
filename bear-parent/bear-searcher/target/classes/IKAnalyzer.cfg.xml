@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Project:  any
+  ~ Module:   searcher
+  ~ File:     IKAnalyzer.cfg.xml
+  ~ Modifier: xyang
+  ~ Modified: 2012-02-15 13:19
+  ~
+  ~ Copyright (c) 2012 Sanyuan Ltd. All Rights Reserved.
+  ~
+  ~ Copying of this document or code and giving it to others and the
+  ~ use or communication of the contents thereof, are forbidden without
+  ~ expressed authority. Offenders are liable to the payment of damages.
+  ~ All rights reserved in the event of the grant of a invention patent or the
+  ~ registration of a utility model, design or code.
+  -->
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>  
+	<comment>IK Analyzer 扩展配置</comment>
+	<!--用户可以在这里配置自己的扩展字典-->
+	<entry key="ext_dict">/mydict.dic;</entry>
+
+	 <!--用户可以在这里配置自己的扩展停止词字典-->
+	<entry key="ext_stopwords">/ext_stopword.dic</entry>
+</properties>

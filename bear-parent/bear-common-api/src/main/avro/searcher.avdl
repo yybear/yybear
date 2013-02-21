@@ -1,0 +1,13 @@
+@namespace("org.bear.api")
+protocol SearcherService{
+	record Index {
+		string id;
+	}
+	
+	record Query {
+		string id;
+	}
+
+	void searcher(Query query);
+}
+

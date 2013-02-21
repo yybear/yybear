@@ -1,0 +1,1436 @@
+@namespace("org.bear.api.identity")
+protocol IdentityService{
+	import idl "standard.avdl";
+
+	enum UserStatus {
+		INIT, // 初始化
+		NORMAL, // 正常
+		DISABLED, // 禁用
+		ARCHIVED, // 归档
+		LOCKED // 锁定
+	}
+	// 用户凭证类型
+	enum CredentialType {
+		USERNAME,// 用户名
+		EMAIL,// 邮箱
+		MOBILE,// 手机号
+		OAUTH // 第三方
+	}
+	
+	/**
+	 * 密码保护问题
+	 */
+	enum ProtectionQuestion {
+		/**
+		 * 我最喜爱的电影？
+		 */
+		FAV_FILM,
+	
+		/**
+		 * 我最喜欢的歌曲？
+		 */
+		FAV_MUSIC,
+	
+		/**
+		 * 我的父亲名字？
+		 */
+		FATHER_NAME,
+	
+		/**
+		 * 我的母亲名字？
+		 */
+		MOTHER_NAME,
+	
+		/**
+		 * 我的爱人名字？
+		 */
+		LOVER_NAME
+	}
+	
+	record User {
+		/**
+		 * 用户标识： -1表示匿名用户
+		 */
+		long id;
+		/**
+		 * 用户名
+	     *
+	     * @size min=0, max=100
+	     */
+		string userName;
+
+		/**
+		 * 昵称
+		 *
+		 * @size min=0, max=100
+		 */
+		string nickName;
+	
+		/**
+		 * 真实姓名
+		 *
+		 * @size min=0, max=100
+		 */
+		string realName;
+	
+		/**
+		 * 性别
+		 */
+		org.bear.api.standard.Gender gender;
+	
+		/**
+		 * 身份证号
+		 */
+		string idNo;
+	
+		/**
+		 * 所在地
+		 */
+		string location;
+		
+		/**
+		 * 生日：自January 1, 1970, 00:00:00 GMT开始的毫秒数，0 表示未填写（空）
+		 */
+		long birthday;
+	
+		/**
+		 * 个人简介
+		 *
+		 * @size min=0, max=200
+		 */
+		string description;
+	
+		/**
+		 * 头像（标识）
+		 *
+		 * @size min=0, max=200
+		 */
+		string photo;
+	
+		/**
+		 * 状态
+		 */
+		UserStatus status;
+	
+		/**
+		 * 创建时间
+		 */
+		long createTime;
+	
+		/**
+		 * 最近更新时间
+		 */
+		long updateTime;
+	}
+	
+	/**
+	 * 凭证
+	 */
+	record Credential {
+		/**
+		 * 凭证标识：-1表示未持久化
+		 */
+		long id;
+	
+		/**
+		 * 用户ID（所属用户）
+		 */
+		long uid;
+	
+		/**
+		 * 凭证类型
+		 */
+		CredentialType type;
+	
+		/**
+		 * 凭证名称：如邮件地址、手机号等
+		 *
+		 * @size min=0, max=100
+		 */
+		string name;
+	
+		/**
+		 * 凭证值：登录时为帐户密码，安全绑定认证时为认证码
+		 */
+		string value;
+	}
+	
+	/**
+	 * 密码保护
+	 */
+	record PasswordProtection {
+		/**
+		 * 用户ID（所属用户）
+		 */
+		long uid;
+	
+		/**
+		 * 问题
+		 */
+		ProtectionQuestion question;
+	
+		/**
+		 * 问题答案
+		 *
+		 * @size min=0, max=200
+		 */
+		string answer;
+	}
+	
+	/**
+	 * 用户组
+	 */
+	record Group {
+		long id;
+	
+		/**
+		 * 名称
+		 */
+		string name;
+	
+		/**
+		 * 描述
+		 */
+		string description;
+	}
+	
+	/**
+	 * 用户session
+	 */
+	record Session {
+		/**
+		 * session id
+		 */
+		long id;
+		/**
+		 * session token
+		 */
+		string token;
+		/**
+		 * 关联的用户id
+		 */
+		long uid;
+		/**
+		 * session创建时间
+		 */
+		long creationTime;
+		/**
+		 * 最长生存时间
+		 */
+		long ttl;
+		/**
+		 * 最长不活动间隔时间
+		 */
+		long tti;
+		/**
+		 * 用户登录时的ip
+		 */
+		string clientIp;
+		/**
+		 * 最近活动时间
+		 */
+		long lastActiveTime;
+	}
+	
+	/**
+	 * 用户注册
+	 *
+	 * @return 若注册成功则返回会话的Token，否则异常
+	 *
+	 * @tables 	identity_credential,
+	 * 			identity_password,
+	 * 			identity_session,
+	 * 			identity_user,
+	 * 			identity_user_attribute
+	 */
+	string registerUser(
+			/**
+			 * 用户基本信息
+			 */
+			User user,
+
+			/**
+			 * 凭证：其中，
+			 * 		name：登录所需的用户名
+			 * 		value：注册时提供的密码
+			 */
+			Credential credential,
+
+			/**
+			 * 用户扩展信息
+			 */
+			map<string> userAttributes
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 登录
+	 * 		成功登录的条件：凭证存在，账户密码正确，用户状态为NORMAL
+	 *
+	 * @return 若登录成功则返回会话的Token，否则异常
+	 *
+	 * @tables 	identity_credential,
+	 * 			identity_password,
+	 * 			identity_session,
+	 * 			identity_user,
+	 * 			identity_user_attribute
+	 */
+	string login(
+			/**
+			 * 登录凭证：其中，
+			 * 		value：账户密码
+			 */
+			Credential credential,
+
+			/**
+			 * 需要保持会话的时间（单位：毫秒），若<=0则表示默认周期（取决于后台空闲时间设置）
+			 */
+			long ttl
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 注销
+	 */
+	void logout(
+			/**
+			 * SSO会话Token
+			 */
+			string token
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 验证token是否具有合法会话，并返回会话用户id
+	 *
+	 * @return 若会话有效则返回该会话的用户ID，否则为返回0，其中，
+	 * 		 0：会话不存在
+	 * 		-1：临时会话
+	 * 		-2：当前会话用户已经在其他地方登录
+	 * 		>0：已登录会话，且为用户ID
+	 *
+	 * @tables 	identity_user
+	 */
+	long validateToken(
+			/**
+			 * SSO会话Token
+			 */
+			string token
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 验证token是否具有合法会话，并返回会话用户
+	 *
+	 * @return 用户基本信息
+	 *
+	 * @tables 	identity_session,
+	 * 			identity_user
+	 */
+	User validateTokenWithUser(
+			/**
+			 * SSO会话Token
+			 */
+			string token
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 凭证邦定认证，系统将认证码发送到凭证类型对应的消息终端上
+	 *
+	 * @return 认证码ID，认证码验证时需要将此ID作为Credential的id进行传递
+	 *
+	 * @tables 	identity_credential_activation
+	 */
+	long requestActivation(
+			/**
+			 * 凭证：其中，
+			 * 		uid：注册时为0，表示匿名，其余情况使用实际的用户ID
+			 * 		value：若为空则由后台产生随机认证码，否则以指定的value值作为认证码
+			 */
+			Credential credential,
+
+			/**
+			 * 认证码有效期（单位：毫秒），-1表示使用后台默认配置
+			 */
+			long ttl
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 校验凭证邦定认证码
+	 *
+	 * @return 校验认证码是否正确
+	 *
+	 * @tables 	identity_credential_activation
+	 */
+	boolean validateActivation(
+			/**
+			 * 附带认证码的凭证：其中，
+			 * 		id：认证码ID，由requestActivation产生并返回
+			 *		uid：与requestActivation时保持一致
+			 *		type：与requestActivation时保持一致
+			 *		name：与requestActivation时保持一致
+			 *		value：用户输入的认证码
+			 */
+			Credential credential
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 校验凭证邦定认证码，校验成功后自动创建凭证邦定
+	 *
+	 * @return 校验认证码并创建凭证邦定是否成功
+	 *
+	 * @tables 	identity_credential,
+	 * 			identity_credential_activation
+	 */
+	boolean validateActivationAndCreateCredential(
+			/**
+			 * 附带认证码的凭证：其中，
+			 * 		id：认证码ID，由requestActivation产生并返回
+			 *		uid：与requestActivation时保持一致
+			 *		type：与requestActivation时保持一致
+			 *		name：与requestActivation时保持一致
+			 *		value：用户输入的认证码
+			 */
+			Credential credential
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 修改用户密码
+	 *
+	 * @tables 	identity_password
+	 */
+	void changePassword(
+			/**
+			 * 用户ID
+			 */
+			long uid,
+
+			/**
+			 * 旧密码，用于认证当前用户
+			 */
+			string oldPwd,
+
+			/**
+			 * 新密码
+			 */
+			string newPwd
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 重置用户的密码，将用户密码置为新的指定密码或随机密码（新密码为空“”时），并以消息形式通知用户（仅当采用随机密码时有效）
+	 * 		消息类型来源于用户的凭证邦定中的凭证类型，如：邮件、手机，将以一种形式发送消息，优先级：1）邮件，2）手机
+	 *
+	 * @tables 	identity_password
+	 */
+	void resetPassword(
+			/**
+			 * 用户ID
+			 */
+			long uid,
+
+			/**
+			 * 新密码：如果为""（空字符串）则会自动以随机密码代替
+			 */
+			string newPwd
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 保护密码（设置密保）
+	 *
+	 * @param protection 密码保护（密码问题-答案）
+	 *
+	 * @param pwd 当前用户密码
+	 *
+	 * @throws Type.AnyException
+	 *
+	 * @tables 	identity_password
+	 */
+	void protectPassword(
+			/**
+			 * 密保信息
+			 */
+			PasswordProtection protection,
+
+			/**
+			 * 账户密码，用于认证当前用户
+			 */
+			string pwd
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 密码保护验证
+	 *
+	 * @return 验证是否通过
+	 *
+	 * @tables 	identity_password
+	 */
+	boolean validatePasswordProtection(
+			/**
+			 * 附带答案的用户密保
+			 */
+			PasswordProtection protection
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 判断用户密保是否存在
+	 *
+	 * @return 用户密保是否存在
+	 *
+	 * @tables 	identity_password
+	 */
+	boolean hasPasswordProtection(
+			/**
+			 * 用户ID
+			 */
+			long uid
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 获取用户密保问题
+	 *
+	 * @return 若密保问题存在则返回，否则异常
+	 *
+	 * @tables 	identity_password
+	 */
+	ProtectionQuestion getProtectionQuestion(
+			/**
+			 * 用户ID
+			 */
+			long uid
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 创建用户凭证绑定
+	 * 		会根据凭证的type和name检查唯一性
+	 *
+	 * @tables 	identity_credential
+	 */
+	void createCredential(
+			/**
+			 * 凭证
+			 */
+			Credential credential
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 取消用户凭证绑定
+	 * 		如果凭证不存在则忽略
+	 *
+	 * @tables 	identity_credential,
+	 * 			identity_credential_attribute
+	 */
+	void removeCredential(
+			/**
+			 * 凭证：其中，
+			 * 		当id<=0时，会根据type和name去唯一匹配，否则直接根据id匹配
+			 */
+			Credential credential
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 更新用户凭证绑定
+	 * 		会根据凭证的type和name检查唯一性
+	 *
+	 * @tables 	identity_credential
+	 */
+	void updateCredential(
+			/**
+			 * 凭证：其中，
+			 * 		新的type和name不能与已有的冲突
+			 */
+			Credential credential
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 根据部分凭证内容获取完整内容，如：根据type和name匹配完整凭证信息，根据id获取完整凭证信息
+	 *
+	 * @return 如果能匹配上则返回完整的凭证内容，否则异常
+	 *
+	 * @tables 	identity_credential
+	 */
+	Credential matchCredential(
+			/**
+			 * 凭证：其中，
+			 * 		如果id>0，则会根据id获取完整凭证信息；
+			 * 		如果id<=0，则会根据type和name匹配
+			 */
+			Credential credential
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 获取用户所有的凭证列表
+	 *
+	 * @return 用户所有的凭证列表
+	 *
+	 * @tables 	identity_credential
+	 */
+	array<Credential> getUserCredentials(
+			/**
+			 * 用户ID
+			 */
+			long uid
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 检测凭证是否已经存在
+	 * 		根据凭证参数的id或者type和name检测
+	 *
+	 * @return 凭证是否存在
+	 *
+	 * @tables 	identity_credential
+	 */
+	boolean isCredentialExists(
+			/**
+			 * 凭证
+			 */
+			Credential credential
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 获取凭证所属用户
+	 * 		根据凭证参数的id或者type和name进行匹配
+	 *
+	 * @return 若凭证存在则返回此凭证的用户ID，否则异常
+	 *
+	 * @tables 	identity_credential
+	 */
+	long getCredentialUid(
+			/**
+			 * 凭证
+			 */
+			Credential credential
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 设置用户状态
+	 *
+	 * @tables 	identity_user
+	 */
+	void updateUserStatus(
+			/**
+			 * 用户ID
+			 */
+			long uid,
+
+			/**
+			 * 状态
+			 */
+			UserStatus status
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 获取用户状态
+	 *
+	 * @return 若用户存在则返回此用户的当前状态，否则异常
+	 *
+	 * @tables 	identity_user
+	 */
+	UserStatus getUserStatus(
+			/**
+			 * 用户ID
+			 */
+			long uid
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 获取用户基本信息
+	 *
+	 * @return 若用户存在则返回此用户的基本信息，否则异常
+	 *
+	 * @tables 	identity_user
+	 */
+	User getUser(
+			/**
+			 * 用户ID
+			 */
+			long uid
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 根据昵称获取用户基本信息
+	 *
+	 * @tables 	identity_user
+	 */
+	User getUserByNick(
+			/**
+			 * 昵称
+			 */
+			string nick
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 批量获取用户信息
+	 *
+	 * @return 用户信息Map
+	 *
+	 * @tables 	identity_user
+	 */
+	map<User> batchGetUser(
+			/**
+			 * 用户ID集合
+			 */
+			array<long> uids
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 更新用户信息
+	 *
+	 * @tables 	identity_user
+	 */
+	void updateUser(
+			/**
+			 * 用户基本信息
+			 */
+			User user
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 批量更新用户信息
+	 *
+	 * @tables 	identity_user
+	 */
+	void batchUpdateUser(
+			/**
+			 * 用户信息集合
+			 */
+			array<User> users
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 获取用户属性值
+	 *
+	 * @return 属性值
+	 * 		注：属性不存在或null，统一返回为“”（空字符串）
+	 *
+	 * @tables 	identity_user_attribute
+	 */
+	string getUserAttribute(
+			/**
+			 * 用户ID
+			 */
+			long uid,
+
+			/**
+			 * 属性名
+			 */
+			string key
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 设置用户属性值
+	 *
+	 * @tables 	identity_user_attribute
+	 */
+	void setUserAttribute(
+			/**
+			 * 用户ID
+			 */
+			long uid,
+
+			/**
+			 * 属性名
+			 */
+			string key,
+
+			/**
+			 * 属性值
+			 * 		注：若value=null，统一为“”（空字符串）
+			 */
+			string value
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 删除用户属性
+	 *
+	 * @tables 	identity_user_attribute
+	 */
+	void removeUserAttribute(
+			/**
+			 * 用户ID
+			 */
+			long uid,
+
+			/**
+			 * 属性名
+			 */
+			string key
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 批量获取指定用户多个属性值
+	 *
+	 * @return 属性值Map
+	 *
+	 * @tables 	identity_user_attribute
+	 */
+	map<string> getUserAttributes(
+			/**
+			 * 用户ID
+			 */
+			long uid,
+
+			/**
+			 * 属性名集合
+			 */
+			array<string> keys
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 批量设置指定用户的多个属性值
+	 *
+	 * @tables 	identity_user_attribute
+	 *
+	 */
+	void setUserAttributes(
+			/**
+			 * 用户ID
+			 */
+			long uid,
+
+			/**
+			 * 属性值Map
+			 */
+			map<string> values
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 批量删除指定用户多个属性
+	 *
+	 * @tables 	identity_user_attribute
+	 */
+	void removeUserAttributes(
+			/**
+			 * 用户ID
+			 */
+			long uid,
+
+			/**
+			 * 属性名集合
+			 */
+			array<string> keys
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 批量获取多个用户指定属性值
+	 *
+	 * @return 属性值Map
+	 *
+	 * @tables 	identity_user_attribute
+	 */
+	map<string> batchGetUserAttribute(
+			/**
+			 * 用户ID集合
+			 */
+			array<long> uids,
+
+			/**
+			 * 属性名
+			 */
+			string key
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 批量设置多个用户的指定属性值
+	 *
+	 * @tables 	identity_user_attribute
+	 */
+	void batchSetUserAttribute(
+			/**
+			 * 属性名
+			 */
+			string key,
+
+			/**
+			 * 用户属性值Map
+			 */
+			map<string> idValues
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 批量删除多个用户指定属性
+	 *
+	 * @tables 	identity_user_attribute
+	 */
+	void batchRemoveUserAttribute(
+			/**
+			 * 用户ID集合
+			 */
+			array<long> uids,
+
+			/**
+			 * 属性名
+			 */
+			string key
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 批量获取多个用户多个属性值
+	 *
+	 * @return 用户属性值Map
+	 *
+	 * @tables 	identity_user_attribute
+	 */
+	map<map<string>> batchGetUserAttributes(
+			/**
+			 * 用户属性名Map
+			 */
+			map<array<string>> idKeys
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 批量设置多个用户的多个属性值
+	 *
+	 * @tables 	identity_user_attribute
+	 */
+	void batchSetUserAttributes(
+			/**
+			 * 用户属性值Map
+			 */
+			map<map<string>> idValues
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 批量删除多个用户多个属性
+	 *
+	 * @tables 	identity_user_attribute
+	 */
+	void batchRemoveUserAttributes(
+			/**
+			 * 用户属性名Map
+			 */
+			map<array<string>> idKeys
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 获取用户所有属性名
+	 *
+	 * @return 属性名集合
+	 *
+	 * @tables 	identity_user_attribute
+	 */
+	array<string> getUserAttributeNames(
+			/**
+			 * 用户ID
+			 */
+			long uid
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 清除用户所有属性
+	 *
+	 * @tables 	identity_user_attribute
+	 */
+	void clearUserAttributes(
+			/**
+			 * 用户ID
+			 */
+			long uid
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 获取用户当前会话属性值
+	 *
+	 * @return 属性值
+	 *
+	 * @tables 	identity_session,
+	 * 			identity_session_attribute
+	 */
+	string getSessionAttribute(
+			/**
+			 * SSO会话Token
+			 */
+			string token,
+
+			/**
+			 * 属性名
+			 */
+			string key
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 批量获取用户当前会话属性值
+	 *
+	 * @return 属性值Map
+	 *
+	 * @tables 	identity_session,
+	 * 			identity_session_attribute
+	 */
+	map<string> getSessionAttributes(
+			/**
+			 * SSO会话Token
+			 */
+			string token,
+
+			/**
+			 * 属性名集合
+			 */
+			array<string> keys
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 设置用户当前会话属性值
+	 *
+	 * @tables 	identity_session,
+	 * 			identity_session_attribute
+	 */
+	void setSessionAttribute(
+			/**
+			 * SSO会话Token
+			 */
+			string token,
+
+			/**
+			 * 属性名
+			 */
+			string key,
+
+			/**
+			 * 属性值
+			 */
+			string value
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 批量设置用户当前会话属性值
+	 *
+	 * @tables 	identity_session,
+	 * 			identity_session_attribute
+	 */
+	void setSessionAttributes(
+			/**
+			 * SSO会话Token
+			 */
+			string token,
+
+			/**
+			 * 属性值Map
+			 */
+			map<string> values
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 移除用户会话属性
+	 *
+	 * @tables 	identity_session,
+	 * 			identity_session_attribute
+	 */
+	void removeSessionAttribute(
+			/**
+			 * SSO会话Token
+			 */
+			string token,
+
+			/**
+			 * 属性名
+			 */
+			string key
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 批量移除用户会话属性
+	 *
+	 * @tables 	identity_session,
+	 * 			identity_session_attribute
+	 */
+	void removeSessionAttributes(
+			/**
+			 * SSO会话Token
+			 */
+			string token,
+
+			/**
+			 * 属性名集合
+			 */
+			array<string> keys
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 获取当前用户会话已有的属性名集合
+	 *
+	 * @return 属性名集合
+	 *
+	 * @tables 	identity_session,
+	 * 			identity_session_attribute
+	 */
+	array<string> getSessionAttributeNames(
+			/**
+			 * SSO会话Token
+			 */
+			string token
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 清除用户会话所有属性
+	 *
+	 * @tables 	identity_session,
+	 * 			identity_session_attribute
+	 */
+	void clearSessionAttributes(
+			/**
+			 * SSO会话Token
+			 */
+			string token
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 创建临时会话
+	 *
+	 * @return 临时会话的token
+	 *
+	 * @tables 	identity_session
+	 */
+	string createGuestSession() throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 检测昵称是否已存在
+	 *
+	 * @return 存在返回true，否则返回false
+	 *
+	 * @tables identity_user
+	 */
+	boolean isNickNameExists(
+			/**
+			 * 用户ID，<=0时表示注册时检测，>0时表示编辑基本信息时检测
+			 */
+			long uid,
+
+			/**
+			 * 昵称
+			 */
+			string nickName
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 统计符合条件的用户总数
+	 *
+	 * @return 符合条件的用户数
+	 *
+	 * @tables identity_user,
+	 * 		   identity_credential
+	 */
+	long countUser(
+			/**
+			 * 昵称
+			 */
+			string nickName,
+
+			/**
+			 * 凭证类型
+			 */
+			CredentialType type,
+
+			/**
+			 * 凭证名(登录名)
+			 */
+			string name,
+
+			/**
+			 * 开始时间，NULL_DATE时不作为条件
+			 */
+			long startTime,
+
+			/**
+			 * 结束时间，NULL_DATE时不作为条件
+			 */
+			long endTime,
+
+			/**
+			 * 扩展属性
+			 */
+			map<string> attributes
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 列出符合条件的用户
+	 *
+	 * @return 分页用户列表
+	 *
+	 * @tables identity_user,
+	 * 		   identity_credential
+	 */
+	array<User> listUser(
+			/**
+			 * 昵称
+			 */
+			string nickName,
+
+			/**
+			 * 凭证类型
+			 */
+			CredentialType type,
+
+			/**
+			 * 凭证名(登录名)
+			 */
+			string name,
+
+			/**
+			 * 开始时间，NULL_DATE时不作为条件
+			 */
+			long startTime,
+
+			/**
+			 * 结束时间，NULL_DATE时不作为条件
+			 */
+			long endTime,
+
+			/**
+			 * 扩展属性
+			 */
+			map<string> attributes,
+
+			/**
+			 * 分页起始位置
+			 */
+			long offset,
+
+			/**
+			 * 分页大小
+			 */
+			long limit
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 创建用户组
+	 *
+	 * @return 返回用户组标识
+	 *
+	 * @tables identity_group
+	 */
+	long createGroup(
+			Group group
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 更新用户组
+	 *
+	 * @tables identity_group
+	 */
+	void updateGroup(
+			Group group
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 删除用户组
+	 *
+	 * @tables identity_group,
+	 * 		   identity_group_user
+	 */
+	void removeGroup(
+			/**
+			 * 用户组标识
+			 */
+			long groupId
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 判断用户组名称是否存在
+	 *
+	 * @return 存在返回true，否则false
+	 *
+	 * @tables identity_group
+	 */
+	boolean isGroupNameExists(
+			/**
+			 * 用户组ID，<=0时表示创建时检测，>0时表示编辑时检测
+			 */
+			long groupId,
+
+			/**
+			 * 用户组名称
+			 */
+			string name
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 获取用户组
+	 *
+	 * @return 用户组信息
+	 *
+	 * @tables identity_group
+	 */
+	Group getGroup(
+			/**
+			 * 用户组ID
+			 */
+			long groupId
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 根据名称获取用户组
+	 *
+	 * @return 用户组信息
+	 *
+	 * @tables identity_group
+	 */
+	Group getGroupByName(
+			/**
+			 * 用户组名称
+			 */
+			string name
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 获取符合条件用户组数量
+	 *
+	 * @tables identity_group
+	 */
+	long countGroups(
+			/**
+			 * 用户组名称，空不作为条件，支持模糊（like）匹配
+			 */
+			string name
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 获取符合条件用户组列表
+	 *
+	 * @tables identity_group
+	 */
+	array<Group> listGroups(
+			/**
+			 * 用户组名称，空不作为条件，支持模糊（like）匹配
+			 */
+			string name,
+
+			/**
+			 * 分页起始位置
+			 */
+			long offset,
+
+			/**
+			 * 分页大小
+			 */
+			long limit
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 将用户添加到用户组
+	 *
+	 * @tables identity_group_user
+	 */
+	void addUserToGroup(
+			/**
+			 * 用户标识
+			 */
+			long uid,
+
+			/**
+			 * 用户组标识
+			 */
+			long groupId
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 从用户组中移除用户
+	 *
+	 * @tables identity_group_user
+	 */
+	void removeUserFromGroup(
+			/**
+			 * 用户标识
+			 */
+			long uid,
+
+			/**
+			 * 用户组标识
+			 */
+			long groupId
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 判断用户是否在指定组内
+	 *
+	 * @tables identity_group_user
+	 */
+	boolean isUserInGroup(
+			/**
+			 * 用户标识
+			 */
+			long uid,
+
+			/**
+			 * 用户组标识
+			 */
+			long groupId
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 获取指定用户组下的用户数
+	 *
+	 * @tables identity_group_user
+	 */
+	long countGroupUsers(
+			/**
+			 * 用户组标识
+			 */
+			long groupId
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 列出指定用户组下的用户
+	 *
+	 * @tables identity_group_user
+	 * 		   identity_user
+	 *
+	 */
+	array<User> listGroupUsers(
+			/**
+			 * 用户组标识
+			 */
+			long groupId,
+
+			long offset,
+
+			long limit
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 获取指定用户所属的用户组列表
+	 *
+	 * @tables identity_group_user,
+	 * 		   identity_group
+	 */
+	array<Group> getUserGroups(
+			/**
+			 * 用户标识
+			 */
+			long uid
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 判断用户是否超级管理员
+	 *
+	 * @tables  identity_user,
+	 * 			identity_user_attribute
+	 */
+	boolean isAdminUser(
+			/**
+			 * 用户标识
+			 */
+			long uid
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 判断当前会话是否是否超级管理员会话
+	 *
+	 * @tables  identity_user,
+	 * 			identity_user_attribute,
+	 * 			identity_session
+	 */
+	boolean isAdminSession(
+			/**
+			 * 会话Token
+			 */
+			string token
+	) throws org.bear.api.standard.GlobalException;
+
+	/**
+	 * 重置超级管理员（系统仅有一个超级管理员）
+	 *
+	 * @tables  identity_user,
+	 * 			identity_user_attribute
+	 */
+	void resetAdminUser(
+			/**
+			 * 用户标识
+			 */
+			long uid
+	) throws org.bear.api.standard.GlobalException;
+}

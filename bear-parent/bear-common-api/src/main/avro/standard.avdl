@@ -1,0 +1,39 @@
+@namespace("org.bear.api.standard")
+protocol StandardService{
+	enum Gender {
+		UNKNOWN,MALE,FEMALE
+	}
+	
+	/**
+	 * 异常堆栈对象
+	 *
+	 * @field className 发生异常的类
+	 *
+	 * @field methodName 发生异常的方法
+	 *
+	 * @field fileName 发生异常的文件
+	 *
+	 * @field lineNumber 发生异常的行号
+	 */
+	record StackTrace {
+		string className;
+		string methodName;
+		string fileName;
+		int lineNumber;
+	}
+	
+	/**
+	 * 通用错误对象
+	 *
+	 * @field code 错误代码
+	 *
+	 * @field msg 错误消息
+	 *
+	 * @field stackTraces 错误堆栈，供调试用
+	 */
+	error GlobalException {
+		int code;
+		string msg;
+		@java_class("java.util.ArrayList") array<StackTrace> stackTraces;
+	}
+}

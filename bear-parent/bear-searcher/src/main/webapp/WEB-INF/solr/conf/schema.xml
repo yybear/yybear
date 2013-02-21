@@ -1,0 +1,97 @@
+<?xml version="1.0" ?>
+
+<schema name="searcherSchema" version="1.4">
+    <types>
+        <fieldType name="string" class="solr.StrField" sortMissingLast="true" omitNorms="true"/>
+        <fieldType name="boolean" class="solr.BoolField" sortMissingLast="true" omitNorms="true"/>
+
+        <fieldType name="int" class="solr.TrieIntField" precisionStep="0" omitNorms="true" positionIncrementGap="0"/>
+        <fieldType name="long" class="solr.TrieLongField" precisionStep="0" omitNorms="true" positionIncrementGap="0"/>
+        <fieldType name="float" class="solr.TrieFloatField" precisionStep="0" omitNorms="true" positionIncrementGap="0"/>
+        <fieldType name="double" class="solr.TrieDoubleField" precisionStep="0" omitNorms="true" positionIncrementGap="0"/>
+        <fieldType name="date" class="solr.TrieDateField" precisionStep="0" omitNorms="true" positionIncrementGap="0"/>
+
+        <fieldType name="tint" class="solr.TrieIntField" precisionStep="8" omitNorms="true" positionIncrementGap="0"/>
+        <fieldType name="tlong" class="solr.TrieLongField" precisionStep="8" omitNorms="true" positionIncrementGap="0"/>
+        <fieldType name="tfloat" class="solr.TrieFloatField" precisionStep="8" omitNorms="true" positionIncrementGap="0"/>
+        <fieldType name="tdouble" class="solr.TrieDoubleField" precisionStep="8" omitNorms="true" positionIncrementGap="0"/>
+        <fieldType name="tdate" class="solr.TrieDateField" precisionStep="6" omitNorms="true" positionIncrementGap="0"/>
+
+        <fieldType name="text" class="solr.TextField" positionIncrementGap="100" autoGeneratePhraseQueries="false">
+            <analyzer>
+                <tokenizer class="org.bear.searcher.analyzer.IKTokenizerFactory"/>
+                <filter class="solr.LowerCaseFilterFactory"/>
+                <filter class="solr.RemoveDuplicatesTokenFilterFactory"/>
+            </analyzer>
+        </fieldType>
+
+        <fieldType name="ngram_text" class="solr.TextField" positionIncrementGap="100" autoGeneratePhraseQueries="false">
+            <analyzer type="query">
+                <tokenizer class="org.bear.searcher.analyzer.IKTokenizerFactory"/>
+                <filter class="solr.LowerCaseFilterFactory"/>
+                <filter class="solr.RemoveDuplicatesTokenFilterFactory"/>
+            </analyzer>
+            <analyzer type="index">
+                <tokenizer class="org.bear.searcher.analyzer.IKTokenizerFactory"/>
+                <filter class="org.bear.searcher.analyzer.TokenJoinTokenFilterFactory" maxSize="3"/>
+                <filter class="solr.LowerCaseFilterFactory"/>
+                <filter class="solr.RemoveDuplicatesTokenFilterFactory"/>
+            </analyzer>
+        </fieldType>
+
+        <fieldtype name="ignored" class="solr.StrField" stored="false" indexed="false"/>
+    </types>
+
+    <fields>
+        <field name="_version_" type="long" indexed="true" stored="true"/>
+        <field name="id" type="string" indexed="true" stored="true" required="true"/>
+        <field name="scope" type="int" indexed="true" stored="false"/>
+        <field name="mimeType" type="int" indexed="true" stored="true"/>
+        <field name="app" type="string" indexed="true" stored="true"/>
+        <field name="category" type="string" indexed="true" stored="true"/>
+        <field name="owner" type="string" indexed="true" stored="false" multiValued="true"/>
+        <field name="role" type="string" indexed="true" stored="false" multiValued="true"/>
+        <field name="tag" type="string" indexed="true" stored="false" multiValued="true"/>
+        <field name="title" type="text" indexed="true" stored="true" omitTermFreqAndPositions="true"/>
+        <field name="titleAuto" type="ngram_text" indexed="true" stored="true" omitTermFreqAndPositions="true"/>
+        <field name="body" type="text" indexed="true" stored="true" omitTermFreqAndPositions="true" compressed="true" compressThreshold="128"/>
+        <field name="date" type="tdate" indexed="true" stored="true"/>
+        <field name="public" type="boolean" indexed="false" stored="true"/>
+        <field name="all" type="text" indexed="true" stored="false" multiValued="true" omitTermFreqAndPositions="true"/>
+        <!--unsearchable fields-->
+        <dynamicField name="*_us" type="string" indexed="false" stored="true" compressed="true" compressThreshold="128"/>
+        <dynamicField name="*_ub" type="boolean" indexed="false" stored="true"/>
+        <dynamicField name="*_ui" type="int" indexed="false" stored="true"/>
+        <dynamicField name="*_ul" type="long" indexed="false" stored="true"/>
+        <dynamicField name="*_uf" type="float" indexed="false" stored="true"/>
+        <dynamicField name="*_ud" type="double" indexed="false" stored="true"/>
+        <dynamicField name="*_ut" type="date" indexed="false" stored="true"/>
+        <!--filter fields-->
+        <dynamicField name="*_fs" type="string" indexed="true" stored="false"/>
+        <dynamicField name="*_fb" type="boolean" indexed="true" stored="false"/>
+        <dynamicField name="*_fi" type="tint" indexed="true" stored="true"/>
+        <dynamicField name="*_fl" type="tlong" indexed="true" stored="true"/>
+        <dynamicField name="*_ff" type="tfloat" indexed="true" stored="true"/>
+        <dynamicField name="*_fd" type="tdouble" indexed="true" stored="true"/>
+        <dynamicField name="*_ft" type="tdate" indexed="true" stored="true"/>
+        <!--searchable fields-->
+        <dynamicField name="*_s" type="string" indexed="true" stored="true" compressed="true" compressThreshold="128"/>
+        <dynamicField name="*_b" type="boolean" indexed="true" stored="true"/>
+        <dynamicField name="*_i" type="tint" indexed="true" stored="true"/>
+        <dynamicField name="*_l" type="tlong" indexed="true" stored="true"/>
+        <dynamicField name="*_f" type="tfloat" indexed="true" stored="true"/>
+        <dynamicField name="*_d" type="tdouble" indexed="true" stored="true"/>
+        <dynamicField name="*_t" type="tdate" indexed="true" stored="true"/>
+        <dynamicField name="*" type="ignored" multiValued="true"/>
+    </fields>
+
+    <copyField source="title" dest="all"/>
+    <copyField source="title" dest="titleAuto"/>
+    <copyField source="body" dest="all"/>
+    <copyField source="*_s" dest="all"/>
+
+    <uniqueKey>id</uniqueKey>
+    <defaultSearchField>all</defaultSearchField>
+    <solrQueryParser defaultOperator="OR"/>
+</schema>
+
