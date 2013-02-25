@@ -1,5 +1,7 @@
 @namespace("org.bear.api.fs")
 protocol FileStoreService{
+	import idl "standard.avdl";
+	
 	/**
 	 * 表示支持的图片变换类型
 	 *
@@ -14,32 +16,6 @@ protocol FileStoreService{
 	    CROP,
 	    ROTATE
 	}
-	
-	/**
-	 * 二进制文件业务
-	 */
-	string BIZ_BIN = "bin";
-	
-	/**
-	 * 用户头像业务
-	 */
-	string BIZ_AVATAR = "avatar";
-	
-	/**
-	 * 普通图片业务
-	 */
-	string BIZ_IMAGE = "image";
-	
-	/**
-	 * 视频业务
-	 */
-	string BIZ_VIDEO = "video";
-	
-	/**
-	 * 默认token有效期,15分钟
-	 */
-	int TTL_DEFAULT = 900;
-	
 	
 	/**
 	 * 文件描述信息,通过主键或者业务加所有者即可获得所关联的文件信息
@@ -66,12 +42,12 @@ protocol FileStoreService{
 	    long id;
 	    string bizKey;
 	    string owner;
-	    i64 userId;
+	    long userId;
 	    string name;
 	    int size;
 	    map<string> data;
 	    long updateAt;
-	    Type.AccessScope scope;
+	    org.bear.api.standard.AccessScope scope;
 	}
 	
 	/**
@@ -169,7 +145,7 @@ protocol FileStoreService{
      *
      * @tables fs_file
      */
-    void writeFile(long id, binary bytes, int position) throws org.bear.api.standard.GlobalException;
+    void writeFile(long id, bytes `bytes`, int position) throws org.bear.api.standard.GlobalException;
 
     /**
      * 从目标文件中读取内容
@@ -193,7 +169,7 @@ protocol FileStoreService{
      *
      * @tables fs_file
      */
-    binary readFile(long id, int position, int count) throws org.bear.api.standard.GlobalException;
+    bytes readFile(long id, int position, int count) throws org.bear.api.standard.GlobalException;
 
     /**
      * 变换一个图片
@@ -235,7 +211,7 @@ protocol FileStoreService{
      *
      * @tables fs_file
      */
-    string getToken(array<long> ids, bool writeable, int ttl) throws org.bear.api.standard.GlobalException;
+    string getToken(array<long> ids, boolean writeable, int ttl) throws org.bear.api.standard.GlobalException;
 
     /**
      * 获取业务文件的访问token,通过url携带这个token实现文件的自定义权限
@@ -258,7 +234,7 @@ protocol FileStoreService{
      *
      * @tables fs_file
      */
-    string getBizToken(string bizKey, array<string> owners, bool writeable, int ttl) throws org.bear.api.standard.GlobalException;
+    string getBizToken(string bizKey, array<string> owners, boolean writeable, int ttl) throws org.bear.api.standard.GlobalException;
 
     /**
      * 绑定文件的读取权限到会话session
@@ -433,5 +409,5 @@ protocol FileStoreService{
      *
      * @tables fs_file
      */
-    FilePage getUserFiles(string bizKey, string owner, i64 userId, int start, int size) throws org.bear.api.standard.GlobalException;
+    FilePage getUserFiles(string bizKey, string owner, long userId, int start, int size) throws org.bear.api.standard.GlobalException;
 }

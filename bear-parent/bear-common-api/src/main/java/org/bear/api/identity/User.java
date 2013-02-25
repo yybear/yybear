@@ -23,7 +23,7 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
 		 * @size min=0, max=100 */
   @Deprecated public java.lang.String realName;
   /** * 性别 */
-  @Deprecated public org.bear.api.standard.Gender gender;
+  @Deprecated public org.bear.api.type.Gender gender;
   /** * 身份证号 */
   @Deprecated public java.lang.String idNo;
   /** * 所在地 */
@@ -53,7 +53,7 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
   /**
    * All-args constructor.
    */
-  public User(java.lang.Long id, java.lang.String userName, java.lang.String nickName, java.lang.String realName, org.bear.api.standard.Gender gender, java.lang.String idNo, java.lang.String location, java.lang.Long birthday, java.lang.String description, java.lang.String photo, org.bear.api.identity.UserStatus status, java.lang.Long createTime, java.lang.Long updateTime) {
+  public User(java.lang.Long id, java.lang.String userName, java.lang.String nickName, java.lang.String realName, org.bear.api.type.Gender gender, java.lang.String idNo, java.lang.String location, java.lang.Long birthday, java.lang.String description, java.lang.String photo, org.bear.api.identity.UserStatus status, java.lang.Long createTime, java.lang.Long updateTime) {
     this.id = id;
     this.userName = userName;
     this.nickName = nickName;
@@ -97,7 +97,7 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
     case 1: userName = (java.lang.String)value$; break;
     case 2: nickName = (java.lang.String)value$; break;
     case 3: realName = (java.lang.String)value$; break;
-    case 4: gender = (org.bear.api.standard.Gender)value$; break;
+    case 4: gender = (org.bear.api.type.Gender)value$; break;
     case 5: idNo = (java.lang.String)value$; break;
     case 6: location = (java.lang.String)value$; break;
     case 7: birthday = (java.lang.Long)value$; break;
@@ -185,7 +185,7 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
   /**
    * Gets the value of the 'gender' field.
    * * 性别   */
-  public org.bear.api.standard.Gender getGender() {
+  public org.bear.api.type.Gender getGender() {
     return gender;
   }
 
@@ -193,7 +193,7 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
    * Sets the value of the 'gender' field.
    * * 性别   * @param value the value to set.
    */
-  public void setGender(org.bear.api.standard.Gender value) {
+  public void setGender(org.bear.api.type.Gender value) {
     this.gender = value;
   }
 
@@ -350,7 +350,7 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
     private java.lang.String userName;
     private java.lang.String nickName;
     private java.lang.String realName;
-    private org.bear.api.standard.Gender gender;
+    private org.bear.api.type.Gender gender;
     private java.lang.String idNo;
     private java.lang.String location;
     private long birthday;
@@ -527,12 +527,12 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
     }
 
     /** Gets the value of the 'gender' field */
-    public org.bear.api.standard.Gender getGender() {
+    public org.bear.api.type.Gender getGender() {
       return gender;
     }
     
     /** Sets the value of the 'gender' field */
-    public org.bear.api.identity.User.Builder setGender(org.bear.api.standard.Gender value) {
+    public org.bear.api.identity.User.Builder setGender(org.bear.api.type.Gender value) {
       validate(fields()[4], value);
       this.gender = value;
       fieldSetFlags()[4] = true;
@@ -756,7 +756,7 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
         record.userName = fieldSetFlags()[1] ? this.userName : (java.lang.String) defaultValue(fields()[1]);
         record.nickName = fieldSetFlags()[2] ? this.nickName : (java.lang.String) defaultValue(fields()[2]);
         record.realName = fieldSetFlags()[3] ? this.realName : (java.lang.String) defaultValue(fields()[3]);
-        record.gender = fieldSetFlags()[4] ? this.gender : (org.bear.api.standard.Gender) defaultValue(fields()[4]);
+        record.gender = fieldSetFlags()[4] ? this.gender : (org.bear.api.type.Gender) defaultValue(fields()[4]);
         record.idNo = fieldSetFlags()[5] ? this.idNo : (java.lang.String) defaultValue(fields()[5]);
         record.location = fieldSetFlags()[6] ? this.location : (java.lang.String) defaultValue(fields()[6]);
         record.birthday = fieldSetFlags()[7] ? this.birthday : (java.lang.Long) defaultValue(fields()[7]);

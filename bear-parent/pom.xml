@@ -13,7 +13,7 @@
 	<properties>
 		<spring.version>3.1.2.RELEASE</spring.version>
 		<spring.security.version>3.1.2.RELEASE</spring.security.version>
-		<hibernate.version>4.1.6.Final</hibernate.version>
+		<hibernate.version>4.1.7.Final</hibernate.version>
 		<slf4j.version>1.7.1</slf4j.version>
 		<logback.version>1.0.7</logback.version>
 		<httpcomponents.version>4.2.1</httpcomponents.version>
@@ -408,6 +408,18 @@
 				<artifactId>validation-api</artifactId>
 				<version>1.0.0.GA</version>
 			</dependency>
+			
+			<!-- spring data jpa -->
+			<dependency>
+				<groupId>org.springframework.data</groupId>
+				<artifactId>spring-data-jpa</artifactId>
+				<version>1.1.2.RELEASE</version>
+			</dependency>
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-entitymanager</artifactId>
+				<version>${hibernate.version}</version>
+			</dependency>
 			<!-- cache -->
 			<dependency>
 				<groupId>redis.clients</groupId>
@@ -504,5 +516,6 @@
 		<module>bear-common-service</module>
 		<module>bear-common-api</module>
     <module>bear-identity-service</module>
+    <module>bear-api-tester</module>
   </modules>
 </project>

@@ -12,7 +12,7 @@ import org.bear.api.identity.PasswordProtection;
 import org.bear.api.identity.ProtectionQuestion;
 import org.bear.api.identity.User;
 import org.bear.api.identity.UserStatus;
-import org.bear.api.standard.GlobalException;
+import org.bear.api.type.GlobalException;
 
 /**
  * .

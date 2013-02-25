@@ -23,6 +23,25 @@ protocol StandardService{
 	}
 	
 	/**
+	 * 表示实体对象的访问权限级别
+	 *
+	 * @field ALL  所有人都可以访问
+	 *
+	 * @field USER 登陆用户即可访问
+	 *
+	 * @field ROLE 拥有指定角色才能访问
+	 *
+	 * @field TOKEN需要通过token认证才能访问
+	 *
+	 * @field SELF 只有自己才能访问
+	 *
+	 * @field SESSION 需要会话授权才能访问
+	 */
+	enum AccessScope {
+		ALL, USER, ROLE, TOKEN, SELF, SESSION
+	}
+	
+	/**
 	 * 通用错误对象
 	 *
 	 * @field code 错误代码

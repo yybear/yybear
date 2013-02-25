@@ -2,6 +2,12 @@ package org.bear.identity.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * .
  * <p/>
@@ -9,10 +15,14 @@ import java.io.Serializable;
  * @author <a href="mailto:gan.qingx@qq.com">gan qing</a>
  * @version V1.0, 2013-2-20
  */
+@Entity
+/*@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)*/
+@Table(name="ids_group")
 public class Group implements Serializable {
 
 	private static final long serialVersionUID = -6844733504418079259L;
-
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 
 	private String name;

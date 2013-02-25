@@ -94,7 +94,7 @@ public class ConvertUtils {
 		result.setRealName(user.getRealName());
 		result.setIdNo(user.getIdNo());
 		result.setLocation(user.getLocation());
-		result.setGender(org.bear.api.standard.Gender.values()[user.getGender().ordinal()]);
+		result.setGender(org.bear.api.type.Gender.values()[user.getGender().ordinal()]);
 		result.setBirthday(toAvroDate(user.getBirthday()));
 		result.setDescription(user.getDescription());
 		result.setPhoto(user.getPhoto());

@@ -3,6 +3,15 @@ package org.bear.identity.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 import org.bear.global.type.Gender;
 import org.bear.identity.type.UserStatus;
 
@@ -13,17 +22,27 @@ import org.bear.identity.type.UserStatus;
  * @author <a href="mailto:gan.qingx@qq.com">gan qing</a>
  * @version V1.0, 2013-2-20
  */
+@Entity
+/*@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)*/
+@Table(name="ids_user")
 public class User implements Serializable {
 
 	private static final long serialVersionUID = 8144021063611739262L;
-
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
+	@Column(name="user_name")
 	private String userName;
+	@Column(name="nick_name")
 	private String nickName;
+	@Column(name="real_name")
 	private String realName;
 	private Gender gender;
+	@Column(name="id_no")
 	private String idNo;
 	private String location;
+	@Column(columnDefinition = "timestamp null")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date birthday;
 	private String description;
 	private String photo;

@@ -2,6 +2,14 @@ package org.bear.identity.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+
 import org.bear.identity.type.CredentialType;
 
 /**
@@ -11,15 +19,20 @@ import org.bear.identity.type.CredentialType;
  * @author <a href="mailto:gan.qingx@qq.com">gan qing</a>
  * @version V1.0, 2013-2-20
  */
+@Entity
+/*@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)*/
+@Table(name="ids_credential")
+@Inheritance(strategy=InheritanceType.JOINED)
 public class Credential implements Serializable {
 
 	private static final long serialVersionUID = 1093980158411446973L;
-
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	private Long uid; // optional
-	private CredentialType type; // optional
-	private String name; // optional
-	private String value; // optional
+	private Long uid;
+	private CredentialType type;
+	private String name;
+	private String value;
 
 	public Credential() {
 		super();

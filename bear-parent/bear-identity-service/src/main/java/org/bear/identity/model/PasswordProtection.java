@@ -2,6 +2,10 @@ package org.bear.identity.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 import org.bear.identity.type.ProtectionQuestion;
 
 /**
@@ -11,13 +15,17 @@ import org.bear.identity.type.ProtectionQuestion;
  * @author <a href="mailto:gan.qingx@qq.com">gan qing</a>
  * @version V1.0, 2013-2-20
  */
+@Entity
+/*@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)*/
+@Table(name="ids_password_protection")
 public class PasswordProtection implements Serializable {
 
 	private static final long serialVersionUID = -2500182814036361180L;
 
-	private Long uid; // optional
-	private ProtectionQuestion question; // optional
-	private String answer; // optional
+	@Id
+	private Long uid;
+	private ProtectionQuestion question;
+	private String answer;
 
 	public Long getUid() {
 		return uid;
