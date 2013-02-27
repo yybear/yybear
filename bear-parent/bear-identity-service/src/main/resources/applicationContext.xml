@@ -29,6 +29,19 @@
 		<property name="releaseHelperThreads" value="3" />
 	</bean>
 	
+	<bean id="redisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+        <property name="hostName" value="${redis.host}"/>
+        <property name="poolConfig">
+        	<bean class="redis.clients.jedis.JedisPoolConfig">
+        		<!--
+        		<property name="maxActive" value="100" />
+        		<property name="maxIdle" value="100" />
+        		-->
+        	</bean>
+        </property>
+        <property name="timeout" value="30000" />
+    </bean>
+	
 	<context:annotation-config/>
 	<jpa:repositories base-package="org.bear.identity.dao"/>
 	

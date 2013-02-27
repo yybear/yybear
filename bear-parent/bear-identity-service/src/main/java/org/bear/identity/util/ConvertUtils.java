@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.bear.api.identity.Session;
 import org.bear.global.type.Gender;
@@ -19,14 +22,14 @@ import org.springframework.util.CollectionUtils;
  * @version V1.0, 2013-2-20
  */
 public class ConvertUtils {
-	public static org.bear.api.identity.PasswordProtection toAvroPasswordProtection(
+	public static org.bear.api.identity.PasswordProtection toApiPasswordProtection(
 			org.bear.identity.model.PasswordProtection protection) {
 		if (protection == null)
 			return null;
 
 		org.bear.api.identity.PasswordProtection result = new org.bear.api.identity.PasswordProtection();
 		result.setUid(protection.getUid() == null ? -1 : protection.getUid().longValue());
-		result.setQuestion(toAvroQuestion(protection.getQuestion()));
+		result.setQuestion(toApiQuestion(protection.getQuestion()));
 		result.setAnswer(protection.getAnswer());
 		return result;
 	}
@@ -49,7 +52,7 @@ public class ConvertUtils {
 				.ordinal()];
 	}
 
-	public static org.bear.api.identity.ProtectionQuestion toAvroQuestion(
+	public static org.bear.api.identity.ProtectionQuestion toApiQuestion(
 			org.bear.identity.type.ProtectionQuestion question) {
 		return question == null ? null : org.bear.api.identity.ProtectionQuestion.values()[question
 				.ordinal()];
@@ -81,8 +84,21 @@ public class ConvertUtils {
 
 		return result;
 	}
+	
+	public static Set<org.bear.identity.model.User> toServiceUserSet(
+			List<org.bear.api.identity.User> users) {
+		if (CollectionUtils.isEmpty(users))
+			return Collections.emptySet();
 
-	public static org.bear.api.identity.User toAvroUser(org.bear.identity.model.User user) {
+		Set<org.bear.identity.model.User> result = new LinkedHashSet<org.bear.identity.model.User>(
+				users.size());
+		for (org.bear.api.identity.User identity : users) {
+			result.add(toServiceUser(identity));
+		}
+		return result;
+	}
+
+	public static org.bear.api.identity.User toApiUser(org.bear.identity.model.User user) {
 		if (user == null)
 			return null;
 
@@ -95,18 +111,18 @@ public class ConvertUtils {
 		result.setIdNo(user.getIdNo());
 		result.setLocation(user.getLocation());
 		result.setGender(org.bear.api.type.Gender.values()[user.getGender().ordinal()]);
-		result.setBirthday(toAvroDate(user.getBirthday()));
+		result.setBirthday(toApiDate(user.getBirthday()));
 		result.setDescription(user.getDescription());
 		result.setPhoto(user.getPhoto());
-		result.setStatus(toAvroUserStatus(user.getStatus()));
+		result.setStatus(toApiUserStatus(user.getStatus()));
 
-		result.setCreateTime(toAvroDate(user.getCreateTime()));
-		result.setUpdateTime(toAvroDate(user.getUpdateTime()));
+		result.setCreateTime(toApiDate(user.getCreateTime()));
+		result.setUpdateTime(toApiDate(user.getUpdateTime()));
 
 		return result;
 	}
 
-	public static List<org.bear.api.identity.User> toAvroUserList(
+	public static List<org.bear.api.identity.User> toApiUserList(
 			List<org.bear.identity.model.User> users) {
 		if (CollectionUtils.isEmpty(users))
 			return Collections.emptyList();
@@ -114,22 +130,26 @@ public class ConvertUtils {
 		List<org.bear.api.identity.User> result = new ArrayList<org.bear.api.identity.User>(
 				users.size());
 		for (org.bear.identity.model.User identity : users) {
-			result.add(toAvroUser(identity));
+			result.add(toApiUser(identity));
 		}
 		return result;
 	}
 
-	public static Map<Long, org.bear.api.identity.User> toAvroUserMap(
+	public static Map<String, org.bear.api.identity.User> toApiUserMap(
 			Map<Long, org.bear.identity.model.User> userMap) {
 		if (CollectionUtils.isEmpty(userMap))
 			return Collections.emptyMap();
 
-		Map<Long, org.bear.api.identity.User> result = new HashMap<Long, org.bear.api.identity.User>(
+		Map<String, org.bear.api.identity.User> result = new HashMap<String, org.bear.api.identity.User>(
 				userMap.size());
 		for (Map.Entry<Long, org.bear.identity.model.User> entry : userMap.entrySet()) {
-			result.put(entry.getKey(), toAvroUser(entry.getValue()));
+			result.put(createMapKey(entry.getKey()), toApiUser(entry.getValue()));
 		}
 		return result;
+	}
+	
+	private static String createMapKey(Long key) {
+		return String.valueOf(key);
 	}
 
 	public static org.bear.identity.type.UserStatus toServiceUserStatus(
@@ -138,7 +158,7 @@ public class ConvertUtils {
 				.ordinal()];
 	}
 
-	public static org.bear.api.identity.UserStatus toAvroUserStatus(
+	public static org.bear.api.identity.UserStatus toApiUserStatus(
 			org.bear.identity.type.UserStatus userStatus) {
 		return userStatus == null ? null : org.bear.api.identity.UserStatus.values()[userStatus
 				.ordinal()];
@@ -158,7 +178,7 @@ public class ConvertUtils {
 		return result;
 	}
 
-	public static org.bear.api.identity.Credential toAvroCredential(
+	public static org.bear.api.identity.Credential toApiCredential(
 			org.bear.identity.model.Credential credential) {
 		if (credential == null)
 			return null;
@@ -166,7 +186,7 @@ public class ConvertUtils {
 		org.bear.api.identity.Credential result = new org.bear.api.identity.Credential();
 		result.setId(credential.getId() == null ? -1 : credential.getId().longValue());
 		result.setUid(credential.getUid() == null ? -1 : credential.getUid().longValue());
-		result.setType(toAvroCredentialType(credential.getType()));
+		result.setType(toApiCredentialType(credential.getType()));
 		result.setName(credential.getName());
 		result.setValue(credential.getValue());
 		return result;
@@ -185,7 +205,7 @@ public class ConvertUtils {
 		return result;
 	}
 
-	public static List<org.bear.api.identity.Credential> toAvroCredential(
+	public static List<org.bear.api.identity.Credential> toApiCredential(
 			List<org.bear.identity.model.Credential> credentials) {
 		if (CollectionUtils.isEmpty(credentials))
 			return Collections.emptyList();
@@ -193,7 +213,7 @@ public class ConvertUtils {
 		List<org.bear.api.identity.Credential> result = new ArrayList<org.bear.api.identity.Credential>(
 				credentials.size());
 		for (org.bear.identity.model.Credential credential : credentials) {
-			result.add(toAvroCredential(credential));
+			result.add(toApiCredential(credential));
 		}
 		return result;
 	}
@@ -204,7 +224,7 @@ public class ConvertUtils {
 				.ordinal()];
 	}
 
-	public static org.bear.api.identity.CredentialType toAvroCredentialType(
+	public static org.bear.api.identity.CredentialType toApiCredentialType(
 			org.bear.identity.type.CredentialType ct) {
 		return ct == null ? null : org.bear.api.identity.CredentialType.values()[ct.ordinal()];
 	}
@@ -213,11 +233,11 @@ public class ConvertUtils {
 		return new Date(date);
 	}
 
-	public static long toAvroDate(Date date) {
+	public static long toApiDate(Date date) {
 		return date.getTime();
 	}
 
-	public static org.bear.api.identity.Group toAvroGroup(org.bear.identity.model.Group group) {
+	public static org.bear.api.identity.Group toApiGroup(org.bear.identity.model.Group group) {
 		if (group == null)
 			return null;
 
@@ -239,14 +259,14 @@ public class ConvertUtils {
 		return result;
 	}
 
-	public static List<org.bear.api.identity.Group> toAvroGroups(
+	public static List<org.bear.api.identity.Group> toApiGroups(
 			List<org.bear.identity.model.Group> groups) {
 		if (CollectionUtils.isEmpty(groups))
 			return Collections.emptyList();
 
 		List<org.bear.api.identity.Group> result = new ArrayList<org.bear.api.identity.Group>();
 		for (org.bear.identity.model.Group group : groups) {
-			result.add(toAvroGroup(group));
+			result.add(toApiGroup(group));
 		}
 		return result;
 	}
@@ -271,7 +291,7 @@ public class ConvertUtils {
 		
 		return res;
 	}
-	public static Session toAvroSession(org.bear.identity.model.Session in) {
+	public static Session toApiSession(org.bear.identity.model.Session in) {
 		Session out = new Session();
 		out.setClientIp(in.getClientIp());
 		out.setCreationTime(in.getCreationTime() == null?0:in.getCreationTime().getTime());
@@ -285,12 +305,25 @@ public class ConvertUtils {
 		return out;
 	}
 
-	public static List<Session> toAvroSessionList(List<org.bear.identity.model.Session> inList) {
+	public static List<Session> toApiSessionList(List<org.bear.identity.model.Session> inList) {
 		List<Session> outList = new ArrayList<Session>(inList.size());
 		for(org.bear.identity.model.Session in:inList) {
-			outList.add(toAvroSession(in));
+			outList.add(toApiSession(in));
 		}
 		
 		return outList;
+	}
+	
+	public static Map<Long, Set<String>> toMapSet(Map<String, List<String>> in) {
+		if(null == in)
+			return null;
+		
+		Map<Long, Set<String>> out = new HashMap<Long, Set<String>>();
+		for(String key : in.keySet()) {
+			Set<String> set = new HashSet<String>();
+			set.addAll(in.get(key));
+			out.put(Long.valueOf(key), set);
+		}
+		return out;
 	}
 }

@@ -35,7 +35,7 @@ public class File extends org.apache.avro.specific.SpecificRecordBase implements
   @Deprecated public int size;
   @Deprecated public java.util.Map<java.lang.String,java.lang.String> data;
   @Deprecated public long updateAt;
-  @Deprecated public org.bear.api.type.AccessScope scope;
+  @Deprecated public org.bear.api.standard.AccessScope scope;
 
   /**
    * Default constructor.
@@ -45,7 +45,7 @@ public class File extends org.apache.avro.specific.SpecificRecordBase implements
   /**
    * All-args constructor.
    */
-  public File(java.lang.Long id, java.lang.String bizKey, java.lang.String owner, java.lang.Long userId, java.lang.String name, java.lang.Integer size, java.util.Map<java.lang.String,java.lang.String> data, java.lang.Long updateAt, org.bear.api.type.AccessScope scope) {
+  public File(java.lang.Long id, java.lang.String bizKey, java.lang.String owner, java.lang.Long userId, java.lang.String name, java.lang.Integer size, java.util.Map<java.lang.String,java.lang.String> data, java.lang.Long updateAt, org.bear.api.standard.AccessScope scope) {
     this.id = id;
     this.bizKey = bizKey;
     this.owner = owner;
@@ -85,7 +85,7 @@ public class File extends org.apache.avro.specific.SpecificRecordBase implements
     case 5: size = (java.lang.Integer)value$; break;
     case 6: data = (java.util.Map<java.lang.String,java.lang.String>)value$; break;
     case 7: updateAt = (java.lang.Long)value$; break;
-    case 8: scope = (org.bear.api.type.AccessScope)value$; break;
+    case 8: scope = (org.bear.api.standard.AccessScope)value$; break;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
     }
   }
@@ -213,7 +213,7 @@ public class File extends org.apache.avro.specific.SpecificRecordBase implements
   /**
    * Gets the value of the 'scope' field.
    */
-  public org.bear.api.type.AccessScope getScope() {
+  public org.bear.api.standard.AccessScope getScope() {
     return scope;
   }
 
@@ -221,7 +221,7 @@ public class File extends org.apache.avro.specific.SpecificRecordBase implements
    * Sets the value of the 'scope' field.
    * @param value the value to set.
    */
-  public void setScope(org.bear.api.type.AccessScope value) {
+  public void setScope(org.bear.api.standard.AccessScope value) {
     this.scope = value;
   }
 
@@ -254,7 +254,7 @@ public class File extends org.apache.avro.specific.SpecificRecordBase implements
     private int size;
     private java.util.Map<java.lang.String,java.lang.String> data;
     private long updateAt;
-    private org.bear.api.type.AccessScope scope;
+    private org.bear.api.standard.AccessScope scope;
 
     /** Creates a new Builder */
     private Builder() {
@@ -504,12 +504,12 @@ public class File extends org.apache.avro.specific.SpecificRecordBase implements
     }
 
     /** Gets the value of the 'scope' field */
-    public org.bear.api.type.AccessScope getScope() {
+    public org.bear.api.standard.AccessScope getScope() {
       return scope;
     }
     
     /** Sets the value of the 'scope' field */
-    public org.bear.api.fs.File.Builder setScope(org.bear.api.type.AccessScope value) {
+    public org.bear.api.fs.File.Builder setScope(org.bear.api.standard.AccessScope value) {
       validate(fields()[8], value);
       this.scope = value;
       fieldSetFlags()[8] = true;
@@ -540,7 +540,7 @@ public class File extends org.apache.avro.specific.SpecificRecordBase implements
         record.size = fieldSetFlags()[5] ? this.size : (java.lang.Integer) defaultValue(fields()[5]);
         record.data = fieldSetFlags()[6] ? this.data : (java.util.Map<java.lang.String,java.lang.String>) defaultValue(fields()[6]);
         record.updateAt = fieldSetFlags()[7] ? this.updateAt : (java.lang.Long) defaultValue(fields()[7]);
-        record.scope = fieldSetFlags()[8] ? this.scope : (org.bear.api.type.AccessScope) defaultValue(fields()[8]);
+        record.scope = fieldSetFlags()[8] ? this.scope : (org.bear.api.standard.AccessScope) defaultValue(fields()[8]);
         return record;
       } catch (Exception e) {
         throw new org.apache.avro.AvroRuntimeException(e);

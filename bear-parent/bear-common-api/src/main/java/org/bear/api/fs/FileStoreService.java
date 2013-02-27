@@ -19,7 +19,7 @@ public interface FileStoreService {
      * @return 包含id的文件
      *
      * @tables fs_file */
-  org.bear.api.fs.File saveFile(org.bear.api.fs.File file) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
+  org.bear.api.fs.File saveFile(org.bear.api.fs.File file) throws org.apache.avro.AvroRemoteException, org.bear.api.standard.GlobalException;
   /** * 批量删除文件
      * 1. 批量将对应的数据库记录的status属性设置成Status.DELETED(逻辑删除)
      * 2. 真实文件不做删除
@@ -27,7 +27,7 @@ public interface FileStoreService {
      * @param ids 文件id列表
      *
      * @tables fs_file */
-  java.lang.Void removeFiles(java.util.List<java.lang.Long> ids) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
+  java.lang.Void removeFiles(java.util.List<java.lang.Long> ids) throws org.apache.avro.AvroRemoteException, org.bear.api.standard.GlobalException;
   /** * 批量删除和某个所有者相关联的所有文件
      * 1. 批量将对应的数据库记录的status属性设置成Status.DELETED(逻辑删除)
      * 2. 真实文件不做删除
@@ -37,7 +37,7 @@ public interface FileStoreService {
      * @param owner 所有者
      *
      * @tables fs_file */
-  java.lang.Void removeFilesByOwner(java.lang.String bizKey, java.lang.String owner) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
+  java.lang.Void removeFilesByOwner(java.lang.String bizKey, java.lang.String owner) throws org.apache.avro.AvroRemoteException, org.bear.api.standard.GlobalException;
   /** * 将二进制内容写入到目标文件的指定位置
      * 
      * 1. 根据文件编号获取数据库中的文件记录
@@ -69,7 +69,7 @@ public interface FileStoreService {
      * </ul>
      *
      * @tables fs_file */
-  java.lang.Void writeFile(long id, java.nio.ByteBuffer bytes, int position) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
+  java.lang.Void writeFile(long id, java.nio.ByteBuffer bytes, int position) throws org.apache.avro.AvroRemoteException, org.bear.api.standard.GlobalException;
   /** * 从目标文件中读取内容
      * 
      * 1. 同writeFile逻辑一致,获取文件存放路径
@@ -90,7 +90,7 @@ public interface FileStoreService {
      * </ul>
      *
      * @tables fs_file */
-  java.nio.ByteBuffer readFile(long id, int position, int count) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
+  java.nio.ByteBuffer readFile(long id, int position, int count) throws org.apache.avro.AvroRemoteException, org.bear.api.standard.GlobalException;
   /** * 变换一个图片
      *  
      * 涉及到的参数
@@ -109,7 +109,7 @@ public interface FileStoreService {
      *
      * @tables fs_file
      * */
-  java.lang.Void transformImage(long id, java.util.List<org.bear.api.fs.Action> actions) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
+  java.lang.Void transformImage(long id, java.util.List<org.bear.api.fs.Action> actions) throws org.apache.avro.AvroRemoteException, org.bear.api.standard.GlobalException;
   /** * 获取一个文件的访问token,通过url携带这个token实现文件的自定义权限
      * 1. 用tokenService创建一个有效期为ttl的token (详见tokenService的createTokenEx)
      * 2. 用tokenService在该token上绑定参数列表 (详见tokenService的bindListParam)
@@ -126,7 +126,7 @@ public interface FileStoreService {
      * @return token字符串
      *
      * @tables fs_file */
-  java.lang.String getToken(java.util.List<java.lang.Long> ids, boolean writeable, int ttl) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
+  java.lang.String getToken(java.util.List<java.lang.Long> ids, boolean writeable, int ttl) throws org.apache.avro.AvroRemoteException, org.bear.api.standard.GlobalException;
   /** * 获取业务文件的访问token,通过url携带这个token实现文件的自定义权限
      *
      * 1. 用tokenService创建一个有效期为ttl的token (详见tokenService的createTokenEx)
@@ -146,7 +146,7 @@ public interface FileStoreService {
      * @return 业务token字符串
      *
      * @tables fs_file */
-  java.lang.String getBizToken(java.lang.String bizKey, java.util.List<java.lang.String> owners, boolean writeable, int ttl) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
+  java.lang.String getBizToken(java.lang.String bizKey, java.util.List<java.lang.String> owners, boolean writeable, int ttl) throws org.apache.avro.AvroRemoteException, org.bear.api.standard.GlobalException;
   /** * 绑定文件的读取权限到会话session
      * 1.遍历文件编号,将他们以 'fs'+文件编号 为key,'T'为value放入一个map
      * 2.调用identityService的setSessionAttributes方法进行绑定(详见identityService)
@@ -154,7 +154,7 @@ public interface FileStoreService {
      * @param sessionId 会话id
      *
      * @param ids 文件id列表 */
-  java.lang.Void bindSession(java.lang.String sessionId, java.util.List<java.lang.Long> ids) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
+  java.lang.Void bindSession(java.lang.String sessionId, java.util.List<java.lang.Long> ids) throws org.apache.avro.AvroRemoteException, org.bear.api.standard.GlobalException;
   /** * 取消绑定文件的读取权限到会话session
      * 
      * 1.遍历文件编号,将他们以 'fs'+文件编号 为key,'T'为value放入一个map
@@ -163,7 +163,7 @@ public interface FileStoreService {
      * @param sessionId 会话id
      *
      * @param ids 文件id列表 */
-  java.lang.Void unbindSession(java.lang.String sessionId, java.util.List<java.lang.Long> ids) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
+  java.lang.Void unbindSession(java.lang.String sessionId, java.util.List<java.lang.Long> ids) throws org.apache.avro.AvroRemoteException, org.bear.api.standard.GlobalException;
   /** * 获取一个文件
      * 
      * 1.仅获取数据库中的一个文件对象
@@ -173,7 +173,7 @@ public interface FileStoreService {
      * @return 文件
      *
      * @tables fs_file */
-  org.bear.api.fs.File getFile(long id) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
+  org.bear.api.fs.File getFile(long id) throws org.apache.avro.AvroRemoteException, org.bear.api.standard.GlobalException;
   /** * 根据id批量获取文件
      * 
      * @param id 文件id列表
@@ -181,7 +181,7 @@ public interface FileStoreService {
      * @return 文件map
      *
      * @tables fs_file */
-  java.util.Map<java.lang.String,org.bear.api.fs.File> getFileMap(java.util.List<java.lang.Long> ids) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
+  java.util.Map<java.lang.String,org.bear.api.fs.File> getFileMap(java.util.List<java.lang.Long> ids) throws org.apache.avro.AvroRemoteException, org.bear.api.standard.GlobalException;
   /** * 获取某个业务对象关联的文件
      * 例如用户的头像可以用getSingleFile(SPACE_AVATAR, "888")来获取888用户的头像文件信息
      *
@@ -192,7 +192,7 @@ public interface FileStoreService {
      * @return 文件
      *
      * @tables fs_file */
-  org.bear.api.fs.File getSingleFile(java.lang.String bizKey, java.lang.String owner) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
+  org.bear.api.fs.File getSingleFile(java.lang.String bizKey, java.lang.String owner) throws org.apache.avro.AvroRemoteException, org.bear.api.standard.GlobalException;
   /** * 获取某个业务对象关联的文件,例如要获取某个帖子相关的附件,,按文件上传倒序排序
      *
      * @param bizKey 业务名
@@ -202,7 +202,7 @@ public interface FileStoreService {
      * @return 文件列表
      *
      * @tables fs_file */
-  java.util.List<org.bear.api.fs.File> getFiles(java.lang.String bizKey, java.lang.String owner) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
+  java.util.List<org.bear.api.fs.File> getFiles(java.lang.String bizKey, java.lang.String owner) throws org.apache.avro.AvroRemoteException, org.bear.api.standard.GlobalException;
   /** * 根据owner列表批量获取某个业务对象关联的文件
      *
      * @param bizKey 业务名
@@ -212,7 +212,7 @@ public interface FileStoreService {
      * @return 文件列表map
      *
      * @tables fs_file */
-  java.util.Map<java.lang.String,java.util.List<org.bear.api.fs.File>> batchGetFiles(java.lang.String bizKey, java.util.List<java.lang.String> owners) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
+  java.util.Map<java.lang.String,java.util.List<org.bear.api.fs.File>> batchGetFiles(java.lang.String bizKey, java.util.List<java.lang.String> owners) throws org.apache.avro.AvroRemoteException, org.bear.api.standard.GlobalException;
   /** * 根据多个bizKey,多个owner获取文件,格式map<bizKey, set<owner>>
      *
      * @param ownersMap 嵌套map,map<bizKey, set<owner>>
@@ -222,7 +222,7 @@ public interface FileStoreService {
      * @return 嵌套map,map<bizKey, map<owner, list<File>>>
      *
      * @tables fs_file */
-  java.util.Map<java.lang.String,java.util.Map<java.lang.String,java.util.List<org.bear.api.fs.File>>> batchGetFilesEx(java.util.Map<java.lang.String,java.util.List<java.lang.String>> ownersMap) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
+  java.util.Map<java.lang.String,java.util.Map<java.lang.String,java.util.List<org.bear.api.fs.File>>> batchGetFilesEx(java.util.Map<java.lang.String,java.util.List<java.lang.String>> ownersMap) throws org.apache.avro.AvroRemoteException, org.bear.api.standard.GlobalException;
   /** * 获取某个文件的加密访问id
      * 
      * 1. 将id和系统时间和有效期,以某种形式组合,并通过加密算法加密后形成的字符串
@@ -234,7 +234,7 @@ public interface FileStoreService {
      * @return 加密的id
      *
      * @tables fs_file */
-  java.lang.String getEncryptedId(long id, int ttl) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
+  java.lang.String getEncryptedId(long id, int ttl) throws org.apache.avro.AvroRemoteException, org.bear.api.standard.GlobalException;
   /** * 批量获取文件的加密访问
      * 
      * 1.同getEncryptedId
@@ -246,7 +246,7 @@ public interface FileStoreService {
      * @return 加密的id列表
      *
      * @tables fs_file */
-  java.util.Map<java.lang.String,java.lang.String> getEncryptedIds(java.util.List<java.lang.Long> ids, int ttl) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
+  java.util.Map<java.lang.String,java.lang.String> getEncryptedIds(java.util.List<java.lang.Long> ids, int ttl) throws org.apache.avro.AvroRemoteException, org.bear.api.standard.GlobalException;
   /** * 根据加密的id获取文件
      * 
      * 1. 根据加密规则解密出文件编号
@@ -257,7 +257,7 @@ public interface FileStoreService {
      * @return 文件
      *
      * @tables fs_file */
-  org.bear.api.fs.File getFileByEncryptedId(java.lang.String encryptedId) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
+  org.bear.api.fs.File getFileByEncryptedId(java.lang.String encryptedId) throws org.apache.avro.AvroRemoteException, org.bear.api.standard.GlobalException;
   /** * 批量根据加密的id获取文件
      * 
      * 1.同getFileByEncryptedId
@@ -267,7 +267,7 @@ public interface FileStoreService {
      * @return 文件map
      *
      * @tables fs_file */
-  java.util.Map<java.lang.String,org.bear.api.fs.File> getFileMapByEncryptedId(java.util.List<java.lang.String> encryptedIds) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
+  java.util.Map<java.lang.String,org.bear.api.fs.File> getFileMapByEncryptedId(java.util.List<java.lang.String> encryptedIds) throws org.apache.avro.AvroRemoteException, org.bear.api.standard.GlobalException;
   /** * 获取某个用户在目标业务的所有文件,如果业务为空则返回所有业务文件,按文件上传倒序排序
      *
      * @param bizKey 业务名 为空则忽略此条件
@@ -283,7 +283,7 @@ public interface FileStoreService {
      * @return 文件列表分页对象
      *
      * @tables fs_file */
-  org.bear.api.fs.FilePage getUserFiles(java.lang.String bizKey, java.lang.String owner, long userId, int start, int size) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
+  org.bear.api.fs.FilePage getUserFiles(java.lang.String bizKey, java.lang.String owner, long userId, int start, int size) throws org.apache.avro.AvroRemoteException, org.bear.api.standard.GlobalException;
 
   @SuppressWarnings("all")
   public interface Callback extends FileStoreService {

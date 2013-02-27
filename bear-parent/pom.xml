@@ -430,7 +430,7 @@
 			<dependency>
 				<groupId>org.springframework.data</groupId>
 				<artifactId>spring-data-redis</artifactId>
-				<version>1.0.3.any</version>
+				<version>1.0.3.RELEASE</version>
 				<exclusions>
 					<exclusion>
 						<groupId>org.slf4j</groupId>
