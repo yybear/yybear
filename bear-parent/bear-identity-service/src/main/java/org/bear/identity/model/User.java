@@ -14,6 +14,7 @@ import javax.persistence.TemporalType;
 
 import org.bear.global.type.Gender;
 import org.bear.identity.type.UserStatus;
+import org.hibernate.annotations.Index;
 
 /**
  * .
@@ -34,6 +35,7 @@ public class User implements Serializable {
 	@Column(name="user_name")
 	private String userName;
 	@Column(name="nick_name")
+	@Index(name="i_u_nickname")
 	private String nickName;
 	@Column(name="real_name")
 	private String realName;

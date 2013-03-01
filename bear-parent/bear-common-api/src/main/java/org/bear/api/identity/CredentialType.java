@@ -9,4 +9,5 @@ package org.bear.api.identity;
 public enum CredentialType { 
   USERNAME, EMAIL, MOBILE, OAUTH  ;
   public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"enum\",\"name\":\"CredentialType\",\"namespace\":\"org.bear.api.identity\",\"symbols\":[\"USERNAME\",\"EMAIL\",\"MOBILE\",\"OAUTH\"]}");
+  public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 }

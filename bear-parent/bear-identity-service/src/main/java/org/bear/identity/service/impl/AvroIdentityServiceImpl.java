@@ -31,9 +31,12 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @version V1.0, 2013-2-20
  */
 public class AvroIdentityServiceImpl implements IdentityService {
-	@Autowired
 	protected IdentityManager identityManager;
 	
+	public void setIdentityManager(IdentityManager identityManager) {
+		this.identityManager = identityManager;
+	}
+
 	@Override
 	public String registerUser(final User user, final Credential credential,
 			final Map<String, String> userAttributes) throws GlobalException, AvroRemoteException {

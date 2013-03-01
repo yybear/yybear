@@ -8,7 +8,8 @@ package org.bear.api.identity;
 /** * 密码保护 */
 @org.apache.avro.specific.AvroGenerated
 public class PasswordProtection extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"PasswordProtection\",\"namespace\":\"org.bear.api.identity\",\"doc\":\"* 密码保护\",\"fields\":[{\"name\":\"uid\",\"type\":\"long\",\"doc\":\"* 用户ID（所属用户）\"},{\"name\":\"question\",\"type\":{\"type\":\"enum\",\"name\":\"ProtectionQuestion\",\"doc\":\"* 我的爱人名字？\",\"symbols\":[\"FAV_FILM\",\"FAV_MUSIC\",\"FATHER_NAME\",\"MOTHER_NAME\",\"LOVER_NAME\"]},\"doc\":\"* 问题\"},{\"name\":\"answer\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"* 问题答案\\r\\n\\t\\t *\\r\\n\\t\\t * @size min=0, max=200\"}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"PasswordProtection\",\"namespace\":\"org.bear.api.identity\",\"doc\":\"* 密码保护\",\"fields\":[{\"name\":\"uid\",\"type\":\"long\",\"doc\":\"* 用户ID（所属用户）\"},{\"name\":\"question\",\"type\":{\"type\":\"enum\",\"name\":\"ProtectionQuestion\",\"doc\":\"* 我的爱人名字？\",\"symbols\":[\"FAV_FILM\",\"FAV_MUSIC\",\"FATHER_NAME\",\"MOTHER_NAME\",\"LOVER_NAME\"]},\"doc\":\"* 问题\"},{\"name\":\"answer\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"doc\":\"* 问题答案\\r\\n\\t\\t *\\r\\n\\t\\t * @size min=0, max=200\"}]}");
+  public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
   /** * 用户ID（所属用户） */
   @Deprecated public long uid;
   /** * 问题 */

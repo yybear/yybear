@@ -24,7 +24,7 @@
 		<skipTests>true</skipTests>
 		<profile.active>dev</profile.active>
 		<profile.scope>compile</profile.scope>
-		<avro.version>1.7.3</avro.version>
+		<avro.version>1.7.4</avro.version>
 	</properties>
 
 	<dependencyManagement>

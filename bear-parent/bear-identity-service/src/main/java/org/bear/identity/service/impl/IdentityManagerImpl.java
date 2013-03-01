@@ -31,7 +31,6 @@ import org.springframework.stereotype.Service;
  * @author <a href="mailto:gan.qingx@qq.com">gan qing</a>
  * @version V1.0, 2013-2-25
  */
-@Service
 public class IdentityManagerImpl implements IdentityManager {
 	@Autowired
 	private SessionManager sessionManager;

@@ -10,4 +10,5 @@ package org.bear.api.identity;
 public enum ProtectionQuestion { 
   FAV_FILM, FAV_MUSIC, FATHER_NAME, MOTHER_NAME, LOVER_NAME  ;
   public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"enum\",\"name\":\"ProtectionQuestion\",\"namespace\":\"org.bear.api.identity\",\"doc\":\"* 我的爱人名字？\",\"symbols\":[\"FAV_FILM\",\"FAV_MUSIC\",\"FATHER_NAME\",\"MOTHER_NAME\",\"LOVER_NAME\"]}");
+  public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 }

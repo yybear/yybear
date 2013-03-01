@@ -21,7 +21,7 @@ public class CommonServiceTest {
 	
 	@Test
 	public void shortUrlTest() throws AvroRemoteException {
-		String s = shortUrlService.generate("xx", 0);
+		String s = shortUrlService.generate(null, 0);
 		
 		System.out.println("shortUrlTest:" + s);
 	}

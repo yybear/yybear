@@ -27,7 +27,7 @@ public class Converts {
     private Converts() {
     }
 
-    public static org.bear.api.fs.File toThriftFile(File file) {
+    public static org.bear.api.fs.File toApiFile(File file) {
         if (file == null) {
             return null;
         }
@@ -44,10 +44,10 @@ public class Converts {
         return tf;
     }
 
-    public static List<org.bear.api.fs.File> toThriftFileList(List<File> files) {
+    public static List<org.bear.api.fs.File> toApiFileList(List<File> files) {
         List<org.bear.api.fs.File> list = Lists.newArrayListWithCapacity(files.size());
         for (File file : files) {
-            list.add(Converts.toThriftFile(file));
+            list.add(Converts.toApiFile(file));
         }
         return list;
     }

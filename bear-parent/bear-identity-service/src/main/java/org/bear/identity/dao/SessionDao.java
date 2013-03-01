@@ -30,11 +30,7 @@ public interface SessionDao extends AttributeEntityDao<Session>{
 	 */
 	Session getByToken(String token);
 	
-	/**
-	 * 根据用户id获取Session实例
-	 * 
-	 * @param uid
-	 * @return
-	 */
-	Session[] listByUid(long uid);
+	List<Long> activeSessionIds(int start, int limit, long startTime, long endTime);
+	
+	long countActiveSessionIds(long startTime, long endTime);
 }

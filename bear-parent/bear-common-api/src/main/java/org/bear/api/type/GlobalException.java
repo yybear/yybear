@@ -5,18 +5,16 @@
  */
 package org.bear.api.type;  
 @SuppressWarnings("all")
-/** * 通用错误对象
-	 *
-	 * @field code 错误代码
-	 *
-	 * @field msg 错误消息
-	 *
-	 * @field stackTraces 错误堆栈，供调试用 */
+/** 通用错误对象 */
 @org.apache.avro.specific.AvroGenerated
 public class GlobalException extends org.apache.avro.specific.SpecificExceptionBase implements org.apache.avro.specific.SpecificRecord {
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"error\",\"name\":\"GlobalException\",\"namespace\":\"org.bear.api.standard\",\"doc\":\"* 通用错误对象\\r\\n\\t *\\r\\n\\t * @field code 错误代码\\r\\n\\t *\\r\\n\\t * @field msg 错误消息\\r\\n\\t *\\r\\n\\t * @field stackTraces 错误堆栈，供调试用\",\"fields\":[{\"name\":\"code\",\"type\":\"int\"},{\"name\":\"msg\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"stackTraces\",\"type\":{\"type\":\"array\",\"items\":{\"type\":\"record\",\"name\":\"StackTrace\",\"doc\":\"* 异常堆栈对象\\r\\n\\t *\\r\\n\\t * @field className 发生异常的类\\r\\n\\t *\\r\\n\\t * @field methodName 发生异常的方法\\r\\n\\t *\\r\\n\\t * @field fileName 发生异常的文件\\r\\n\\t *\\r\\n\\t * @field lineNumber 发生异常的行号\",\"fields\":[{\"name\":\"className\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"methodName\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"fileName\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"lineNumber\",\"type\":\"int\"}]},\"java_class\":\"java.util.ArrayList\"}}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"error\",\"name\":\"GlobalException\",\"namespace\":\"org.bear.api.type\",\"doc\":\"通用错误对象\",\"fields\":[{\"name\":\"code\",\"type\":\"int\",\"doc\":\"错误代码\"},{\"name\":\"msg\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"发生异常的方法\"},{\"name\":\"stackTraces\",\"type\":{\"type\":\"array\",\"items\":{\"type\":\"record\",\"name\":\"StackTrace\",\"doc\":\"异常堆栈对象\",\"fields\":[{\"name\":\"className\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"发生异常的类\"},{\"name\":\"methodName\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"发生异常的方法\"},{\"name\":\"fileName\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"发生异常的文件\"},{\"name\":\"lineNumber\",\"type\":\"int\",\"doc\":\"发生异常的行号\"}]}},\"doc\":\"发生错误堆栈，供调试用\"}]}");
+  public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
+  /** 错误代码 */
   @Deprecated public int code;
+  /** 发生异常的方法 */
   @Deprecated public java.lang.String msg;
+  /** 发生错误堆栈，供调试用 */
   @Deprecated public java.util.List<org.bear.api.type.StackTrace> stackTraces;
 
   public GlobalException() {
@@ -58,14 +56,14 @@ public class GlobalException extends org.apache.avro.specific.SpecificExceptionB
 
   /**
    * Gets the value of the 'code' field.
-   */
+   * 错误代码   */
   public java.lang.Integer getCode() {
     return code;
   }
 
   /**
    * Sets the value of the 'code' field.
-   * @param value the value to set.
+   * 错误代码   * @param value the value to set.
    */
   public void setCode(java.lang.Integer value) {
     this.code = value;
@@ -73,14 +71,14 @@ public class GlobalException extends org.apache.avro.specific.SpecificExceptionB
 
   /**
    * Gets the value of the 'msg' field.
-   */
+   * 发生异常的方法   */
   public java.lang.String getMsg() {
     return msg;
   }
 
   /**
    * Sets the value of the 'msg' field.
-   * @param value the value to set.
+   * 发生异常的方法   * @param value the value to set.
    */
   public void setMsg(java.lang.String value) {
     this.msg = value;
@@ -88,14 +86,14 @@ public class GlobalException extends org.apache.avro.specific.SpecificExceptionB
 
   /**
    * Gets the value of the 'stackTraces' field.
-   */
+   * 发生错误堆栈，供调试用   */
   public java.util.List<org.bear.api.type.StackTrace> getStackTraces() {
     return stackTraces;
   }
 
   /**
    * Sets the value of the 'stackTraces' field.
-   * @param value the value to set.
+   * 发生错误堆栈，供调试用   * @param value the value to set.
    */
   public void setStackTraces(java.util.List<org.bear.api.type.StackTrace> value) {
     this.stackTraces = value;

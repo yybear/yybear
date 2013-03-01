@@ -5,21 +5,18 @@
  */
 package org.bear.api.type;  
 @SuppressWarnings("all")
-/** * 异常堆栈对象
-	 *
-	 * @field className 发生异常的类
-	 *
-	 * @field methodName 发生异常的方法
-	 *
-	 * @field fileName 发生异常的文件
-	 *
-	 * @field lineNumber 发生异常的行号 */
+/** 异常堆栈对象 */
 @org.apache.avro.specific.AvroGenerated
 public class StackTrace extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"StackTrace\",\"namespace\":\"org.bear.api.standard\",\"doc\":\"* 异常堆栈对象\\r\\n\\t *\\r\\n\\t * @field className 发生异常的类\\r\\n\\t *\\r\\n\\t * @field methodName 发生异常的方法\\r\\n\\t *\\r\\n\\t * @field fileName 发生异常的文件\\r\\n\\t *\\r\\n\\t * @field lineNumber 发生异常的行号\",\"fields\":[{\"name\":\"className\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"methodName\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"fileName\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"lineNumber\",\"type\":\"int\"}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"StackTrace\",\"namespace\":\"org.bear.api.type\",\"doc\":\"异常堆栈对象\",\"fields\":[{\"name\":\"className\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"发生异常的类\"},{\"name\":\"methodName\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"发生异常的方法\"},{\"name\":\"fileName\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"发生异常的文件\"},{\"name\":\"lineNumber\",\"type\":\"int\",\"doc\":\"发生异常的行号\"}]}");
+  public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
+  /** 发生异常的类 */
   @Deprecated public java.lang.String className;
+  /** 发生异常的方法 */
   @Deprecated public java.lang.String methodName;
+  /** 发生异常的文件 */
   @Deprecated public java.lang.String fileName;
+  /** 发生异常的行号 */
   @Deprecated public int lineNumber;
 
   /**
@@ -62,14 +59,14 @@ public class StackTrace extends org.apache.avro.specific.SpecificRecordBase impl
 
   /**
    * Gets the value of the 'className' field.
-   */
+   * 发生异常的类   */
   public java.lang.String getClassName() {
     return className;
   }
 
   /**
    * Sets the value of the 'className' field.
-   * @param value the value to set.
+   * 发生异常的类   * @param value the value to set.
    */
   public void setClassName(java.lang.String value) {
     this.className = value;
@@ -77,14 +74,14 @@ public class StackTrace extends org.apache.avro.specific.SpecificRecordBase impl
 
   /**
    * Gets the value of the 'methodName' field.
-   */
+   * 发生异常的方法   */
   public java.lang.String getMethodName() {
     return methodName;
   }
 
   /**
    * Sets the value of the 'methodName' field.
-   * @param value the value to set.
+   * 发生异常的方法   * @param value the value to set.
    */
   public void setMethodName(java.lang.String value) {
     this.methodName = value;
@@ -92,14 +89,14 @@ public class StackTrace extends org.apache.avro.specific.SpecificRecordBase impl
 
   /**
    * Gets the value of the 'fileName' field.
-   */
+   * 发生异常的文件   */
   public java.lang.String getFileName() {
     return fileName;
   }
 
   /**
    * Sets the value of the 'fileName' field.
-   * @param value the value to set.
+   * 发生异常的文件   * @param value the value to set.
    */
   public void setFileName(java.lang.String value) {
     this.fileName = value;
@@ -107,14 +104,14 @@ public class StackTrace extends org.apache.avro.specific.SpecificRecordBase impl
 
   /**
    * Gets the value of the 'lineNumber' field.
-   */
+   * 发生异常的行号   */
   public java.lang.Integer getLineNumber() {
     return lineNumber;
   }
 
   /**
    * Sets the value of the 'lineNumber' field.
-   * @param value the value to set.
+   * 发生异常的行号   * @param value the value to set.
    */
   public void setLineNumber(java.lang.Integer value) {
     this.lineNumber = value;

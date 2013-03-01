@@ -5,8 +5,10 @@
  */
 package org.bear.api.type;  
 @SuppressWarnings("all")
+/**  */
 @org.apache.avro.specific.AvroGenerated
 public enum Gender { 
   UNKNOWN, MALE, FEMALE  ;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"enum\",\"name\":\"Gender\",\"namespace\":\"org.bear.api.standard\",\"symbols\":[\"UNKNOWN\",\"MALE\",\"FEMALE\"]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"enum\",\"name\":\"Gender\",\"namespace\":\"org.bear.api.type\",\"doc\":\"\",\"symbols\":[\"UNKNOWN\",\"MALE\",\"FEMALE\"]}");
+  public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 }

@@ -13,6 +13,7 @@ package org.bear.api.fs;
 @org.apache.avro.specific.AvroGenerated
 public class Action extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
   public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Action\",\"namespace\":\"org.bear.api.fs\",\"doc\":\"* 图片变换操作\\r\\n\\t *\\r\\n\\t * @field operate 操作类型\\r\\n\\t *\\r\\n\\t * @field params 附加参数\",\"fields\":[{\"name\":\"operate\",\"type\":{\"type\":\"enum\",\"name\":\"Operate\",\"doc\":\"* 表示支持的图片变换类型\\r\\n\\t *\\r\\n\\t * @field RESIZE 等比缩放\\r\\n\\t *\\r\\n\\t * @field CROP 裁剪\\r\\n\\t *\\r\\n\\t * @field ROTATE 旋转\",\"symbols\":[\"RESIZE\",\"CROP\",\"ROTATE\"]}},{\"name\":\"param\",\"type\":{\"type\":\"map\",\"values\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"avro.java.string\":\"String\"}}]}");
+  public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
   @Deprecated public org.bear.api.fs.Operate operate;
   @Deprecated public java.util.Map<java.lang.String,java.lang.String> param;
 

@@ -1,6 +1,6 @@
 @namespace("org.bear.api.fs")
 protocol FileStoreService{
-	import idl "standard.avdl";
+	import schema "type.avsc";
 	
 	/**
 	 * 表示支持的图片变换类型
@@ -47,7 +47,7 @@ protocol FileStoreService{
 	    int size;
 	    map<string> data;
 	    long updateAt;
-	    org.bear.api.standard.AccessScope scope;
+	    org.bear.api.type.AccessScope scope;
 	}
 	
 	/**
@@ -86,7 +86,7 @@ protocol FileStoreService{
      *
      * @tables fs_file
      */
-    File saveFile(File file) throws org.bear.api.standard.GlobalException;
+    File saveFile(File file) throws org.bear.api.type.GlobalException;
 
     /**
      * 批量删除文件
@@ -97,7 +97,7 @@ protocol FileStoreService{
      *
      * @tables fs_file
      */
-    void removeFiles(array<long> ids) throws org.bear.api.standard.GlobalException;
+    void removeFiles(array<long> ids) throws org.bear.api.type.GlobalException;
 
     /**
      * 批量删除和某个所有者相关联的所有文件
@@ -110,7 +110,7 @@ protocol FileStoreService{
      *
      * @tables fs_file
      */
-    void removeFilesByOwner(string bizKey, string owner) throws org.bear.api.standard.GlobalException;
+    void removeFilesByOwner(string bizKey, string owner) throws org.bear.api.type.GlobalException;
 
     /**
      * 将二进制内容写入到目标文件的指定位置
@@ -145,7 +145,7 @@ protocol FileStoreService{
      *
      * @tables fs_file
      */
-    void writeFile(long id, bytes `bytes`, int position) throws org.bear.api.standard.GlobalException;
+    void writeFile(long id, bytes `bytes`, int position) throws org.bear.api.type.GlobalException;
 
     /**
      * 从目标文件中读取内容
@@ -169,7 +169,7 @@ protocol FileStoreService{
      *
      * @tables fs_file
      */
-    bytes readFile(long id, int position, int count) throws org.bear.api.standard.GlobalException;
+    bytes readFile(long id, int position, int count) throws org.bear.api.type.GlobalException;
 
     /**
      * 变换一个图片
@@ -191,7 +191,7 @@ protocol FileStoreService{
      * @tables fs_file
      *
      */
-    void transformImage(long id, array<Action> actions) throws org.bear.api.standard.GlobalException;
+    void transformImage(long id, array<Action> actions) throws org.bear.api.type.GlobalException;
 
     /**
      * 获取一个文件的访问token,通过url携带这个token实现文件的自定义权限
@@ -211,7 +211,7 @@ protocol FileStoreService{
      *
      * @tables fs_file
      */
-    string getToken(array<long> ids, boolean writeable, int ttl) throws org.bear.api.standard.GlobalException;
+    string getToken(array<long> ids, boolean writeable, int ttl) throws org.bear.api.type.GlobalException;
 
     /**
      * 获取业务文件的访问token,通过url携带这个token实现文件的自定义权限
@@ -234,7 +234,7 @@ protocol FileStoreService{
      *
      * @tables fs_file
      */
-    string getBizToken(string bizKey, array<string> owners, boolean writeable, int ttl) throws org.bear.api.standard.GlobalException;
+    string getBizToken(string bizKey, array<string> owners, boolean writeable, int ttl) throws org.bear.api.type.GlobalException;
 
     /**
      * 绑定文件的读取权限到会话session
@@ -245,7 +245,7 @@ protocol FileStoreService{
      *
      * @param ids 文件id列表
      */
-    void bindSession(string sessionId, array<long> ids) throws org.bear.api.standard.GlobalException;
+    void bindSession(string sessionId, array<long> ids) throws org.bear.api.type.GlobalException;
     /**
      * 取消绑定文件的读取权限到会话session
      * 
@@ -256,7 +256,7 @@ protocol FileStoreService{
      *
      * @param ids 文件id列表
      */
-    void unbindSession(string sessionId, array<long> ids) throws org.bear.api.standard.GlobalException;
+    void unbindSession(string sessionId, array<long> ids) throws org.bear.api.type.GlobalException;
 
     /**
      * 获取一个文件
@@ -269,7 +269,7 @@ protocol FileStoreService{
      *
      * @tables fs_file
      */
-    File getFile(long id) throws org.bear.api.standard.GlobalException;
+    File getFile(long id) throws org.bear.api.type.GlobalException;
 
     /**
      * 根据id批量获取文件
@@ -280,7 +280,7 @@ protocol FileStoreService{
      *
      * @tables fs_file
      */
-    map<File> getFileMap(array<long> ids) throws org.bear.api.standard.GlobalException;
+    map<File> getFileMap(array<long> ids) throws org.bear.api.type.GlobalException;
 
     /**
      * 获取某个业务对象关联的文件
@@ -294,7 +294,7 @@ protocol FileStoreService{
      *
      * @tables fs_file
      */
-    File getSingleFile(string bizKey, string owner) throws org.bear.api.standard.GlobalException;
+    File getSingleFile(string bizKey, string owner) throws org.bear.api.type.GlobalException;
 
     /**
      * 获取某个业务对象关联的文件,例如要获取某个帖子相关的附件,,按文件上传倒序排序
@@ -307,7 +307,7 @@ protocol FileStoreService{
      *
      * @tables fs_file
      */
-    array<File> getFiles(string bizKey, string owner) throws org.bear.api.standard.GlobalException;
+    array<File> getFiles(string bizKey, string owner) throws org.bear.api.type.GlobalException;
 
     /**
      * 根据owner列表批量获取某个业务对象关联的文件
@@ -320,7 +320,7 @@ protocol FileStoreService{
      *
      * @tables fs_file
      */
-    map<array<File>> batchGetFiles(string bizKey, array<string> owners) throws org.bear.api.standard.GlobalException;
+    map<array<File>> batchGetFiles(string bizKey, array<string> owners) throws org.bear.api.type.GlobalException;
 
     /**
      * 根据多个bizKey,多个owner获取文件,格式map<bizKey, set<owner>>
@@ -333,7 +333,7 @@ protocol FileStoreService{
      *
      * @tables fs_file
      */
-    map<map<array<File>>> batchGetFilesEx(map<array<string>> ownersMap) throws org.bear.api.standard.GlobalException;
+    map<map<array<File>>> batchGetFilesEx(map<array<string>> ownersMap) throws org.bear.api.type.GlobalException;
 
     /**
      * 获取某个文件的加密访问id
@@ -348,7 +348,7 @@ protocol FileStoreService{
      *
      * @tables fs_file
      */
-    string getEncryptedId(long id, int ttl) throws org.bear.api.standard.GlobalException;
+    string getEncryptedId(long id, int ttl) throws org.bear.api.type.GlobalException;
 
     /**
      * 批量获取文件的加密访问
@@ -363,7 +363,7 @@ protocol FileStoreService{
      *
      * @tables fs_file
      */
-    map<string> getEncryptedIds(array<long> ids, int ttl) throws org.bear.api.standard.GlobalException;
+    map<string> getEncryptedIds(array<long> ids, int ttl) throws org.bear.api.type.GlobalException;
 
     /**
      * 根据加密的id获取文件
@@ -377,7 +377,7 @@ protocol FileStoreService{
      *
      * @tables fs_file
      */
-    File getFileByEncryptedId(string encryptedId) throws org.bear.api.standard.GlobalException;
+    File getFileByEncryptedId(string encryptedId) throws org.bear.api.type.GlobalException;
 
     /**
      * 批量根据加密的id获取文件
@@ -390,7 +390,7 @@ protocol FileStoreService{
      *
      * @tables fs_file
      */
-    map<File> getFileMapByEncryptedId(array<string> encryptedIds) throws org.bear.api.standard.GlobalException;
+    map<File> getFileMapByEncryptedId(array<string> encryptedIds) throws org.bear.api.type.GlobalException;
 
     /**
      * 获取某个用户在目标业务的所有文件,如果业务为空则返回所有业务文件,按文件上传倒序排序
@@ -409,5 +409,5 @@ protocol FileStoreService{
      *
      * @tables fs_file
      */
-    FilePage getUserFiles(string bizKey, string owner, long userId, int start, int size) throws org.bear.api.standard.GlobalException;
+    FilePage getUserFiles(string bizKey, string owner, long userId, int start, int size) throws org.bear.api.type.GlobalException;
 }

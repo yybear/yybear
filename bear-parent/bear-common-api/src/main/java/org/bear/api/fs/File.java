@@ -26,7 +26,8 @@ package org.bear.api.fs;
 	 * @field scope 文件的访问权限级别 */
 @org.apache.avro.specific.AvroGenerated
 public class File extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"File\",\"namespace\":\"org.bear.api.fs\",\"doc\":\"* 文件描述信息,通过主键或者业务加所有者即可获得所关联的文件信息\\r\\n\\t *\\r\\n\\t * @field id 文件的id,主键\\r\\n\\t *\\r\\n\\t * @field bizKey 文件所属的业务\\r\\n\\t *\\r\\n\\t * @field owner 文件的所有者,建议为业务对象的主键,这样配合bizKey就可以确定和这个业务对象向关联的所有文件\\r\\n\\t *\\r\\n\\t * @field userId 文件的关联用户,表示文件由哪个用户上传\\r\\n\\t *\\r\\n\\t * @field name 文件的名称\\r\\n\\t *\\r\\n\\t * @field size 文件的大小\\r\\n\\t *\\r\\n\\t * @field data 文件的附加属性\\r\\n\\t *\\r\\n\\t * @field updateAt 文件的最后更新时间\\r\\n\\t *\\r\\n\\t * @field scope 文件的访问权限级别\",\"fields\":[{\"name\":\"id\",\"type\":\"long\"},{\"name\":\"bizKey\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"owner\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"userId\",\"type\":\"long\"},{\"name\":\"name\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"size\",\"type\":\"int\"},{\"name\":\"data\",\"type\":{\"type\":\"map\",\"values\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"avro.java.string\":\"String\"}},{\"name\":\"updateAt\",\"type\":\"long\"},{\"name\":\"scope\",\"type\":{\"type\":\"enum\",\"name\":\"AccessScope\",\"namespace\":\"org.bear.api.standard\",\"doc\":\"* 表示实体对象的访问权限级别\\r\\n\\t *\\r\\n\\t * @field ALL  所有人都可以访问\\r\\n\\t *\\r\\n\\t * @field USER 登陆用户即可访问\\r\\n\\t *\\r\\n\\t * @field ROLE 拥有指定角色才能访问\\r\\n\\t *\\r\\n\\t * @field TOKEN需要通过token认证才能访问\\r\\n\\t *\\r\\n\\t * @field SELF 只有自己才能访问\\r\\n\\t *\\r\\n\\t * @field SESSION 需要会话授权才能访问\",\"symbols\":[\"ALL\",\"USER\",\"ROLE\",\"TOKEN\",\"SELF\",\"SESSION\"]}}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"File\",\"namespace\":\"org.bear.api.fs\",\"doc\":\"* 文件描述信息,通过主键或者业务加所有者即可获得所关联的文件信息\\r\\n\\t *\\r\\n\\t * @field id 文件的id,主键\\r\\n\\t *\\r\\n\\t * @field bizKey 文件所属的业务\\r\\n\\t *\\r\\n\\t * @field owner 文件的所有者,建议为业务对象的主键,这样配合bizKey就可以确定和这个业务对象向关联的所有文件\\r\\n\\t *\\r\\n\\t * @field userId 文件的关联用户,表示文件由哪个用户上传\\r\\n\\t *\\r\\n\\t * @field name 文件的名称\\r\\n\\t *\\r\\n\\t * @field size 文件的大小\\r\\n\\t *\\r\\n\\t * @field data 文件的附加属性\\r\\n\\t *\\r\\n\\t * @field updateAt 文件的最后更新时间\\r\\n\\t *\\r\\n\\t * @field scope 文件的访问权限级别\",\"fields\":[{\"name\":\"id\",\"type\":\"long\"},{\"name\":\"bizKey\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"owner\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"userId\",\"type\":\"long\"},{\"name\":\"name\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"size\",\"type\":\"int\"},{\"name\":\"data\",\"type\":{\"type\":\"map\",\"values\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"avro.java.string\":\"String\"}},{\"name\":\"updateAt\",\"type\":\"long\"},{\"name\":\"scope\",\"type\":{\"type\":\"enum\",\"name\":\"AccessScope\",\"namespace\":\"org.bear.api.type\",\"doc\":\"表示实体对象的访问权限级别\",\"symbols\":[\"ALL\",\"USER\",\"ROLE\",\"TOKEN\",\"SELF\",\"SESSION\"]}}]}");
+  public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
   @Deprecated public long id;
   @Deprecated public java.lang.String bizKey;
   @Deprecated public java.lang.String owner;
@@ -35,7 +36,7 @@ public class File extends org.apache.avro.specific.SpecificRecordBase implements
   @Deprecated public int size;
   @Deprecated public java.util.Map<java.lang.String,java.lang.String> data;
   @Deprecated public long updateAt;
-  @Deprecated public org.bear.api.standard.AccessScope scope;
+  @Deprecated public org.bear.api.type.AccessScope scope;
 
   /**
    * Default constructor.
@@ -45,7 +46,7 @@ public class File extends org.apache.avro.specific.SpecificRecordBase implements
   /**
    * All-args constructor.
    */
-  public File(java.lang.Long id, java.lang.String bizKey, java.lang.String owner, java.lang.Long userId, java.lang.String name, java.lang.Integer size, java.util.Map<java.lang.String,java.lang.String> data, java.lang.Long updateAt, org.bear.api.standard.AccessScope scope) {
+  public File(java.lang.Long id, java.lang.String bizKey, java.lang.String owner, java.lang.Long userId, java.lang.String name, java.lang.Integer size, java.util.Map<java.lang.String,java.lang.String> data, java.lang.Long updateAt, org.bear.api.type.AccessScope scope) {
     this.id = id;
     this.bizKey = bizKey;
     this.owner = owner;
@@ -85,7 +86,7 @@ public class File extends org.apache.avro.specific.SpecificRecordBase implements
     case 5: size = (java.lang.Integer)value$; break;
     case 6: data = (java.util.Map<java.lang.String,java.lang.String>)value$; break;
     case 7: updateAt = (java.lang.Long)value$; break;
-    case 8: scope = (org.bear.api.standard.AccessScope)value$; break;
+    case 8: scope = (org.bear.api.type.AccessScope)value$; break;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
     }
   }
@@ -213,7 +214,7 @@ public class File extends org.apache.avro.specific.SpecificRecordBase implements
   /**
    * Gets the value of the 'scope' field.
    */
-  public org.bear.api.standard.AccessScope getScope() {
+  public org.bear.api.type.AccessScope getScope() {
     return scope;
   }
 
@@ -221,7 +222,7 @@ public class File extends org.apache.avro.specific.SpecificRecordBase implements
    * Sets the value of the 'scope' field.
    * @param value the value to set.
    */
-  public void setScope(org.bear.api.standard.AccessScope value) {
+  public void setScope(org.bear.api.type.AccessScope value) {
     this.scope = value;
   }
 
@@ -254,7 +255,7 @@ public class File extends org.apache.avro.specific.SpecificRecordBase implements
     private int size;
     private java.util.Map<java.lang.String,java.lang.String> data;
     private long updateAt;
-    private org.bear.api.standard.AccessScope scope;
+    private org.bear.api.type.AccessScope scope;
 
     /** Creates a new Builder */
     private Builder() {
@@ -504,12 +505,12 @@ public class File extends org.apache.avro.specific.SpecificRecordBase implements
     }
 
     /** Gets the value of the 'scope' field */
-    public org.bear.api.standard.AccessScope getScope() {
+    public org.bear.api.type.AccessScope getScope() {
       return scope;
     }
     
     /** Sets the value of the 'scope' field */
-    public org.bear.api.fs.File.Builder setScope(org.bear.api.standard.AccessScope value) {
+    public org.bear.api.fs.File.Builder setScope(org.bear.api.type.AccessScope value) {
       validate(fields()[8], value);
       this.scope = value;
       fieldSetFlags()[8] = true;
@@ -540,7 +541,7 @@ public class File extends org.apache.avro.specific.SpecificRecordBase implements
         record.size = fieldSetFlags()[5] ? this.size : (java.lang.Integer) defaultValue(fields()[5]);
         record.data = fieldSetFlags()[6] ? this.data : (java.util.Map<java.lang.String,java.lang.String>) defaultValue(fields()[6]);
         record.updateAt = fieldSetFlags()[7] ? this.updateAt : (java.lang.Long) defaultValue(fields()[7]);
-        record.scope = fieldSetFlags()[8] ? this.scope : (org.bear.api.standard.AccessScope) defaultValue(fields()[8]);
+        record.scope = fieldSetFlags()[8] ? this.scope : (org.bear.api.type.AccessScope) defaultValue(fields()[8]);
         return record;
       } catch (Exception e) {
         throw new org.apache.avro.AvroRuntimeException(e);

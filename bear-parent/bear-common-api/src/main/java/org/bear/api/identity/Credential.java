@@ -8,7 +8,8 @@ package org.bear.api.identity;
 /** * 凭证 */
 @org.apache.avro.specific.AvroGenerated
 public class Credential extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Credential\",\"namespace\":\"org.bear.api.identity\",\"doc\":\"* 凭证\",\"fields\":[{\"name\":\"id\",\"type\":\"long\",\"doc\":\"* 凭证标识：-1表示未持久化\"},{\"name\":\"uid\",\"type\":\"long\",\"doc\":\"* 用户ID（所属用户）\"},{\"name\":\"type\",\"type\":{\"type\":\"enum\",\"name\":\"CredentialType\",\"symbols\":[\"USERNAME\",\"EMAIL\",\"MOBILE\",\"OAUTH\"]},\"doc\":\"* 凭证类型\"},{\"name\":\"name\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"* 凭证名称：如邮件地址、手机号等\\r\\n\\t\\t *\\r\\n\\t\\t * @size min=0, max=100\"},{\"name\":\"value\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"* 凭证值：登录时为帐户密码，安全绑定认证时为认证码\"}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Credential\",\"namespace\":\"org.bear.api.identity\",\"doc\":\"* 凭证\",\"fields\":[{\"name\":\"id\",\"type\":\"long\",\"doc\":\"* 凭证标识：-1表示未持久化\"},{\"name\":\"uid\",\"type\":\"long\",\"doc\":\"* 用户ID（所属用户）\"},{\"name\":\"type\",\"type\":{\"type\":\"enum\",\"name\":\"CredentialType\",\"symbols\":[\"USERNAME\",\"EMAIL\",\"MOBILE\",\"OAUTH\"]},\"doc\":\"* 凭证类型\"},{\"name\":\"name\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"doc\":\"* 凭证名称：如邮件地址、手机号等\\r\\n\\t\\t *\\r\\n\\t\\t * @size min=0, max=100\"},{\"name\":\"value\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"doc\":\"* 凭证值：登录时为帐户密码，安全绑定认证时为认证码\"}]}");
+  public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
   /** * 凭证标识：-1表示未持久化 */
   @Deprecated public long id;
   /** * 用户ID（所属用户） */

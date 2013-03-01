@@ -1,8 +1,8 @@
 @namespace("org.bear.api")
 protocol ShortUrlService{
-	string generate(string url, int ttl);
+	string generate(union { null, string } url, int ttl);
 	
-	string getUrl(string code);
+	string getUrl(union { null, string } code);
 	
-	int getAccessCount(string code);
+	int getAccessCount(union { null, string } code);
 }

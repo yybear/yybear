@@ -30,7 +30,6 @@ public class RedisCacheManager extends AbstractCacheManager implements Disposabl
 
 	private String namespace;
     private boolean enableCleanup = true;
-    @Autowired
     private RedisConnectionFactory connectionFactory;
     private RedisTemplate redis;
     // 默认使用JDK序列化工具
@@ -41,7 +40,11 @@ public class RedisCacheManager extends AbstractCacheManager implements Disposabl
         setDefaultConfig(new RedisCacheConfig());
     }
 
-    public void setNamespace(String namespace) {
+    public void setConnectionFactory(RedisConnectionFactory connectionFactory) {
+		this.connectionFactory = connectionFactory;
+	}
+
+	public void setNamespace(String namespace) {
         this.namespace = namespace;
     }
 
