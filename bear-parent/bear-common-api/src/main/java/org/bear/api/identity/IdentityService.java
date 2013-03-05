@@ -8,27 +8,27 @@ package org.bear.api.identity;
 @SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
 public interface IdentityService {
-  public static final org.apache.avro.Protocol PROTOCOL = org.apache.avro.Protocol.parse("{\"protocol\":\"IdentityService\",\"namespace\":\"org.bear.api.identity\",\"types\":[{\"type\":\"enum\",\"name\":\"Gender\",\"namespace\":\"org.bear.api.type\",\"doc\":\"\",\"symbols\":[\"UNKNOWN\",\"MALE\",\"FEMALE\"]},{\"type\":\"record\",\"name\":\"StackTrace\",\"namespace\":\"org.bear.api.type\",\"doc\":\"异常堆栈对象\",\"fields\":[{\"name\":\"className\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"发生异常的类\"},{\"name\":\"methodName\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"发生异常的方法\"},{\"name\":\"fileName\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"发生异常的文件\"},{\"name\":\"lineNumber\",\"type\":\"int\",\"doc\":\"发生异常的行号\"}]},{\"type\":\"enum\",\"name\":\"AccessScope\",\"namespace\":\"org.bear.api.type\",\"doc\":\"表示实体对象的访问权限级别\",\"symbols\":[\"ALL\",\"USER\",\"ROLE\",\"TOKEN\",\"SELF\",\"SESSION\"]},{\"type\":\"error\",\"name\":\"GlobalException\",\"namespace\":\"org.bear.api.type\",\"doc\":\"通用错误对象\",\"fields\":[{\"name\":\"code\",\"type\":\"int\",\"doc\":\"错误代码\"},{\"name\":\"msg\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"发生异常的方法\"},{\"name\":\"stackTraces\",\"type\":{\"type\":\"array\",\"items\":\"StackTrace\"},\"doc\":\"发生错误堆栈，供调试用\"}]},{\"type\":\"enum\",\"name\":\"UserStatus\",\"symbols\":[\"INIT\",\"NORMAL\",\"DISABLED\",\"ARCHIVED\",\"LOCKED\"]},{\"type\":\"enum\",\"name\":\"CredentialType\",\"symbols\":[\"USERNAME\",\"EMAIL\",\"MOBILE\",\"OAUTH\"]},{\"type\":\"enum\",\"name\":\"ProtectionQuestion\",\"doc\":\"* 我的爱人名字？\",\"symbols\":[\"FAV_FILM\",\"FAV_MUSIC\",\"FATHER_NAME\",\"MOTHER_NAME\",\"LOVER_NAME\"]},{\"type\":\"record\",\"name\":\"User\",\"fields\":[{\"name\":\"id\",\"type\":\"long\",\"doc\":\"* 用户标识： -1表示匿名用户\"},{\"name\":\"userName\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"doc\":\"* 用户名\\r\\n\\t     *\\r\\n\\t     * @size min=0, max=100\"},{\"name\":\"nickName\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"doc\":\"* 昵称\\r\\n\\t\\t *\\r\\n\\t\\t * @size min=0, max=100\"},{\"name\":\"realName\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"doc\":\"* 真实姓名\\r\\n\\t\\t *\\r\\n\\t\\t * @size min=0, max=100\"},{\"name\":\"gender\",\"type\":\"org.bear.api.type.Gender\",\"doc\":\"* 性别\"},{\"name\":\"idNo\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"doc\":\"* 身份证号\"},{\"name\":\"location\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"doc\":\"* 所在地\"},{\"name\":\"birthday\",\"type\":\"long\",\"doc\":\"* 生日：自January 1, 1970, 00:00:00 GMT开始的毫秒数，0 表示未填写（空）\"},{\"name\":\"description\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"doc\":\"* 个人简介\\r\\n\\t\\t *\\r\\n\\t\\t * @size min=0, max=200\"},{\"name\":\"photo\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"doc\":\"* 头像（标识）\\r\\n\\t\\t *\\r\\n\\t\\t * @size min=0, max=200\"},{\"name\":\"status\",\"type\":\"UserStatus\",\"doc\":\"* 状态\"},{\"name\":\"createTime\",\"type\":\"long\",\"doc\":\"* 创建时间\"},{\"name\":\"updateTime\",\"type\":\"long\",\"doc\":\"* 最近更新时间\"}]},{\"type\":\"record\",\"name\":\"Credential\",\"doc\":\"* 凭证\",\"fields\":[{\"name\":\"id\",\"type\":\"long\",\"doc\":\"* 凭证标识：-1表示未持久化\"},{\"name\":\"uid\",\"type\":\"long\",\"doc\":\"* 用户ID（所属用户）\"},{\"name\":\"type\",\"type\":\"CredentialType\",\"doc\":\"* 凭证类型\"},{\"name\":\"name\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"doc\":\"* 凭证名称：如邮件地址、手机号等\\r\\n\\t\\t *\\r\\n\\t\\t * @size min=0, max=100\"},{\"name\":\"value\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"doc\":\"* 凭证值：登录时为帐户密码，安全绑定认证时为认证码\"}]},{\"type\":\"record\",\"name\":\"PasswordProtection\",\"doc\":\"* 密码保护\",\"fields\":[{\"name\":\"uid\",\"type\":\"long\",\"doc\":\"* 用户ID（所属用户）\"},{\"name\":\"question\",\"type\":\"ProtectionQuestion\",\"doc\":\"* 问题\"},{\"name\":\"answer\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"doc\":\"* 问题答案\\r\\n\\t\\t *\\r\\n\\t\\t * @size min=0, max=200\"}]},{\"type\":\"record\",\"name\":\"Group\",\"doc\":\"* 用户组\",\"fields\":[{\"name\":\"id\",\"type\":\"long\"},{\"name\":\"name\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"doc\":\"* 名称\"},{\"name\":\"description\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"doc\":\"* 描述\"}]},{\"type\":\"record\",\"name\":\"Session\",\"doc\":\"* 用户session\",\"fields\":[{\"name\":\"id\",\"type\":\"long\",\"doc\":\"* session id\"},{\"name\":\"token\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"doc\":\"* session token\"},{\"name\":\"uid\",\"type\":\"long\",\"doc\":\"* 关联的用户id\"},{\"name\":\"creationTime\",\"type\":\"long\",\"doc\":\"* session创建时间\"},{\"name\":\"ttl\",\"type\":\"long\",\"doc\":\"* 最长生存时间\"},{\"name\":\"tti\",\"type\":\"long\",\"doc\":\"* 最长不活动间隔时间\"},{\"name\":\"clientIp\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"doc\":\"* 用户登录时的ip\"},{\"name\":\"lastActiveTime\",\"type\":\"long\",\"doc\":\"* 最近活动时间\"}]}],\"messages\":{\"registerUser\":{\"doc\":\"* 用户注册\\r\\n\\t *\\r\\n\\t * @return 若注册成功则返回会话的Token，否则异常\\r\\n\\t *\\r\\n\\t * @tables \\tidentity_credential,\\r\\n\\t * \\t\\t\\tidentity_password,\\r\\n\\t * \\t\\t\\tidentity_session,\\r\\n\\t * \\t\\t\\tidentity_user,\\r\\n\\t * \\t\\t\\tidentity_user_attribute\",\"request\":[{\"name\":\"user\",\"type\":\"User\"},{\"name\":\"credential\",\"type\":\"Credential\"},{\"name\":\"userAttributes\",\"type\":{\"type\":\"map\",\"values\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"avro.java.string\":\"String\"}}],\"response\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"errors\":[\"org.bear.api.type.GlobalException\"]},\"login\":{\"doc\":\"* 登录\\r\\n\\t * \\t\\t成功登录的条件：凭证存在，账户密码正确，用户状态为NORMAL\\r\\n\\t *\\r\\n\\t * @return 若登录成功则返回会话的Token，否则异常\\r\\n\\t *\\r\\n\\t * @tables \\tidentity_credential,\\r\\n\\t * \\t\\t\\tidentity_password,\\r\\n\\t * \\t\\t\\tidentity_session,\\r\\n\\t * \\t\\t\\tidentity_user,\\r\\n\\t * \\t\\t\\tidentity_user_attribute\",\"request\":[{\"name\":\"credential\",\"type\":\"Credential\"},{\"name\":\"ttl\",\"type\":\"long\"}],\"response\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"errors\":[\"org.bear.api.type.GlobalException\"]},\"logout\":{\"doc\":\"* 注销\",\"request\":[{\"name\":\"token\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]}],\"response\":\"null\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"validateToken\":{\"doc\":\"* 验证token是否具有合法会话，并返回会话用户id\\r\\n\\t *\\r\\n\\t * @return 若会话有效则返回该会话的用户ID，否则为返回0，其中，\\r\\n\\t * \\t\\t 0：会话不存在\\r\\n\\t * \\t\\t-1：临时会话\\r\\n\\t * \\t\\t-2：当前会话用户已经在其他地方登录\\r\\n\\t * \\t\\t>0：已登录会话，且为用户ID\\r\\n\\t *\\r\\n\\t * @tables \\tidentity_user\",\"request\":[{\"name\":\"token\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]}],\"response\":\"long\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"validateTokenWithUser\":{\"doc\":\"* 验证token是否具有合法会话，并返回会话用户\\r\\n\\t *\\r\\n\\t * @return 用户基本信息\\r\\n\\t *\\r\\n\\t * @tables \\tidentity_session,\\r\\n\\t * \\t\\t\\tidentity_user\",\"request\":[{\"name\":\"token\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]}],\"response\":\"User\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"requestActivation\":{\"doc\":\"* 凭证邦定认证，系统将认证码发送到凭证类型对应的消息终端上\\r\\n\\t *\\r\\n\\t * @return 认证码ID，认证码验证时需要将此ID作为Credential的id进行传递\\r\\n\\t *\\r\\n\\t * @tables \\tidentity_credential_activation\",\"request\":[{\"name\":\"credential\",\"type\":\"Credential\"},{\"name\":\"ttl\",\"type\":\"long\"}],\"response\":\"long\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"validateActivation\":{\"doc\":\"* 校验凭证邦定认证码\\r\\n\\t *\\r\\n\\t * @return 校验认证码是否正确\\r\\n\\t *\\r\\n\\t * @tables \\tidentity_credential_activation\",\"request\":[{\"name\":\"credential\",\"type\":\"Credential\"}],\"response\":\"boolean\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"validateActivationAndCreateCredential\":{\"doc\":\"* 校验凭证邦定认证码，校验成功后自动创建凭证邦定\\r\\n\\t *\\r\\n\\t * @return 校验认证码并创建凭证邦定是否成功\\r\\n\\t *\\r\\n\\t * @tables \\tidentity_credential,\\r\\n\\t * \\t\\t\\tidentity_credential_activation\",\"request\":[{\"name\":\"credential\",\"type\":\"Credential\"}],\"response\":\"boolean\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"changePassword\":{\"doc\":\"* 修改用户密码\\r\\n\\t *\\r\\n\\t * @tables \\tidentity_password\",\"request\":[{\"name\":\"uid\",\"type\":\"long\"},{\"name\":\"oldPwd\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]},{\"name\":\"newPwd\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]}],\"response\":\"null\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"resetPassword\":{\"doc\":\"* 重置用户的密码，将用户密码置为新的指定密码或随机密码（新密码为空“”时），并以消息形式通知用户（仅当采用随机密码时有效）\\r\\n\\t * \\t\\t消息类型来源于用户的凭证邦定中的凭证类型，如：邮件、手机，将以一种形式发送消息，优先级：1）邮件，2）手机\\r\\n\\t *\\r\\n\\t * @tables \\tidentity_password\",\"request\":[{\"name\":\"uid\",\"type\":\"long\"},{\"name\":\"newPwd\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]}],\"response\":\"null\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"protectPassword\":{\"doc\":\"* 保护密码（设置密保）\\r\\n\\t *\\r\\n\\t * @param protection 密码保护（密码问题-答案）\\r\\n\\t *\\r\\n\\t * @param pwd 当前用户密码\\r\\n\\t *\\r\\n\\t * @tables \\tidentity_password\",\"request\":[{\"name\":\"protection\",\"type\":\"PasswordProtection\"},{\"name\":\"pwd\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]}],\"response\":\"null\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"validatePasswordProtection\":{\"doc\":\"* 密码保护验证\\r\\n\\t *\\r\\n\\t * @return 验证是否通过\\r\\n\\t *\\r\\n\\t * @tables \\tidentity_password\",\"request\":[{\"name\":\"protection\",\"type\":\"PasswordProtection\"}],\"response\":\"boolean\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"hasPasswordProtection\":{\"doc\":\"* 判断用户密保是否存在\\r\\n\\t *\\r\\n\\t * @return 用户密保是否存在\\r\\n\\t *\\r\\n\\t * @tables \\tidentity_password\",\"request\":[{\"name\":\"uid\",\"type\":\"long\"}],\"response\":\"boolean\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"getProtectionQuestion\":{\"doc\":\"* 获取用户密保问题\\r\\n\\t *\\r\\n\\t * @return 若密保问题存在则返回，否则异常\\r\\n\\t *\\r\\n\\t * @tables \\tidentity_password\",\"request\":[{\"name\":\"uid\",\"type\":\"long\"}],\"response\":\"ProtectionQuestion\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"createCredential\":{\"doc\":\"* 创建用户凭证绑定\\r\\n\\t * \\t\\t会根据凭证的type和name检查唯一性\\r\\n\\t *\\r\\n\\t * @tables \\tidentity_credential\",\"request\":[{\"name\":\"credential\",\"type\":\"Credential\"}],\"response\":\"null\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"removeCredential\":{\"doc\":\"* 取消用户凭证绑定\\r\\n\\t * \\t\\t如果凭证不存在则忽略\\r\\n\\t *\\r\\n\\t * @tables \\tidentity_credential,\\r\\n\\t * \\t\\t\\tidentity_credential_attribute\",\"request\":[{\"name\":\"credential\",\"type\":\"Credential\"}],\"response\":\"null\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"updateCredential\":{\"doc\":\"* 更新用户凭证绑定\\r\\n\\t * \\t\\t会根据凭证的type和name检查唯一性\\r\\n\\t *\\r\\n\\t * @tables \\tidentity_credential\",\"request\":[{\"name\":\"credential\",\"type\":\"Credential\"}],\"response\":\"null\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"matchCredential\":{\"doc\":\"* 根据部分凭证内容获取完整内容，如：根据type和name匹配完整凭证信息，根据id获取完整凭证信息\\r\\n\\t *\\r\\n\\t * @return 如果能匹配上则返回完整的凭证内容，否则异常\\r\\n\\t *\\r\\n\\t * @tables \\tidentity_credential\",\"request\":[{\"name\":\"credential\",\"type\":\"Credential\"}],\"response\":\"Credential\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"getUserCredentials\":{\"doc\":\"* 获取用户所有的凭证列表\\r\\n\\t *\\r\\n\\t * @return 用户所有的凭证列表\\r\\n\\t *\\r\\n\\t * @tables \\tidentity_credential\",\"request\":[{\"name\":\"uid\",\"type\":\"long\"}],\"response\":{\"type\":\"array\",\"items\":\"Credential\"},\"errors\":[\"org.bear.api.type.GlobalException\"]},\"isCredentialExists\":{\"doc\":\"* 检测凭证是否已经存在\\r\\n\\t * \\t\\t根据凭证参数的id或者type和name检测\\r\\n\\t *\\r\\n\\t * @return 凭证是否存在\\r\\n\\t *\\r\\n\\t * @tables \\tidentity_credential\",\"request\":[{\"name\":\"credential\",\"type\":\"Credential\"}],\"response\":\"boolean\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"getCredentialUid\":{\"doc\":\"* 获取凭证所属用户\\r\\n\\t * \\t\\t根据凭证参数的id或者type和name进行匹配\\r\\n\\t *\\r\\n\\t * @return 若凭证存在则返回此凭证的用户ID，否则异常\\r\\n\\t *\\r\\n\\t * @tables \\tidentity_credential\",\"request\":[{\"name\":\"credential\",\"type\":\"Credential\"}],\"response\":\"long\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"updateUserStatus\":{\"doc\":\"* 设置用户状态\\r\\n\\t *\\r\\n\\t * @tables \\tidentity_user\",\"request\":[{\"name\":\"uid\",\"type\":\"long\"},{\"name\":\"status\",\"type\":\"UserStatus\"}],\"response\":\"null\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"getUserStatus\":{\"doc\":\"* 获取用户状态\\r\\n\\t *\\r\\n\\t * @return 若用户存在则返回此用户的当前状态，否则异常\\r\\n\\t *\\r\\n\\t * @tables \\tidentity_user\",\"request\":[{\"name\":\"uid\",\"type\":\"long\"}],\"response\":\"UserStatus\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"getUser\":{\"doc\":\"* 获取用户基本信息\\r\\n\\t *\\r\\n\\t * @return 若用户存在则返回此用户的基本信息，否则异常\\r\\n\\t *\\r\\n\\t * @tables \\tidentity_user\",\"request\":[{\"name\":\"uid\",\"type\":\"long\"}],\"response\":\"User\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"getUserByNick\":{\"doc\":\"* 根据昵称获取用户基本信息\\r\\n\\t *\\r\\n\\t * @tables \\tidentity_user\",\"request\":[{\"name\":\"nick\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]}],\"response\":\"User\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"batchGetUser\":{\"doc\":\"* 批量获取用户信息\\r\\n\\t *\\r\\n\\t * @return 用户信息Map\\r\\n\\t *\\r\\n\\t * @tables \\tidentity_user\",\"request\":[{\"name\":\"uids\",\"type\":{\"type\":\"array\",\"items\":\"long\"}}],\"response\":{\"type\":\"map\",\"values\":\"User\",\"avro.java.string\":\"String\"},\"errors\":[\"org.bear.api.type.GlobalException\"]},\"updateUser\":{\"doc\":\"* 更新用户信息\\r\\n\\t *\\r\\n\\t * @tables \\tidentity_user\",\"request\":[{\"name\":\"user\",\"type\":\"User\"}],\"response\":\"null\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"batchUpdateUser\":{\"doc\":\"* 批量更新用户信息\\r\\n\\t *\\r\\n\\t * @tables \\tidentity_user\",\"request\":[{\"name\":\"users\",\"type\":{\"type\":\"array\",\"items\":\"User\"}}],\"response\":\"null\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"getUserAttribute\":{\"doc\":\"* 获取用户属性值\\r\\n\\t *\\r\\n\\t * @return 属性值\\r\\n\\t * \\t\\t注：属性不存在或null，统一返回为“”（空字符串）\\r\\n\\t *\\r\\n\\t * @tables \\tidentity_user_attribute\",\"request\":[{\"name\":\"uid\",\"type\":\"long\"},{\"name\":\"key\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]}],\"response\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"errors\":[\"org.bear.api.type.GlobalException\"]},\"setUserAttribute\":{\"doc\":\"* 设置用户属性值\\r\\n\\t *\\r\\n\\t * @tables \\tidentity_user_attribute\",\"request\":[{\"name\":\"uid\",\"type\":\"long\"},{\"name\":\"key\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]},{\"name\":\"value\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]}],\"response\":\"null\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"removeUserAttribute\":{\"doc\":\"* 删除用户属性\\r\\n\\t *\\r\\n\\t * @tables \\tidentity_user_attribute\",\"request\":[{\"name\":\"uid\",\"type\":\"long\"},{\"name\":\"key\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]}],\"response\":\"null\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"getUserAttributes\":{\"doc\":\"* 批量获取指定用户多个属性值\\r\\n\\t *\\r\\n\\t * @return 属性值Map\\r\\n\\t *\\r\\n\\t * @tables \\tidentity_user_attribute\",\"request\":[{\"name\":\"uid\",\"type\":\"long\"},{\"name\":\"keys\",\"type\":{\"type\":\"array\",\"items\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]}}],\"response\":{\"type\":\"map\",\"values\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"avro.java.string\":\"String\"},\"errors\":[\"org.bear.api.type.GlobalException\"]},\"setUserAttributes\":{\"doc\":\"* 批量设置指定用户的多个属性值\\r\\n\\t *\\r\\n\\t * @tables \\tidentity_user_attribute\\r\\n\\t *\",\"request\":[{\"name\":\"uid\",\"type\":\"long\"},{\"name\":\"values\",\"type\":{\"type\":\"map\",\"values\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"avro.java.string\":\"String\"}}],\"response\":\"null\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"removeUserAttributes\":{\"doc\":\"* 批量删除指定用户多个属性\\r\\n\\t *\\r\\n\\t * @tables \\tidentity_user_attribute\",\"request\":[{\"name\":\"uid\",\"type\":\"long\"},{\"name\":\"keys\",\"type\":{\"type\":\"array\",\"items\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]}}],\"response\":\"null\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"batchGetUserAttribute\":{\"doc\":\"* 批量获取多个用户指定属性值\\r\\n\\t *\\r\\n\\t * @return 属性值Map\\r\\n\\t *\\r\\n\\t * @tables \\tidentity_user_attribute\",\"request\":[{\"name\":\"uids\",\"type\":{\"type\":\"array\",\"items\":\"long\"}},{\"name\":\"key\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]}],\"response\":{\"type\":\"map\",\"values\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"avro.java.string\":\"String\"},\"errors\":[\"org.bear.api.type.GlobalException\"]},\"batchSetUserAttribute\":{\"doc\":\"* 批量设置多个用户的指定属性值\\r\\n\\t *\\r\\n\\t * @tables \\tidentity_user_attribute\",\"request\":[{\"name\":\"key\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]},{\"name\":\"idValues\",\"type\":{\"type\":\"map\",\"values\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"avro.java.string\":\"String\"}}],\"response\":\"null\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"batchRemoveUserAttribute\":{\"doc\":\"* 批量删除多个用户指定属性\\r\\n\\t *\\r\\n\\t * @tables \\tidentity_user_attribute\",\"request\":[{\"name\":\"uids\",\"type\":{\"type\":\"array\",\"items\":\"long\"}},{\"name\":\"key\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]}],\"response\":\"null\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"batchGetUserAttributes\":{\"doc\":\"* 批量获取多个用户多个属性值\\r\\n\\t *\\r\\n\\t * @return 用户属性值Map\\r\\n\\t *\\r\\n\\t * @tables \\tidentity_user_attribute\",\"request\":[{\"name\":\"idKeys\",\"type\":{\"type\":\"map\",\"values\":{\"type\":\"array\",\"items\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]},\"avro.java.string\":\"String\"}}],\"response\":{\"type\":\"map\",\"values\":{\"type\":\"map\",\"values\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"avro.java.string\":\"String\"},\"avro.java.string\":\"String\"},\"errors\":[\"org.bear.api.type.GlobalException\"]},\"batchSetUserAttributes\":{\"doc\":\"* 批量设置多个用户的多个属性值\\r\\n\\t *\\r\\n\\t * @tables \\tidentity_user_attribute\",\"request\":[{\"name\":\"idValues\",\"type\":{\"type\":\"map\",\"values\":{\"type\":\"map\",\"values\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"avro.java.string\":\"String\"},\"avro.java.string\":\"String\"}}],\"response\":\"null\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"batchRemoveUserAttributes\":{\"doc\":\"* 批量删除多个用户多个属性\\r\\n\\t *\\r\\n\\t * @tables \\tidentity_user_attribute\",\"request\":[{\"name\":\"idKeys\",\"type\":{\"type\":\"map\",\"values\":{\"type\":\"array\",\"items\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]},\"avro.java.string\":\"String\"}}],\"response\":\"null\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"getUserAttributeNames\":{\"doc\":\"* 获取用户所有属性名\\r\\n\\t *\\r\\n\\t * @return 属性名集合\\r\\n\\t *\\r\\n\\t * @tables \\tidentity_user_attribute\",\"request\":[{\"name\":\"uid\",\"type\":\"long\"}],\"response\":{\"type\":\"array\",\"items\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]},\"errors\":[\"org.bear.api.type.GlobalException\"]},\"clearUserAttributes\":{\"doc\":\"* 清除用户所有属性\\r\\n\\t *\\r\\n\\t * @tables \\tidentity_user_attribute\",\"request\":[{\"name\":\"uid\",\"type\":\"long\"}],\"response\":\"null\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"getSessionAttribute\":{\"doc\":\"* 获取用户当前会话属性值\\r\\n\\t *\\r\\n\\t * @return 属性值\\r\\n\\t *\\r\\n\\t * @tables \\tidentity_session,\\r\\n\\t * \\t\\t\\tidentity_session_attribute\",\"request\":[{\"name\":\"token\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]},{\"name\":\"key\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]}],\"response\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"errors\":[\"org.bear.api.type.GlobalException\"]},\"getSessionAttributes\":{\"doc\":\"* 批量获取用户当前会话属性值\\r\\n\\t *\\r\\n\\t * @return 属性值Map\\r\\n\\t *\\r\\n\\t * @tables \\tidentity_session,\\r\\n\\t * \\t\\t\\tidentity_session_attribute\",\"request\":[{\"name\":\"token\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]},{\"name\":\"keys\",\"type\":{\"type\":\"array\",\"items\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]}}],\"response\":{\"type\":\"map\",\"values\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"avro.java.string\":\"String\"},\"errors\":[\"org.bear.api.type.GlobalException\"]},\"setSessionAttribute\":{\"doc\":\"* 设置用户当前会话属性值\\r\\n\\t *\\r\\n\\t * @tables \\tidentity_session,\\r\\n\\t * \\t\\t\\tidentity_session_attribute\",\"request\":[{\"name\":\"token\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]},{\"name\":\"key\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]},{\"name\":\"value\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]}],\"response\":\"null\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"setSessionAttributes\":{\"doc\":\"* 批量设置用户当前会话属性值\\r\\n\\t *\\r\\n\\t * @tables \\tidentity_session,\\r\\n\\t * \\t\\t\\tidentity_session_attribute\",\"request\":[{\"name\":\"token\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]},{\"name\":\"values\",\"type\":{\"type\":\"map\",\"values\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"avro.java.string\":\"String\"}}],\"response\":\"null\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"removeSessionAttribute\":{\"doc\":\"* 移除用户会话属性\\r\\n\\t *\\r\\n\\t * @tables \\tidentity_session,\\r\\n\\t * \\t\\t\\tidentity_session_attribute\",\"request\":[{\"name\":\"token\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]},{\"name\":\"key\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]}],\"response\":\"null\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"removeSessionAttributes\":{\"doc\":\"* 批量移除用户会话属性\\r\\n\\t *\\r\\n\\t * @tables \\tidentity_session,\\r\\n\\t * \\t\\t\\tidentity_session_attribute\",\"request\":[{\"name\":\"token\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]},{\"name\":\"keys\",\"type\":{\"type\":\"array\",\"items\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]}}],\"response\":\"null\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"getSessionAttributeNames\":{\"doc\":\"* 获取当前用户会话已有的属性名集合\\r\\n\\t *\\r\\n\\t * @return 属性名集合\\r\\n\\t *\\r\\n\\t * @tables \\tidentity_session,\\r\\n\\t * \\t\\t\\tidentity_session_attribute\",\"request\":[{\"name\":\"token\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]}],\"response\":{\"type\":\"array\",\"items\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]},\"errors\":[\"org.bear.api.type.GlobalException\"]},\"clearSessionAttributes\":{\"doc\":\"* 清除用户会话所有属性\\r\\n\\t *\\r\\n\\t * @tables \\tidentity_session,\\r\\n\\t * \\t\\t\\tidentity_session_attribute\",\"request\":[{\"name\":\"token\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]}],\"response\":\"null\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"createGuestSession\":{\"doc\":\"* 创建临时会话\\r\\n\\t *\\r\\n\\t * @return 临时会话的token\\r\\n\\t *\\r\\n\\t * @tables \\tidentity_session\",\"request\":[],\"response\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"errors\":[\"org.bear.api.type.GlobalException\"]},\"isNickNameExists\":{\"doc\":\"* 检测昵称是否已存在\\r\\n\\t *\\r\\n\\t * @return 存在返回true，否则返回false\\r\\n\\t *\\r\\n\\t * @tables identity_user\",\"request\":[{\"name\":\"uid\",\"type\":\"long\"},{\"name\":\"nickName\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]}],\"response\":\"boolean\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"countUser\":{\"doc\":\"* 统计符合条件的用户总数\\r\\n\\t *\\r\\n\\t * @return 符合条件的用户数\\r\\n\\t *\\r\\n\\t * @tables identity_user,\\r\\n\\t * \\t\\t   identity_credential\",\"request\":[{\"name\":\"nickName\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]},{\"name\":\"type\",\"type\":\"CredentialType\"},{\"name\":\"name\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]},{\"name\":\"startTime\",\"type\":\"long\"},{\"name\":\"endTime\",\"type\":\"long\"},{\"name\":\"attributes\",\"type\":{\"type\":\"map\",\"values\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"avro.java.string\":\"String\"}}],\"response\":\"long\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"listUser\":{\"doc\":\"* 列出符合条件的用户\\r\\n\\t *\\r\\n\\t * @return 分页用户列表\\r\\n\\t *\\r\\n\\t * @tables identity_user,\\r\\n\\t * \\t\\t   identity_credential\",\"request\":[{\"name\":\"nickName\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]},{\"name\":\"type\",\"type\":\"CredentialType\"},{\"name\":\"name\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]},{\"name\":\"startTime\",\"type\":\"long\"},{\"name\":\"endTime\",\"type\":\"long\"},{\"name\":\"attributes\",\"type\":{\"type\":\"map\",\"values\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"avro.java.string\":\"String\"}},{\"name\":\"offset\",\"type\":\"long\"},{\"name\":\"limit\",\"type\":\"long\"}],\"response\":{\"type\":\"array\",\"items\":\"User\"},\"errors\":[\"org.bear.api.type.GlobalException\"]},\"createGroup\":{\"doc\":\"* 创建用户组\\r\\n\\t *\\r\\n\\t * @return 返回用户组标识\\r\\n\\t *\\r\\n\\t * @tables identity_group\",\"request\":[{\"name\":\"group\",\"type\":\"Group\"}],\"response\":\"long\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"updateGroup\":{\"doc\":\"* 更新用户组\\r\\n\\t *\\r\\n\\t * @tables identity_group\",\"request\":[{\"name\":\"group\",\"type\":\"Group\"}],\"response\":\"null\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"removeGroup\":{\"doc\":\"* 删除用户组\\r\\n\\t *\\r\\n\\t * @tables identity_group,\\r\\n\\t * \\t\\t   identity_group_user\",\"request\":[{\"name\":\"groupId\",\"type\":\"long\"}],\"response\":\"null\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"isGroupNameExists\":{\"doc\":\"* 判断用户组名称是否存在\\r\\n\\t *\\r\\n\\t * @return 存在返回true，否则false\\r\\n\\t *\\r\\n\\t * @tables identity_group\",\"request\":[{\"name\":\"groupId\",\"type\":\"long\"},{\"name\":\"name\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]}],\"response\":\"boolean\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"getGroup\":{\"doc\":\"* 获取用户组\\r\\n\\t *\\r\\n\\t * @return 用户组信息\\r\\n\\t *\\r\\n\\t * @tables identity_group\",\"request\":[{\"name\":\"groupId\",\"type\":\"long\"}],\"response\":\"Group\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"getGroupByName\":{\"doc\":\"* 根据名称获取用户组\\r\\n\\t *\\r\\n\\t * @return 用户组信息\\r\\n\\t *\\r\\n\\t * @tables identity_group\",\"request\":[{\"name\":\"name\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]}],\"response\":\"Group\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"countGroups\":{\"doc\":\"* 获取符合条件用户组数量\\r\\n\\t *\\r\\n\\t * @tables identity_group\",\"request\":[{\"name\":\"name\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]}],\"response\":\"long\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"listGroups\":{\"doc\":\"* 获取符合条件用户组列表\\r\\n\\t *\\r\\n\\t * @tables identity_group\",\"request\":[{\"name\":\"name\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]},{\"name\":\"offset\",\"type\":\"long\"},{\"name\":\"limit\",\"type\":\"long\"}],\"response\":{\"type\":\"array\",\"items\":\"Group\"},\"errors\":[\"org.bear.api.type.GlobalException\"]},\"addUserToGroup\":{\"doc\":\"* 将用户添加到用户组\\r\\n\\t *\\r\\n\\t * @tables identity_group_user\",\"request\":[{\"name\":\"uid\",\"type\":\"long\"},{\"name\":\"groupId\",\"type\":\"long\"}],\"response\":\"null\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"removeUserFromGroup\":{\"doc\":\"* 从用户组中移除用户\\r\\n\\t *\\r\\n\\t * @tables identity_group_user\",\"request\":[{\"name\":\"uid\",\"type\":\"long\"},{\"name\":\"groupId\",\"type\":\"long\"}],\"response\":\"null\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"isUserInGroup\":{\"doc\":\"* 判断用户是否在指定组内\\r\\n\\t *\\r\\n\\t * @tables identity_group_user\",\"request\":[{\"name\":\"uid\",\"type\":\"long\"},{\"name\":\"groupId\",\"type\":\"long\"}],\"response\":\"boolean\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"countGroupUsers\":{\"doc\":\"* 获取指定用户组下的用户数\\r\\n\\t *\\r\\n\\t * @tables identity_group_user\",\"request\":[{\"name\":\"groupId\",\"type\":\"long\"}],\"response\":\"long\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"listGroupUsers\":{\"doc\":\"* 列出指定用户组下的用户\\r\\n\\t *\\r\\n\\t * @tables identity_group_user\\r\\n\\t * \\t\\t   identity_user\\r\\n\\t *\",\"request\":[{\"name\":\"groupId\",\"type\":\"long\"},{\"name\":\"offset\",\"type\":\"long\"},{\"name\":\"limit\",\"type\":\"long\"}],\"response\":{\"type\":\"array\",\"items\":\"User\"},\"errors\":[\"org.bear.api.type.GlobalException\"]},\"getUserGroups\":{\"doc\":\"* 获取指定用户所属的用户组列表\\r\\n\\t *\\r\\n\\t * @tables identity_group_user,\\r\\n\\t * \\t\\t   identity_group\",\"request\":[{\"name\":\"uid\",\"type\":\"long\"}],\"response\":{\"type\":\"array\",\"items\":\"Group\"},\"errors\":[\"org.bear.api.type.GlobalException\"]},\"isAdminUser\":{\"doc\":\"* 判断用户是否超级管理员\\r\\n\\t *\\r\\n\\t * @tables  identity_user,\\r\\n\\t * \\t\\t\\tidentity_user_attribute\",\"request\":[{\"name\":\"uid\",\"type\":\"long\"}],\"response\":\"boolean\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"isAdminSession\":{\"doc\":\"* 判断当前会话是否是否超级管理员会话\\r\\n\\t *\\r\\n\\t * @tables  identity_user,\\r\\n\\t * \\t\\t\\tidentity_user_attribute,\\r\\n\\t * \\t\\t\\tidentity_session\",\"request\":[{\"name\":\"token\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]}],\"response\":\"boolean\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"resetAdminUser\":{\"doc\":\"* 重置超级管理员（系统仅有一个超级管理员）\\r\\n\\t *\\r\\n\\t * @tables  identity_user,\\r\\n\\t * \\t\\t\\tidentity_user_attribute\",\"request\":[{\"name\":\"uid\",\"type\":\"long\"}],\"response\":\"null\",\"errors\":[\"org.bear.api.type.GlobalException\"]}}}");
+  public static final org.apache.avro.Protocol PROTOCOL = org.apache.avro.Protocol.parse("{\"protocol\":\"IdentityService\",\"namespace\":\"org.bear.api.identity\",\"types\":[{\"type\":\"enum\",\"name\":\"Gender\",\"namespace\":\"org.bear.api.type\",\"doc\":\"\",\"symbols\":[\"UNKNOWN\",\"MALE\",\"FEMALE\"]},{\"type\":\"record\",\"name\":\"StackTrace\",\"namespace\":\"org.bear.api.type\",\"doc\":\"异常堆栈对象\",\"fields\":[{\"name\":\"className\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"发生异常的类\"},{\"name\":\"methodName\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"发生异常的方法\"},{\"name\":\"fileName\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"发生异常的文件\"},{\"name\":\"lineNumber\",\"type\":\"int\",\"doc\":\"发生异常的行号\"}]},{\"type\":\"enum\",\"name\":\"AccessScope\",\"namespace\":\"org.bear.api.type\",\"doc\":\"表示实体对象的访问权限级别\",\"symbols\":[\"ALL\",\"USER\",\"ROLE\",\"TOKEN\",\"SELF\",\"SESSION\"]},{\"type\":\"error\",\"name\":\"GlobalException\",\"namespace\":\"org.bear.api.type\",\"doc\":\"通用错误对象\",\"fields\":[{\"name\":\"code\",\"type\":\"int\",\"doc\":\"错误代码\"},{\"name\":\"msg\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"发生异常的方法\"},{\"name\":\"stackTraces\",\"type\":{\"type\":\"array\",\"items\":\"StackTrace\"},\"doc\":\"发生错误堆栈，供调试用\"}]},{\"type\":\"enum\",\"name\":\"UserStatus\",\"symbols\":[\"INIT\",\"NORMAL\",\"DISABLED\",\"ARCHIVED\",\"LOCKED\"]},{\"type\":\"enum\",\"name\":\"CredentialType\",\"symbols\":[\"USERNAME\",\"EMAIL\",\"MOBILE\",\"OAUTH\"]},{\"type\":\"enum\",\"name\":\"ProtectionQuestion\",\"doc\":\"* 我的爱人名字？\",\"symbols\":[\"FAV_FILM\",\"FAV_MUSIC\",\"FATHER_NAME\",\"MOTHER_NAME\",\"LOVER_NAME\"]},{\"type\":\"record\",\"name\":\"User\",\"fields\":[{\"name\":\"id\",\"type\":\"long\",\"doc\":\"* 用户标识： -1表示匿名用户\"},{\"name\":\"userName\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"doc\":\"* 用户名\\r\\n\\t     *\\r\\n\\t     * @size min=0, max=100\"},{\"name\":\"nickName\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"doc\":\"* 昵称\\r\\n\\t\\t *\\r\\n\\t\\t * @size min=0, max=100\"},{\"name\":\"realName\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"doc\":\"* 真实姓名\\r\\n\\t\\t *\\r\\n\\t\\t * @size min=0, max=100\"},{\"name\":\"gender\",\"type\":[\"null\",\"org.bear.api.type.Gender\"],\"doc\":\"* 性别\"},{\"name\":\"idNo\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"doc\":\"* 身份证号\"},{\"name\":\"location\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"doc\":\"* 所在地\"},{\"name\":\"birthday\",\"type\":\"long\",\"doc\":\"* 生日：自January 1, 1970, 00:00:00 GMT开始的毫秒数，0 表示未填写（空）\"},{\"name\":\"description\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"doc\":\"* 个人简介\\r\\n\\t\\t *\\r\\n\\t\\t * @size min=0, max=200\"},{\"name\":\"photo\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"doc\":\"* 头像（标识）\\r\\n\\t\\t *\\r\\n\\t\\t * @size min=0, max=200\"},{\"name\":\"status\",\"type\":[\"null\",\"UserStatus\"],\"doc\":\"* 状态\"},{\"name\":\"createTime\",\"type\":\"long\",\"doc\":\"* 创建时间\"},{\"name\":\"updateTime\",\"type\":\"long\",\"doc\":\"* 最近更新时间\"}]},{\"type\":\"record\",\"name\":\"Credential\",\"doc\":\"* 凭证\",\"fields\":[{\"name\":\"id\",\"type\":\"long\",\"doc\":\"* 凭证标识：-1表示未持久化\"},{\"name\":\"uid\",\"type\":\"long\",\"doc\":\"* 用户ID（所属用户）\"},{\"name\":\"type\",\"type\":[\"null\",\"CredentialType\"],\"doc\":\"* 凭证类型\"},{\"name\":\"name\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"doc\":\"* 凭证名称：如邮件地址、手机号等\\r\\n\\t\\t *\\r\\n\\t\\t * @size min=0, max=100\"},{\"name\":\"value\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"doc\":\"* 凭证值：登录时为帐户密码，安全绑定认证时为认证码\"}]},{\"type\":\"record\",\"name\":\"PasswordProtection\",\"doc\":\"* 密码保护\",\"fields\":[{\"name\":\"uid\",\"type\":\"long\",\"doc\":\"* 用户ID（所属用户）\"},{\"name\":\"question\",\"type\":[\"null\",\"ProtectionQuestion\"],\"doc\":\"* 问题\"},{\"name\":\"answer\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"doc\":\"* 问题答案\\r\\n\\t\\t *\\r\\n\\t\\t * @size min=0, max=200\"}]},{\"type\":\"record\",\"name\":\"Group\",\"doc\":\"* 用户组\",\"fields\":[{\"name\":\"id\",\"type\":\"long\"},{\"name\":\"name\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"doc\":\"* 名称\"},{\"name\":\"description\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"doc\":\"* 描述\"}]},{\"type\":\"record\",\"name\":\"Session\",\"doc\":\"* 用户session\",\"fields\":[{\"name\":\"id\",\"type\":\"long\",\"doc\":\"* session id\"},{\"name\":\"token\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"doc\":\"* session token\"},{\"name\":\"uid\",\"type\":\"long\",\"doc\":\"* 关联的用户id\"},{\"name\":\"creationTime\",\"type\":\"long\",\"doc\":\"* session创建时间\"},{\"name\":\"ttl\",\"type\":\"long\",\"doc\":\"* 最长生存时间\"},{\"name\":\"tti\",\"type\":\"long\",\"doc\":\"* 最长不活动间隔时间\"},{\"name\":\"clientIp\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"doc\":\"* 用户登录时的ip\"},{\"name\":\"lastActiveTime\",\"type\":\"long\",\"doc\":\"* 最近活动时间\"}]}],\"messages\":{\"registerUser\":{\"doc\":\"* 用户注册\\r\\n\\t *\\r\\n\\t * @return 若注册成功则返回会话的Token，否则异常\\r\\n\\t *\\r\\n\\t * @tables \\tids_credential,\\r\\n\\t * \\t\\t\\tids_password,\\r\\n\\t * \\t\\t\\tids_session,\\r\\n\\t * \\t\\t\\tids_user,\\r\\n\\t * \\t\\t\\tids_user_attribute\",\"request\":[{\"name\":\"user\",\"type\":[\"null\",\"User\"]},{\"name\":\"credential\",\"type\":[\"null\",\"Credential\"]},{\"name\":\"userAttributes\",\"type\":{\"type\":\"map\",\"values\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"avro.java.string\":\"String\"}}],\"response\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"errors\":[\"org.bear.api.type.GlobalException\"]},\"login\":{\"doc\":\"* 登录\\r\\n\\t * \\t\\t成功登录的条件：凭证存在，账户密码正确，用户状态为NORMAL\\r\\n\\t *\\r\\n\\t * @return 若登录成功则返回会话的Token，否则异常\\r\\n\\t *\\r\\n\\t * @tables \\tids_credential,\\r\\n\\t * \\t\\t\\tids_password,\\r\\n\\t * \\t\\t\\tids_session,\\r\\n\\t * \\t\\t\\tids_user,\\r\\n\\t * \\t\\t\\tids_user_attribute\",\"request\":[{\"name\":\"credential\",\"type\":[\"null\",\"Credential\"]},{\"name\":\"ttl\",\"type\":\"long\"}],\"response\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"errors\":[\"org.bear.api.type.GlobalException\"]},\"logout\":{\"doc\":\"* 注销\",\"request\":[{\"name\":\"token\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]}],\"response\":\"null\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"validateToken\":{\"doc\":\"* 验证token是否具有合法会话，并返回会话用户id\\r\\n\\t *\\r\\n\\t * @return 若会话有效则返回该会话的用户ID，否则为返回0，其中，\\r\\n\\t * \\t\\t 0：会话不存在\\r\\n\\t * \\t\\t-1：临时会话\\r\\n\\t * \\t\\t-2：当前会话用户已经在其他地方登录\\r\\n\\t * \\t\\t>0：已登录会话，且为用户ID\\r\\n\\t *\\r\\n\\t * @tables \\tids_user\",\"request\":[{\"name\":\"token\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]}],\"response\":\"long\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"validateTokenWithUser\":{\"doc\":\"* 验证token是否具有合法会话，并返回会话用户\\r\\n\\t *\\r\\n\\t * @return 用户基本信息\\r\\n\\t *\\r\\n\\t * @tables \\tids_session,\\r\\n\\t * \\t\\t\\tids_user\",\"request\":[{\"name\":\"token\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]}],\"response\":\"User\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"requestActivation\":{\"doc\":\"* 凭证邦定认证，系统将认证码发送到凭证类型对应的消息终端上\\r\\n\\t *\\r\\n\\t * @return 认证码ID，认证码验证时需要将此ID作为Credential的id进行传递\\r\\n\\t *\\r\\n\\t * @tables \\tids_credential_activation\",\"request\":[{\"name\":\"credential\",\"type\":[\"null\",\"Credential\"]},{\"name\":\"ttl\",\"type\":\"long\"}],\"response\":\"long\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"validateActivation\":{\"doc\":\"* 校验凭证邦定认证码\\r\\n\\t *\\r\\n\\t * @return 校验认证码是否正确\\r\\n\\t *\\r\\n\\t * @tables \\tids_credential_activation\",\"request\":[{\"name\":\"credential\",\"type\":[\"null\",\"Credential\"]}],\"response\":\"boolean\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"validateActivationAndCreateCredential\":{\"doc\":\"* 校验凭证邦定认证码，校验成功后自动创建凭证邦定\\r\\n\\t *\\r\\n\\t * @return 校验认证码并创建凭证邦定是否成功\\r\\n\\t *\\r\\n\\t * @tables \\tids_credential,\\r\\n\\t * \\t\\t\\tids_credential_activation\",\"request\":[{\"name\":\"credential\",\"type\":[\"null\",\"Credential\"]}],\"response\":\"boolean\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"changePassword\":{\"doc\":\"* 修改用户密码\\r\\n\\t *\\r\\n\\t * @tables \\tids_password\",\"request\":[{\"name\":\"uid\",\"type\":\"long\"},{\"name\":\"oldPwd\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]},{\"name\":\"newPwd\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]}],\"response\":\"null\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"resetPassword\":{\"doc\":\"* 重置用户的密码，将用户密码置为新的指定密码或随机密码（新密码为空“”时），并以消息形式通知用户（仅当采用随机密码时有效）\\r\\n\\t * \\t\\t消息类型来源于用户的凭证邦定中的凭证类型，如：邮件、手机，将以一种形式发送消息，优先级：1）邮件，2）手机\\r\\n\\t *\\r\\n\\t * @tables \\tids_password\",\"request\":[{\"name\":\"uid\",\"type\":\"long\"},{\"name\":\"newPwd\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]}],\"response\":\"null\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"protectPassword\":{\"doc\":\"* 保护密码（设置密保）\\r\\n\\t *\\r\\n\\t * @param protection 密码保护（密码问题-答案）\\r\\n\\t *\\r\\n\\t * @param pwd 当前用户密码\\r\\n\\t *\\r\\n\\t * @tables \\tids_password\",\"request\":[{\"name\":\"protection\",\"type\":[\"null\",\"PasswordProtection\"]},{\"name\":\"pwd\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]}],\"response\":\"null\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"validatePasswordProtection\":{\"doc\":\"* 密码保护验证\\r\\n\\t *\\r\\n\\t * @return 验证是否通过\\r\\n\\t *\\r\\n\\t * @tables \\tids_password\",\"request\":[{\"name\":\"protection\",\"type\":[\"null\",\"PasswordProtection\"]}],\"response\":\"boolean\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"hasPasswordProtection\":{\"doc\":\"* 判断用户密保是否存在\\r\\n\\t *\\r\\n\\t * @return 用户密保是否存在\\r\\n\\t *\\r\\n\\t * @tables \\tids_password\",\"request\":[{\"name\":\"uid\",\"type\":\"long\"}],\"response\":\"boolean\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"getProtectionQuestion\":{\"doc\":\"* 获取用户密保问题\\r\\n\\t *\\r\\n\\t * @return 若密保问题存在则返回，否则异常\\r\\n\\t *\\r\\n\\t * @tables \\tids_password\",\"request\":[{\"name\":\"uid\",\"type\":\"long\"}],\"response\":\"ProtectionQuestion\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"createCredential\":{\"doc\":\"* 创建用户凭证绑定\\r\\n\\t * \\t\\t会根据凭证的type和name检查唯一性\\r\\n\\t *\\r\\n\\t * @tables \\tids_credential\",\"request\":[{\"name\":\"credential\",\"type\":[\"null\",\"Credential\"]}],\"response\":\"null\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"removeCredential\":{\"doc\":\"* 取消用户凭证绑定\\r\\n\\t * \\t\\t如果凭证不存在则忽略\\r\\n\\t *\\r\\n\\t * @tables \\tids_credential,\\r\\n\\t * \\t\\t\\tids_credential_attribute\",\"request\":[{\"name\":\"credential\",\"type\":[\"null\",\"Credential\"]}],\"response\":\"null\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"updateCredential\":{\"doc\":\"* 更新用户凭证绑定\\r\\n\\t * \\t\\t会根据凭证的type和name检查唯一性\\r\\n\\t *\\r\\n\\t * @tables \\tids_credential\",\"request\":[{\"name\":\"credential\",\"type\":[\"null\",\"Credential\"]}],\"response\":\"null\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"matchCredential\":{\"doc\":\"* 根据部分凭证内容获取完整内容，如：根据type和name匹配完整凭证信息，根据id获取完整凭证信息\\r\\n\\t *\\r\\n\\t * @return 如果能匹配上则返回完整的凭证内容，否则异常\\r\\n\\t *\\r\\n\\t * @tables \\tids_credential\",\"request\":[{\"name\":\"credential\",\"type\":[\"null\",\"Credential\"]}],\"response\":\"Credential\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"getUserCredentials\":{\"doc\":\"* 获取用户所有的凭证列表\\r\\n\\t *\\r\\n\\t * @return 用户所有的凭证列表\\r\\n\\t *\\r\\n\\t * @tables \\tids_credential\",\"request\":[{\"name\":\"uid\",\"type\":\"long\"}],\"response\":{\"type\":\"array\",\"items\":\"Credential\"},\"errors\":[\"org.bear.api.type.GlobalException\"]},\"isCredentialExists\":{\"doc\":\"* 检测凭证是否已经存在\\r\\n\\t * \\t\\t根据凭证参数的id或者type和name检测\\r\\n\\t *\\r\\n\\t * @return 凭证是否存在\\r\\n\\t *\\r\\n\\t * @tables \\tids_credential\",\"request\":[{\"name\":\"credential\",\"type\":[\"null\",\"Credential\"]}],\"response\":\"boolean\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"getCredentialUid\":{\"doc\":\"* 获取凭证所属用户\\r\\n\\t * \\t\\t根据凭证参数的id或者type和name进行匹配\\r\\n\\t *\\r\\n\\t * @return 若凭证存在则返回此凭证的用户ID，否则异常\\r\\n\\t *\\r\\n\\t * @tables \\tids_credential\",\"request\":[{\"name\":\"credential\",\"type\":[\"null\",\"Credential\"]}],\"response\":\"long\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"updateUserStatus\":{\"doc\":\"* 设置用户状态\\r\\n\\t *\\r\\n\\t * @tables \\tids_user\",\"request\":[{\"name\":\"uid\",\"type\":\"long\"},{\"name\":\"status\",\"type\":[\"null\",\"UserStatus\"]}],\"response\":\"null\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"getUserStatus\":{\"doc\":\"* 获取用户状态\\r\\n\\t *\\r\\n\\t * @return 若用户存在则返回此用户的当前状态，否则异常\\r\\n\\t *\\r\\n\\t * @tables \\tids_user\",\"request\":[{\"name\":\"uid\",\"type\":\"long\"}],\"response\":\"UserStatus\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"getUser\":{\"doc\":\"* 获取用户基本信息\\r\\n\\t *\\r\\n\\t * @return 若用户存在则返回此用户的基本信息，否则异常\\r\\n\\t *\\r\\n\\t * @tables \\tids_user\",\"request\":[{\"name\":\"uid\",\"type\":\"long\"}],\"response\":\"User\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"getUserByNick\":{\"doc\":\"* 根据昵称获取用户基本信息\\r\\n\\t *\\r\\n\\t * @tables \\tids_user\",\"request\":[{\"name\":\"nick\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]}],\"response\":\"User\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"batchGetUser\":{\"doc\":\"* 批量获取用户信息\\r\\n\\t *\\r\\n\\t * @return 用户信息Map\\r\\n\\t *\\r\\n\\t * @tables \\tids_user\",\"request\":[{\"name\":\"uids\",\"type\":{\"type\":\"array\",\"items\":\"long\"}}],\"response\":{\"type\":\"map\",\"values\":\"User\",\"avro.java.string\":\"String\"},\"errors\":[\"org.bear.api.type.GlobalException\"]},\"updateUser\":{\"doc\":\"* 更新用户信息\\r\\n\\t *\\r\\n\\t * @tables \\tids_user\",\"request\":[{\"name\":\"user\",\"type\":[\"null\",\"User\"]}],\"response\":\"null\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"batchUpdateUser\":{\"doc\":\"* 批量更新用户信息\\r\\n\\t *\\r\\n\\t * @tables \\tids_user\",\"request\":[{\"name\":\"users\",\"type\":[\"null\",{\"type\":\"array\",\"items\":\"User\"}]}],\"response\":\"null\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"getUserAttribute\":{\"doc\":\"* 获取用户属性值\\r\\n\\t *\\r\\n\\t * @return 属性值\\r\\n\\t * \\t\\t注：属性不存在或null，统一返回为“”（空字符串）\\r\\n\\t *\\r\\n\\t * @tables \\tids_user_attribute\",\"request\":[{\"name\":\"uid\",\"type\":\"long\"},{\"name\":\"key\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]}],\"response\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"errors\":[\"org.bear.api.type.GlobalException\"]},\"setUserAttribute\":{\"doc\":\"* 设置用户属性值\\r\\n\\t *\\r\\n\\t * @tables \\tids_user_attribute\",\"request\":[{\"name\":\"uid\",\"type\":\"long\"},{\"name\":\"key\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]},{\"name\":\"value\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]}],\"response\":\"null\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"removeUserAttribute\":{\"doc\":\"* 删除用户属性\\r\\n\\t *\\r\\n\\t * @tables \\tids_user_attribute\",\"request\":[{\"name\":\"uid\",\"type\":\"long\"},{\"name\":\"key\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]}],\"response\":\"null\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"getUserAttributes\":{\"doc\":\"* 批量获取指定用户多个属性值\\r\\n\\t *\\r\\n\\t * @return 属性值Map\\r\\n\\t *\\r\\n\\t * @tables \\tids_user_attribute\",\"request\":[{\"name\":\"uid\",\"type\":\"long\"},{\"name\":\"keys\",\"type\":[\"null\",{\"type\":\"array\",\"items\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]}]}],\"response\":{\"type\":\"map\",\"values\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"avro.java.string\":\"String\"},\"errors\":[\"org.bear.api.type.GlobalException\"]},\"setUserAttributes\":{\"doc\":\"* 批量设置指定用户的多个属性值\\r\\n\\t *\\r\\n\\t * @tables \\tids_user_attribute\\r\\n\\t *\",\"request\":[{\"name\":\"uid\",\"type\":\"long\"},{\"name\":\"values\",\"type\":[\"null\",{\"type\":\"map\",\"values\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"avro.java.string\":\"String\"}]}],\"response\":\"null\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"removeUserAttributes\":{\"doc\":\"* 批量删除指定用户多个属性\\r\\n\\t *\\r\\n\\t * @tables \\tids_user_attribute\",\"request\":[{\"name\":\"uid\",\"type\":\"long\"},{\"name\":\"keys\",\"type\":[\"null\",{\"type\":\"array\",\"items\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]}]}],\"response\":\"null\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"batchGetUserAttribute\":{\"doc\":\"* 批量获取多个用户指定属性值\\r\\n\\t *\\r\\n\\t * @return 属性值Map\\r\\n\\t *\\r\\n\\t * @tables \\tids_user_attribute\",\"request\":[{\"name\":\"uids\",\"type\":{\"type\":\"array\",\"items\":\"long\"}},{\"name\":\"key\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]}],\"response\":{\"type\":\"map\",\"values\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"avro.java.string\":\"String\"},\"errors\":[\"org.bear.api.type.GlobalException\"]},\"batchSetUserAttribute\":{\"doc\":\"* 批量设置多个用户的指定属性值\\r\\n\\t *\\r\\n\\t * @tables \\tids_user_attribute\",\"request\":[{\"name\":\"key\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]},{\"name\":\"idValues\",\"type\":[\"null\",{\"type\":\"map\",\"values\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"avro.java.string\":\"String\"}]}],\"response\":\"null\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"batchRemoveUserAttribute\":{\"doc\":\"* 批量删除多个用户指定属性\\r\\n\\t *\\r\\n\\t * @tables \\tids_user_attribute\",\"request\":[{\"name\":\"uids\",\"type\":{\"type\":\"array\",\"items\":\"long\"}},{\"name\":\"key\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]}],\"response\":\"null\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"batchGetUserAttributes\":{\"doc\":\"* 批量获取多个用户多个属性值\\r\\n\\t *\\r\\n\\t * @return 用户属性值Map\\r\\n\\t *\\r\\n\\t * @tables \\tids_user_attribute\",\"request\":[{\"name\":\"idKeys\",\"type\":[\"null\",{\"type\":\"map\",\"values\":{\"type\":\"array\",\"items\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]},\"avro.java.string\":\"String\"}]}],\"response\":{\"type\":\"map\",\"values\":{\"type\":\"map\",\"values\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"avro.java.string\":\"String\"},\"avro.java.string\":\"String\"},\"errors\":[\"org.bear.api.type.GlobalException\"]},\"batchSetUserAttributes\":{\"doc\":\"* 批量设置多个用户的多个属性值\\r\\n\\t *\\r\\n\\t * @tables \\tids_user_attribute\",\"request\":[{\"name\":\"idValues\",\"type\":[\"null\",{\"type\":\"map\",\"values\":{\"type\":\"map\",\"values\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"avro.java.string\":\"String\"},\"avro.java.string\":\"String\"}]}],\"response\":\"null\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"batchRemoveUserAttributes\":{\"doc\":\"* 批量删除多个用户多个属性\\r\\n\\t *\\r\\n\\t * @tables \\tids_user_attribute\",\"request\":[{\"name\":\"idKeys\",\"type\":[\"null\",{\"type\":\"map\",\"values\":{\"type\":\"array\",\"items\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]},\"avro.java.string\":\"String\"}]}],\"response\":\"null\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"getUserAttributeNames\":{\"doc\":\"* 获取用户所有属性名\\r\\n\\t *\\r\\n\\t * @return 属性名集合\\r\\n\\t *\\r\\n\\t * @tables \\tids_user_attribute\",\"request\":[{\"name\":\"uid\",\"type\":\"long\"}],\"response\":{\"type\":\"array\",\"items\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]},\"errors\":[\"org.bear.api.type.GlobalException\"]},\"clearUserAttributes\":{\"doc\":\"* 清除用户所有属性\\r\\n\\t *\\r\\n\\t * @tables \\tids_user_attribute\",\"request\":[{\"name\":\"uid\",\"type\":\"long\"}],\"response\":\"null\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"getSessionAttribute\":{\"doc\":\"* 获取用户当前会话属性值\\r\\n\\t *\\r\\n\\t * @return 属性值\\r\\n\\t *\\r\\n\\t * @tables \\tids_session,\\r\\n\\t * \\t\\t\\tids_session_attribute\",\"request\":[{\"name\":\"token\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]},{\"name\":\"key\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]}],\"response\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"errors\":[\"org.bear.api.type.GlobalException\"]},\"getSessionAttributes\":{\"doc\":\"* 批量获取用户当前会话属性值\\r\\n\\t *\\r\\n\\t * @return 属性值Map\\r\\n\\t *\\r\\n\\t * @tables \\tids_session,\\r\\n\\t * \\t\\t\\tids_session_attribute\",\"request\":[{\"name\":\"token\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]},{\"name\":\"keys\",\"type\":[\"null\",{\"type\":\"array\",\"items\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]}]}],\"response\":{\"type\":\"map\",\"values\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"avro.java.string\":\"String\"},\"errors\":[\"org.bear.api.type.GlobalException\"]},\"setSessionAttribute\":{\"doc\":\"* 设置用户当前会话属性值\\r\\n\\t *\\r\\n\\t * @tables \\tids_session,\\r\\n\\t * \\t\\t\\tids_session_attribute\",\"request\":[{\"name\":\"token\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]},{\"name\":\"key\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]},{\"name\":\"value\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]}],\"response\":\"null\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"setSessionAttributes\":{\"doc\":\"* 批量设置用户当前会话属性值\\r\\n\\t *\\r\\n\\t * @tables \\tids_session,\\r\\n\\t * \\t\\t\\tids_session_attribute\",\"request\":[{\"name\":\"token\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]},{\"name\":\"values\",\"type\":[\"null\",{\"type\":\"map\",\"values\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"avro.java.string\":\"String\"}]}],\"response\":\"null\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"removeSessionAttribute\":{\"doc\":\"* 移除用户会话属性\\r\\n\\t *\\r\\n\\t * @tables \\tids_session,\\r\\n\\t * \\t\\t\\tids_session_attribute\",\"request\":[{\"name\":\"token\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]},{\"name\":\"key\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]}],\"response\":\"null\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"removeSessionAttributes\":{\"doc\":\"* 批量移除用户会话属性\\r\\n\\t *\\r\\n\\t * @tables \\tids_session,\\r\\n\\t * \\t\\t\\tids_session_attribute\",\"request\":[{\"name\":\"token\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]},{\"name\":\"keys\",\"type\":[\"null\",{\"type\":\"array\",\"items\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]}]}],\"response\":\"null\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"getSessionAttributeNames\":{\"doc\":\"* 获取当前用户会话已有的属性名集合\\r\\n\\t *\\r\\n\\t * @return 属性名集合\\r\\n\\t *\\r\\n\\t * @tables \\tids_session,\\r\\n\\t * \\t\\t\\tids_session_attribute\",\"request\":[{\"name\":\"token\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]}],\"response\":{\"type\":\"array\",\"items\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]},\"errors\":[\"org.bear.api.type.GlobalException\"]},\"clearSessionAttributes\":{\"doc\":\"* 清除用户会话所有属性\\r\\n\\t *\\r\\n\\t * @tables \\tids_session,\\r\\n\\t * \\t\\t\\tids_session_attribute\",\"request\":[{\"name\":\"token\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]}],\"response\":\"null\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"createGuestSession\":{\"doc\":\"* 创建临时会话\\r\\n\\t *\\r\\n\\t * @return 临时会话的token\\r\\n\\t *\\r\\n\\t * @tables \\tids_session\",\"request\":[],\"response\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"errors\":[\"org.bear.api.type.GlobalException\"]},\"isNickNameExists\":{\"doc\":\"* 检测昵称是否已存在\\r\\n\\t *\\r\\n\\t * @return 存在返回true，否则返回false\\r\\n\\t *\\r\\n\\t * @tables ids_user\",\"request\":[{\"name\":\"uid\",\"type\":\"long\"},{\"name\":\"nickName\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]}],\"response\":\"boolean\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"countUser\":{\"doc\":\"* 统计符合条件的用户总数\\r\\n\\t *\\r\\n\\t * @return 符合条件的用户数\\r\\n\\t *\\r\\n\\t * @tables ids_user,\\r\\n\\t * \\t\\t   ids_credential\",\"request\":[{\"name\":\"nickName\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]},{\"name\":\"type\",\"type\":[\"null\",\"CredentialType\"]},{\"name\":\"name\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]},{\"name\":\"startTime\",\"type\":\"long\"},{\"name\":\"endTime\",\"type\":\"long\"},{\"name\":\"attributes\",\"type\":[\"null\",{\"type\":\"map\",\"values\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"avro.java.string\":\"String\"}]}],\"response\":\"long\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"listUser\":{\"doc\":\"* 列出符合条件的用户\\r\\n\\t *\\r\\n\\t * @return 分页用户列表\\r\\n\\t *\\r\\n\\t * @tables ids_user,\\r\\n\\t * \\t\\t   ids_credential\",\"request\":[{\"name\":\"nickName\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]},{\"name\":\"type\",\"type\":[\"null\",\"CredentialType\"]},{\"name\":\"name\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]},{\"name\":\"startTime\",\"type\":\"long\"},{\"name\":\"endTime\",\"type\":\"long\"},{\"name\":\"attributes\",\"type\":[\"null\",{\"type\":\"map\",\"values\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"avro.java.string\":\"String\"}]},{\"name\":\"offset\",\"type\":\"long\"},{\"name\":\"limit\",\"type\":\"long\"}],\"response\":{\"type\":\"array\",\"items\":\"User\"},\"errors\":[\"org.bear.api.type.GlobalException\"]},\"createGroup\":{\"doc\":\"* 创建用户组\\r\\n\\t *\\r\\n\\t * @return 返回用户组标识\\r\\n\\t *\\r\\n\\t * @tables ids_group\",\"request\":[{\"name\":\"group\",\"type\":\"Group\"}],\"response\":\"long\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"updateGroup\":{\"doc\":\"* 更新用户组\\r\\n\\t *\\r\\n\\t * @tables ids_group\",\"request\":[{\"name\":\"group\",\"type\":\"Group\"}],\"response\":\"null\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"removeGroup\":{\"doc\":\"* 删除用户组\\r\\n\\t *\\r\\n\\t * @tables ids_group,\\r\\n\\t * \\t\\t   ids_group_user\",\"request\":[{\"name\":\"groupId\",\"type\":\"long\"}],\"response\":\"null\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"isGroupNameExists\":{\"doc\":\"* 判断用户组名称是否存在\\r\\n\\t *\\r\\n\\t * @return 存在返回true，否则false\\r\\n\\t *\\r\\n\\t * @tables ids_group\",\"request\":[{\"name\":\"groupId\",\"type\":\"long\"},{\"name\":\"name\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]}],\"response\":\"boolean\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"getGroup\":{\"doc\":\"* 获取用户组\\r\\n\\t *\\r\\n\\t * @return 用户组信息\\r\\n\\t *\\r\\n\\t * @tables ids_group\",\"request\":[{\"name\":\"groupId\",\"type\":\"long\"}],\"response\":\"Group\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"getGroupByName\":{\"doc\":\"* 根据名称获取用户组\\r\\n\\t *\\r\\n\\t * @return 用户组信息\\r\\n\\t *\\r\\n\\t * @tables ids_group\",\"request\":[{\"name\":\"name\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]}],\"response\":\"Group\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"countGroups\":{\"doc\":\"* 获取符合条件用户组数量\\r\\n\\t *\\r\\n\\t * @tables ids_group\",\"request\":[{\"name\":\"name\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]}],\"response\":\"long\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"listGroups\":{\"doc\":\"* 获取符合条件用户组列表\\r\\n\\t *\\r\\n\\t * @tables ids_group\",\"request\":[{\"name\":\"name\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]},{\"name\":\"offset\",\"type\":\"long\"},{\"name\":\"limit\",\"type\":\"long\"}],\"response\":{\"type\":\"array\",\"items\":\"Group\"},\"errors\":[\"org.bear.api.type.GlobalException\"]},\"addUserToGroup\":{\"doc\":\"* 将用户添加到用户组\\r\\n\\t *\\r\\n\\t * @tables ids_group_user\",\"request\":[{\"name\":\"uid\",\"type\":\"long\"},{\"name\":\"groupId\",\"type\":\"long\"}],\"response\":\"null\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"removeUserFromGroup\":{\"doc\":\"* 从用户组中移除用户\\r\\n\\t *\\r\\n\\t * @tables ids_group_user\",\"request\":[{\"name\":\"uid\",\"type\":\"long\"},{\"name\":\"groupId\",\"type\":\"long\"}],\"response\":\"null\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"isUserInGroup\":{\"doc\":\"* 判断用户是否在指定组内\\r\\n\\t *\\r\\n\\t * @tables ids_group_user\",\"request\":[{\"name\":\"uid\",\"type\":\"long\"},{\"name\":\"groupId\",\"type\":\"long\"}],\"response\":\"boolean\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"countGroupUsers\":{\"doc\":\"* 获取指定用户组下的用户数\\r\\n\\t *\\r\\n\\t * @tables ids_group_user\",\"request\":[{\"name\":\"groupId\",\"type\":\"long\"}],\"response\":\"long\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"listGroupUsers\":{\"doc\":\"* 列出指定用户组下的用户\\r\\n\\t *\\r\\n\\t * @tables ids_group_user\\r\\n\\t * \\t\\t   ids_user\\r\\n\\t *\",\"request\":[{\"name\":\"groupId\",\"type\":\"long\"},{\"name\":\"offset\",\"type\":\"long\"},{\"name\":\"limit\",\"type\":\"long\"}],\"response\":{\"type\":\"array\",\"items\":\"User\"},\"errors\":[\"org.bear.api.type.GlobalException\"]},\"getUserGroups\":{\"doc\":\"* 获取指定用户所属的用户组列表\\r\\n\\t *\\r\\n\\t * @tables ids_group_user,\\r\\n\\t * \\t\\t   ids_group\",\"request\":[{\"name\":\"uid\",\"type\":\"long\"}],\"response\":{\"type\":\"array\",\"items\":\"Group\"},\"errors\":[\"org.bear.api.type.GlobalException\"]},\"isAdminUser\":{\"doc\":\"* 判断用户是否超级管理员\\r\\n\\t *\\r\\n\\t * @tables  ids_user,\\r\\n\\t * \\t\\t\\tids_user_attribute\",\"request\":[{\"name\":\"uid\",\"type\":\"long\"}],\"response\":\"boolean\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"isAdminSession\":{\"doc\":\"* 判断当前会话是否是否超级管理员会话\\r\\n\\t *\\r\\n\\t * @tables  ids_user,\\r\\n\\t * \\t\\t\\tids_user_attribute,\\r\\n\\t * \\t\\t\\tids_session\",\"request\":[{\"name\":\"token\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]}],\"response\":\"boolean\",\"errors\":[\"org.bear.api.type.GlobalException\"]},\"resetAdminUser\":{\"doc\":\"* 重置超级管理员（系统仅有一个超级管理员）\\r\\n\\t *\\r\\n\\t * @tables  ids_user,\\r\\n\\t * \\t\\t\\tids_user_attribute\",\"request\":[{\"name\":\"uid\",\"type\":\"long\"}],\"response\":\"null\",\"errors\":[\"org.bear.api.type.GlobalException\"]}}}");
   /** * 用户注册
 	 *
 	 * @return 若注册成功则返回会话的Token，否则异常
 	 *
-	 * @tables 	identity_credential,
-	 * 			identity_password,
-	 * 			identity_session,
-	 * 			identity_user,
-	 * 			identity_user_attribute */
+	 * @tables 	ids_credential,
+	 * 			ids_password,
+	 * 			ids_session,
+	 * 			ids_user,
+	 * 			ids_user_attribute */
   java.lang.String registerUser(org.bear.api.identity.User user, org.bear.api.identity.Credential credential, java.util.Map<java.lang.String,java.lang.String> userAttributes) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 登录
 	 * 		成功登录的条件：凭证存在，账户密码正确，用户状态为NORMAL
 	 *
 	 * @return 若登录成功则返回会话的Token，否则异常
 	 *
-	 * @tables 	identity_credential,
-	 * 			identity_password,
-	 * 			identity_session,
-	 * 			identity_user,
-	 * 			identity_user_attribute */
+	 * @tables 	ids_credential,
+	 * 			ids_password,
+	 * 			ids_session,
+	 * 			ids_user,
+	 * 			ids_user_attribute */
   java.lang.String login(org.bear.api.identity.Credential credential, long ttl) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 注销 */
   java.lang.Void logout(java.lang.String token) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
@@ -40,42 +40,42 @@ public interface IdentityService {
 	 * 		-2：当前会话用户已经在其他地方登录
 	 * 		>0：已登录会话，且为用户ID
 	 *
-	 * @tables 	identity_user */
+	 * @tables 	ids_user */
   long validateToken(java.lang.String token) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 验证token是否具有合法会话，并返回会话用户
 	 *
 	 * @return 用户基本信息
 	 *
-	 * @tables 	identity_session,
-	 * 			identity_user */
+	 * @tables 	ids_session,
+	 * 			ids_user */
   org.bear.api.identity.User validateTokenWithUser(java.lang.String token) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 凭证邦定认证，系统将认证码发送到凭证类型对应的消息终端上
 	 *
 	 * @return 认证码ID，认证码验证时需要将此ID作为Credential的id进行传递
 	 *
-	 * @tables 	identity_credential_activation */
+	 * @tables 	ids_credential_activation */
   long requestActivation(org.bear.api.identity.Credential credential, long ttl) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 校验凭证邦定认证码
 	 *
 	 * @return 校验认证码是否正确
 	 *
-	 * @tables 	identity_credential_activation */
+	 * @tables 	ids_credential_activation */
   boolean validateActivation(org.bear.api.identity.Credential credential) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 校验凭证邦定认证码，校验成功后自动创建凭证邦定
 	 *
 	 * @return 校验认证码并创建凭证邦定是否成功
 	 *
-	 * @tables 	identity_credential,
-	 * 			identity_credential_activation */
+	 * @tables 	ids_credential,
+	 * 			ids_credential_activation */
   boolean validateActivationAndCreateCredential(org.bear.api.identity.Credential credential) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 修改用户密码
 	 *
-	 * @tables 	identity_password */
+	 * @tables 	ids_password */
   java.lang.Void changePassword(long uid, java.lang.String oldPwd, java.lang.String newPwd) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 重置用户的密码，将用户密码置为新的指定密码或随机密码（新密码为空“”时），并以消息形式通知用户（仅当采用随机密码时有效）
 	 * 		消息类型来源于用户的凭证邦定中的凭证类型，如：邮件、手机，将以一种形式发送消息，优先级：1）邮件，2）手机
 	 *
-	 * @tables 	identity_password */
+	 * @tables 	ids_password */
   java.lang.Void resetPassword(long uid, java.lang.String newPwd) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 保护密码（设置密保）
 	 *
@@ -83,325 +83,325 @@ public interface IdentityService {
 	 *
 	 * @param pwd 当前用户密码
 	 *
-	 * @tables 	identity_password */
+	 * @tables 	ids_password */
   java.lang.Void protectPassword(org.bear.api.identity.PasswordProtection protection, java.lang.String pwd) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 密码保护验证
 	 *
 	 * @return 验证是否通过
 	 *
-	 * @tables 	identity_password */
+	 * @tables 	ids_password */
   boolean validatePasswordProtection(org.bear.api.identity.PasswordProtection protection) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 判断用户密保是否存在
 	 *
 	 * @return 用户密保是否存在
 	 *
-	 * @tables 	identity_password */
+	 * @tables 	ids_password */
   boolean hasPasswordProtection(long uid) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 获取用户密保问题
 	 *
 	 * @return 若密保问题存在则返回，否则异常
 	 *
-	 * @tables 	identity_password */
+	 * @tables 	ids_password */
   org.bear.api.identity.ProtectionQuestion getProtectionQuestion(long uid) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 创建用户凭证绑定
 	 * 		会根据凭证的type和name检查唯一性
 	 *
-	 * @tables 	identity_credential */
+	 * @tables 	ids_credential */
   java.lang.Void createCredential(org.bear.api.identity.Credential credential) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 取消用户凭证绑定
 	 * 		如果凭证不存在则忽略
 	 *
-	 * @tables 	identity_credential,
-	 * 			identity_credential_attribute */
+	 * @tables 	ids_credential,
+	 * 			ids_credential_attribute */
   java.lang.Void removeCredential(org.bear.api.identity.Credential credential) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 更新用户凭证绑定
 	 * 		会根据凭证的type和name检查唯一性
 	 *
-	 * @tables 	identity_credential */
+	 * @tables 	ids_credential */
   java.lang.Void updateCredential(org.bear.api.identity.Credential credential) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 根据部分凭证内容获取完整内容，如：根据type和name匹配完整凭证信息，根据id获取完整凭证信息
 	 *
 	 * @return 如果能匹配上则返回完整的凭证内容，否则异常
 	 *
-	 * @tables 	identity_credential */
+	 * @tables 	ids_credential */
   org.bear.api.identity.Credential matchCredential(org.bear.api.identity.Credential credential) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 获取用户所有的凭证列表
 	 *
 	 * @return 用户所有的凭证列表
 	 *
-	 * @tables 	identity_credential */
+	 * @tables 	ids_credential */
   java.util.List<org.bear.api.identity.Credential> getUserCredentials(long uid) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 检测凭证是否已经存在
 	 * 		根据凭证参数的id或者type和name检测
 	 *
 	 * @return 凭证是否存在
 	 *
-	 * @tables 	identity_credential */
+	 * @tables 	ids_credential */
   boolean isCredentialExists(org.bear.api.identity.Credential credential) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 获取凭证所属用户
 	 * 		根据凭证参数的id或者type和name进行匹配
 	 *
 	 * @return 若凭证存在则返回此凭证的用户ID，否则异常
 	 *
-	 * @tables 	identity_credential */
+	 * @tables 	ids_credential */
   long getCredentialUid(org.bear.api.identity.Credential credential) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 设置用户状态
 	 *
-	 * @tables 	identity_user */
+	 * @tables 	ids_user */
   java.lang.Void updateUserStatus(long uid, org.bear.api.identity.UserStatus status) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 获取用户状态
 	 *
 	 * @return 若用户存在则返回此用户的当前状态，否则异常
 	 *
-	 * @tables 	identity_user */
+	 * @tables 	ids_user */
   org.bear.api.identity.UserStatus getUserStatus(long uid) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 获取用户基本信息
 	 *
 	 * @return 若用户存在则返回此用户的基本信息，否则异常
 	 *
-	 * @tables 	identity_user */
+	 * @tables 	ids_user */
   org.bear.api.identity.User getUser(long uid) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 根据昵称获取用户基本信息
 	 *
-	 * @tables 	identity_user */
+	 * @tables 	ids_user */
   org.bear.api.identity.User getUserByNick(java.lang.String nick) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 批量获取用户信息
 	 *
 	 * @return 用户信息Map
 	 *
-	 * @tables 	identity_user */
+	 * @tables 	ids_user */
   java.util.Map<java.lang.String,org.bear.api.identity.User> batchGetUser(java.util.List<java.lang.Long> uids) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 更新用户信息
 	 *
-	 * @tables 	identity_user */
+	 * @tables 	ids_user */
   java.lang.Void updateUser(org.bear.api.identity.User user) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 批量更新用户信息
 	 *
-	 * @tables 	identity_user */
+	 * @tables 	ids_user */
   java.lang.Void batchUpdateUser(java.util.List<org.bear.api.identity.User> users) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 获取用户属性值
 	 *
 	 * @return 属性值
 	 * 		注：属性不存在或null，统一返回为“”（空字符串）
 	 *
-	 * @tables 	identity_user_attribute */
+	 * @tables 	ids_user_attribute */
   java.lang.String getUserAttribute(long uid, java.lang.String key) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 设置用户属性值
 	 *
-	 * @tables 	identity_user_attribute */
+	 * @tables 	ids_user_attribute */
   java.lang.Void setUserAttribute(long uid, java.lang.String key, java.lang.String value) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 删除用户属性
 	 *
-	 * @tables 	identity_user_attribute */
+	 * @tables 	ids_user_attribute */
   java.lang.Void removeUserAttribute(long uid, java.lang.String key) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 批量获取指定用户多个属性值
 	 *
 	 * @return 属性值Map
 	 *
-	 * @tables 	identity_user_attribute */
+	 * @tables 	ids_user_attribute */
   java.util.Map<java.lang.String,java.lang.String> getUserAttributes(long uid, java.util.List<java.lang.String> keys) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 批量设置指定用户的多个属性值
 	 *
-	 * @tables 	identity_user_attribute
+	 * @tables 	ids_user_attribute
 	 * */
   java.lang.Void setUserAttributes(long uid, java.util.Map<java.lang.String,java.lang.String> values) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 批量删除指定用户多个属性
 	 *
-	 * @tables 	identity_user_attribute */
+	 * @tables 	ids_user_attribute */
   java.lang.Void removeUserAttributes(long uid, java.util.List<java.lang.String> keys) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 批量获取多个用户指定属性值
 	 *
 	 * @return 属性值Map
 	 *
-	 * @tables 	identity_user_attribute */
+	 * @tables 	ids_user_attribute */
   java.util.Map<java.lang.String,java.lang.String> batchGetUserAttribute(java.util.List<java.lang.Long> uids, java.lang.String key) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 批量设置多个用户的指定属性值
 	 *
-	 * @tables 	identity_user_attribute */
+	 * @tables 	ids_user_attribute */
   java.lang.Void batchSetUserAttribute(java.lang.String key, java.util.Map<java.lang.String,java.lang.String> idValues) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 批量删除多个用户指定属性
 	 *
-	 * @tables 	identity_user_attribute */
+	 * @tables 	ids_user_attribute */
   java.lang.Void batchRemoveUserAttribute(java.util.List<java.lang.Long> uids, java.lang.String key) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 批量获取多个用户多个属性值
 	 *
 	 * @return 用户属性值Map
 	 *
-	 * @tables 	identity_user_attribute */
+	 * @tables 	ids_user_attribute */
   java.util.Map<java.lang.String,java.util.Map<java.lang.String,java.lang.String>> batchGetUserAttributes(java.util.Map<java.lang.String,java.util.List<java.lang.String>> idKeys) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 批量设置多个用户的多个属性值
 	 *
-	 * @tables 	identity_user_attribute */
+	 * @tables 	ids_user_attribute */
   java.lang.Void batchSetUserAttributes(java.util.Map<java.lang.String,java.util.Map<java.lang.String,java.lang.String>> idValues) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 批量删除多个用户多个属性
 	 *
-	 * @tables 	identity_user_attribute */
+	 * @tables 	ids_user_attribute */
   java.lang.Void batchRemoveUserAttributes(java.util.Map<java.lang.String,java.util.List<java.lang.String>> idKeys) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 获取用户所有属性名
 	 *
 	 * @return 属性名集合
 	 *
-	 * @tables 	identity_user_attribute */
+	 * @tables 	ids_user_attribute */
   java.util.List<java.lang.String> getUserAttributeNames(long uid) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 清除用户所有属性
 	 *
-	 * @tables 	identity_user_attribute */
+	 * @tables 	ids_user_attribute */
   java.lang.Void clearUserAttributes(long uid) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 获取用户当前会话属性值
 	 *
 	 * @return 属性值
 	 *
-	 * @tables 	identity_session,
-	 * 			identity_session_attribute */
+	 * @tables 	ids_session,
+	 * 			ids_session_attribute */
   java.lang.String getSessionAttribute(java.lang.String token, java.lang.String key) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 批量获取用户当前会话属性值
 	 *
 	 * @return 属性值Map
 	 *
-	 * @tables 	identity_session,
-	 * 			identity_session_attribute */
+	 * @tables 	ids_session,
+	 * 			ids_session_attribute */
   java.util.Map<java.lang.String,java.lang.String> getSessionAttributes(java.lang.String token, java.util.List<java.lang.String> keys) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 设置用户当前会话属性值
 	 *
-	 * @tables 	identity_session,
-	 * 			identity_session_attribute */
+	 * @tables 	ids_session,
+	 * 			ids_session_attribute */
   java.lang.Void setSessionAttribute(java.lang.String token, java.lang.String key, java.lang.String value) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 批量设置用户当前会话属性值
 	 *
-	 * @tables 	identity_session,
-	 * 			identity_session_attribute */
+	 * @tables 	ids_session,
+	 * 			ids_session_attribute */
   java.lang.Void setSessionAttributes(java.lang.String token, java.util.Map<java.lang.String,java.lang.String> values) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 移除用户会话属性
 	 *
-	 * @tables 	identity_session,
-	 * 			identity_session_attribute */
+	 * @tables 	ids_session,
+	 * 			ids_session_attribute */
   java.lang.Void removeSessionAttribute(java.lang.String token, java.lang.String key) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 批量移除用户会话属性
 	 *
-	 * @tables 	identity_session,
-	 * 			identity_session_attribute */
+	 * @tables 	ids_session,
+	 * 			ids_session_attribute */
   java.lang.Void removeSessionAttributes(java.lang.String token, java.util.List<java.lang.String> keys) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 获取当前用户会话已有的属性名集合
 	 *
 	 * @return 属性名集合
 	 *
-	 * @tables 	identity_session,
-	 * 			identity_session_attribute */
+	 * @tables 	ids_session,
+	 * 			ids_session_attribute */
   java.util.List<java.lang.String> getSessionAttributeNames(java.lang.String token) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 清除用户会话所有属性
 	 *
-	 * @tables 	identity_session,
-	 * 			identity_session_attribute */
+	 * @tables 	ids_session,
+	 * 			ids_session_attribute */
   java.lang.Void clearSessionAttributes(java.lang.String token) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 创建临时会话
 	 *
 	 * @return 临时会话的token
 	 *
-	 * @tables 	identity_session */
+	 * @tables 	ids_session */
   java.lang.String createGuestSession() throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 检测昵称是否已存在
 	 *
 	 * @return 存在返回true，否则返回false
 	 *
-	 * @tables identity_user */
+	 * @tables ids_user */
   boolean isNickNameExists(long uid, java.lang.String nickName) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 统计符合条件的用户总数
 	 *
 	 * @return 符合条件的用户数
 	 *
-	 * @tables identity_user,
-	 * 		   identity_credential */
+	 * @tables ids_user,
+	 * 		   ids_credential */
   long countUser(java.lang.String nickName, org.bear.api.identity.CredentialType type, java.lang.String name, long startTime, long endTime, java.util.Map<java.lang.String,java.lang.String> attributes) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 列出符合条件的用户
 	 *
 	 * @return 分页用户列表
 	 *
-	 * @tables identity_user,
-	 * 		   identity_credential */
+	 * @tables ids_user,
+	 * 		   ids_credential */
   java.util.List<org.bear.api.identity.User> listUser(java.lang.String nickName, org.bear.api.identity.CredentialType type, java.lang.String name, long startTime, long endTime, java.util.Map<java.lang.String,java.lang.String> attributes, long offset, long limit) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 创建用户组
 	 *
 	 * @return 返回用户组标识
 	 *
-	 * @tables identity_group */
+	 * @tables ids_group */
   long createGroup(org.bear.api.identity.Group group) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 更新用户组
 	 *
-	 * @tables identity_group */
+	 * @tables ids_group */
   java.lang.Void updateGroup(org.bear.api.identity.Group group) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 删除用户组
 	 *
-	 * @tables identity_group,
-	 * 		   identity_group_user */
+	 * @tables ids_group,
+	 * 		   ids_group_user */
   java.lang.Void removeGroup(long groupId) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 判断用户组名称是否存在
 	 *
 	 * @return 存在返回true，否则false
 	 *
-	 * @tables identity_group */
+	 * @tables ids_group */
   boolean isGroupNameExists(long groupId, java.lang.String name) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 获取用户组
 	 *
 	 * @return 用户组信息
 	 *
-	 * @tables identity_group */
+	 * @tables ids_group */
   org.bear.api.identity.Group getGroup(long groupId) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 根据名称获取用户组
 	 *
 	 * @return 用户组信息
 	 *
-	 * @tables identity_group */
+	 * @tables ids_group */
   org.bear.api.identity.Group getGroupByName(java.lang.String name) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 获取符合条件用户组数量
 	 *
-	 * @tables identity_group */
+	 * @tables ids_group */
   long countGroups(java.lang.String name) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 获取符合条件用户组列表
 	 *
-	 * @tables identity_group */
+	 * @tables ids_group */
   java.util.List<org.bear.api.identity.Group> listGroups(java.lang.String name, long offset, long limit) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 将用户添加到用户组
 	 *
-	 * @tables identity_group_user */
+	 * @tables ids_group_user */
   java.lang.Void addUserToGroup(long uid, long groupId) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 从用户组中移除用户
 	 *
-	 * @tables identity_group_user */
+	 * @tables ids_group_user */
   java.lang.Void removeUserFromGroup(long uid, long groupId) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 判断用户是否在指定组内
 	 *
-	 * @tables identity_group_user */
+	 * @tables ids_group_user */
   boolean isUserInGroup(long uid, long groupId) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 获取指定用户组下的用户数
 	 *
-	 * @tables identity_group_user */
+	 * @tables ids_group_user */
   long countGroupUsers(long groupId) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 列出指定用户组下的用户
 	 *
-	 * @tables identity_group_user
-	 * 		   identity_user
+	 * @tables ids_group_user
+	 * 		   ids_user
 	 * */
   java.util.List<org.bear.api.identity.User> listGroupUsers(long groupId, long offset, long limit) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 获取指定用户所属的用户组列表
 	 *
-	 * @tables identity_group_user,
-	 * 		   identity_group */
+	 * @tables ids_group_user,
+	 * 		   ids_group */
   java.util.List<org.bear.api.identity.Group> getUserGroups(long uid) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 判断用户是否超级管理员
 	 *
-	 * @tables  identity_user,
-	 * 			identity_user_attribute */
+	 * @tables  ids_user,
+	 * 			ids_user_attribute */
   boolean isAdminUser(long uid) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 判断当前会话是否是否超级管理员会话
 	 *
-	 * @tables  identity_user,
-	 * 			identity_user_attribute,
-	 * 			identity_session */
+	 * @tables  ids_user,
+	 * 			ids_user_attribute,
+	 * 			ids_session */
   boolean isAdminSession(java.lang.String token) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
   /** * 重置超级管理员（系统仅有一个超级管理员）
 	 *
-	 * @tables  identity_user,
-	 * 			identity_user_attribute */
+	 * @tables  ids_user,
+	 * 			ids_user_attribute */
   java.lang.Void resetAdminUser(long uid) throws org.apache.avro.AvroRemoteException, org.bear.api.type.GlobalException;
 
   @SuppressWarnings("all")
@@ -411,22 +411,22 @@ public interface IdentityService {
 	 *
 	 * @return 若注册成功则返回会话的Token，否则异常
 	 *
-	 * @tables 	identity_credential,
-	 * 			identity_password,
-	 * 			identity_session,
-	 * 			identity_user,
-	 * 			identity_user_attribute */
+	 * @tables 	ids_credential,
+	 * 			ids_password,
+	 * 			ids_session,
+	 * 			ids_user,
+	 * 			ids_user_attribute */
     void registerUser(org.bear.api.identity.User user, org.bear.api.identity.Credential credential, java.util.Map<java.lang.String,java.lang.String> userAttributes, org.apache.avro.ipc.Callback<java.lang.String> callback) throws java.io.IOException;
     /** * 登录
 	 * 		成功登录的条件：凭证存在，账户密码正确，用户状态为NORMAL
 	 *
 	 * @return 若登录成功则返回会话的Token，否则异常
 	 *
-	 * @tables 	identity_credential,
-	 * 			identity_password,
-	 * 			identity_session,
-	 * 			identity_user,
-	 * 			identity_user_attribute */
+	 * @tables 	ids_credential,
+	 * 			ids_password,
+	 * 			ids_session,
+	 * 			ids_user,
+	 * 			ids_user_attribute */
     void login(org.bear.api.identity.Credential credential, long ttl, org.apache.avro.ipc.Callback<java.lang.String> callback) throws java.io.IOException;
     /** * 注销 */
     void logout(java.lang.String token, org.apache.avro.ipc.Callback<java.lang.Void> callback) throws java.io.IOException;
@@ -438,42 +438,42 @@ public interface IdentityService {
 	 * 		-2：当前会话用户已经在其他地方登录
 	 * 		>0：已登录会话，且为用户ID
 	 *
-	 * @tables 	identity_user */
+	 * @tables 	ids_user */
     void validateToken(java.lang.String token, org.apache.avro.ipc.Callback<java.lang.Long> callback) throws java.io.IOException;
     /** * 验证token是否具有合法会话，并返回会话用户
 	 *
 	 * @return 用户基本信息
 	 *
-	 * @tables 	identity_session,
-	 * 			identity_user */
+	 * @tables 	ids_session,
+	 * 			ids_user */
     void validateTokenWithUser(java.lang.String token, org.apache.avro.ipc.Callback<org.bear.api.identity.User> callback) throws java.io.IOException;
     /** * 凭证邦定认证，系统将认证码发送到凭证类型对应的消息终端上
 	 *
 	 * @return 认证码ID，认证码验证时需要将此ID作为Credential的id进行传递
 	 *
-	 * @tables 	identity_credential_activation */
+	 * @tables 	ids_credential_activation */
     void requestActivation(org.bear.api.identity.Credential credential, long ttl, org.apache.avro.ipc.Callback<java.lang.Long> callback) throws java.io.IOException;
     /** * 校验凭证邦定认证码
 	 *
 	 * @return 校验认证码是否正确
 	 *
-	 * @tables 	identity_credential_activation */
+	 * @tables 	ids_credential_activation */
     void validateActivation(org.bear.api.identity.Credential credential, org.apache.avro.ipc.Callback<java.lang.Boolean> callback) throws java.io.IOException;
     /** * 校验凭证邦定认证码，校验成功后自动创建凭证邦定
 	 *
 	 * @return 校验认证码并创建凭证邦定是否成功
 	 *
-	 * @tables 	identity_credential,
-	 * 			identity_credential_activation */
+	 * @tables 	ids_credential,
+	 * 			ids_credential_activation */
     void validateActivationAndCreateCredential(org.bear.api.identity.Credential credential, org.apache.avro.ipc.Callback<java.lang.Boolean> callback) throws java.io.IOException;
     /** * 修改用户密码
 	 *
-	 * @tables 	identity_password */
+	 * @tables 	ids_password */
     void changePassword(long uid, java.lang.String oldPwd, java.lang.String newPwd, org.apache.avro.ipc.Callback<java.lang.Void> callback) throws java.io.IOException;
     /** * 重置用户的密码，将用户密码置为新的指定密码或随机密码（新密码为空“”时），并以消息形式通知用户（仅当采用随机密码时有效）
 	 * 		消息类型来源于用户的凭证邦定中的凭证类型，如：邮件、手机，将以一种形式发送消息，优先级：1）邮件，2）手机
 	 *
-	 * @tables 	identity_password */
+	 * @tables 	ids_password */
     void resetPassword(long uid, java.lang.String newPwd, org.apache.avro.ipc.Callback<java.lang.Void> callback) throws java.io.IOException;
     /** * 保护密码（设置密保）
 	 *
@@ -481,325 +481,325 @@ public interface IdentityService {
 	 *
 	 * @param pwd 当前用户密码
 	 *
-	 * @tables 	identity_password */
+	 * @tables 	ids_password */
     void protectPassword(org.bear.api.identity.PasswordProtection protection, java.lang.String pwd, org.apache.avro.ipc.Callback<java.lang.Void> callback) throws java.io.IOException;
     /** * 密码保护验证
 	 *
 	 * @return 验证是否通过
 	 *
-	 * @tables 	identity_password */
+	 * @tables 	ids_password */
     void validatePasswordProtection(org.bear.api.identity.PasswordProtection protection, org.apache.avro.ipc.Callback<java.lang.Boolean> callback) throws java.io.IOException;
     /** * 判断用户密保是否存在
 	 *
 	 * @return 用户密保是否存在
 	 *
-	 * @tables 	identity_password */
+	 * @tables 	ids_password */
     void hasPasswordProtection(long uid, org.apache.avro.ipc.Callback<java.lang.Boolean> callback) throws java.io.IOException;
     /** * 获取用户密保问题
 	 *
 	 * @return 若密保问题存在则返回，否则异常
 	 *
-	 * @tables 	identity_password */
+	 * @tables 	ids_password */
     void getProtectionQuestion(long uid, org.apache.avro.ipc.Callback<org.bear.api.identity.ProtectionQuestion> callback) throws java.io.IOException;
     /** * 创建用户凭证绑定
 	 * 		会根据凭证的type和name检查唯一性
 	 *
-	 * @tables 	identity_credential */
+	 * @tables 	ids_credential */
     void createCredential(org.bear.api.identity.Credential credential, org.apache.avro.ipc.Callback<java.lang.Void> callback) throws java.io.IOException;
     /** * 取消用户凭证绑定
 	 * 		如果凭证不存在则忽略
 	 *
-	 * @tables 	identity_credential,
-	 * 			identity_credential_attribute */
+	 * @tables 	ids_credential,
+	 * 			ids_credential_attribute */
     void removeCredential(org.bear.api.identity.Credential credential, org.apache.avro.ipc.Callback<java.lang.Void> callback) throws java.io.IOException;
     /** * 更新用户凭证绑定
 	 * 		会根据凭证的type和name检查唯一性
 	 *
-	 * @tables 	identity_credential */
+	 * @tables 	ids_credential */
     void updateCredential(org.bear.api.identity.Credential credential, org.apache.avro.ipc.Callback<java.lang.Void> callback) throws java.io.IOException;
     /** * 根据部分凭证内容获取完整内容，如：根据type和name匹配完整凭证信息，根据id获取完整凭证信息
 	 *
 	 * @return 如果能匹配上则返回完整的凭证内容，否则异常
 	 *
-	 * @tables 	identity_credential */
+	 * @tables 	ids_credential */
     void matchCredential(org.bear.api.identity.Credential credential, org.apache.avro.ipc.Callback<org.bear.api.identity.Credential> callback) throws java.io.IOException;
     /** * 获取用户所有的凭证列表
 	 *
 	 * @return 用户所有的凭证列表
 	 *
-	 * @tables 	identity_credential */
+	 * @tables 	ids_credential */
     void getUserCredentials(long uid, org.apache.avro.ipc.Callback<java.util.List<org.bear.api.identity.Credential>> callback) throws java.io.IOException;
     /** * 检测凭证是否已经存在
 	 * 		根据凭证参数的id或者type和name检测
 	 *
 	 * @return 凭证是否存在
 	 *
-	 * @tables 	identity_credential */
+	 * @tables 	ids_credential */
     void isCredentialExists(org.bear.api.identity.Credential credential, org.apache.avro.ipc.Callback<java.lang.Boolean> callback) throws java.io.IOException;
     /** * 获取凭证所属用户
 	 * 		根据凭证参数的id或者type和name进行匹配
 	 *
 	 * @return 若凭证存在则返回此凭证的用户ID，否则异常
 	 *
-	 * @tables 	identity_credential */
+	 * @tables 	ids_credential */
     void getCredentialUid(org.bear.api.identity.Credential credential, org.apache.avro.ipc.Callback<java.lang.Long> callback) throws java.io.IOException;
     /** * 设置用户状态
 	 *
-	 * @tables 	identity_user */
+	 * @tables 	ids_user */
     void updateUserStatus(long uid, org.bear.api.identity.UserStatus status, org.apache.avro.ipc.Callback<java.lang.Void> callback) throws java.io.IOException;
     /** * 获取用户状态
 	 *
 	 * @return 若用户存在则返回此用户的当前状态，否则异常
 	 *
-	 * @tables 	identity_user */
+	 * @tables 	ids_user */
     void getUserStatus(long uid, org.apache.avro.ipc.Callback<org.bear.api.identity.UserStatus> callback) throws java.io.IOException;
     /** * 获取用户基本信息
 	 *
 	 * @return 若用户存在则返回此用户的基本信息，否则异常
 	 *
-	 * @tables 	identity_user */
+	 * @tables 	ids_user */
     void getUser(long uid, org.apache.avro.ipc.Callback<org.bear.api.identity.User> callback) throws java.io.IOException;
     /** * 根据昵称获取用户基本信息
 	 *
-	 * @tables 	identity_user */
+	 * @tables 	ids_user */
     void getUserByNick(java.lang.String nick, org.apache.avro.ipc.Callback<org.bear.api.identity.User> callback) throws java.io.IOException;
     /** * 批量获取用户信息
 	 *
 	 * @return 用户信息Map
 	 *
-	 * @tables 	identity_user */
+	 * @tables 	ids_user */
     void batchGetUser(java.util.List<java.lang.Long> uids, org.apache.avro.ipc.Callback<java.util.Map<java.lang.String,org.bear.api.identity.User>> callback) throws java.io.IOException;
     /** * 更新用户信息
 	 *
-	 * @tables 	identity_user */
+	 * @tables 	ids_user */
     void updateUser(org.bear.api.identity.User user, org.apache.avro.ipc.Callback<java.lang.Void> callback) throws java.io.IOException;
     /** * 批量更新用户信息
 	 *
-	 * @tables 	identity_user */
+	 * @tables 	ids_user */
     void batchUpdateUser(java.util.List<org.bear.api.identity.User> users, org.apache.avro.ipc.Callback<java.lang.Void> callback) throws java.io.IOException;
     /** * 获取用户属性值
 	 *
 	 * @return 属性值
 	 * 		注：属性不存在或null，统一返回为“”（空字符串）
 	 *
-	 * @tables 	identity_user_attribute */
+	 * @tables 	ids_user_attribute */
     void getUserAttribute(long uid, java.lang.String key, org.apache.avro.ipc.Callback<java.lang.String> callback) throws java.io.IOException;
     /** * 设置用户属性值
 	 *
-	 * @tables 	identity_user_attribute */
+	 * @tables 	ids_user_attribute */
     void setUserAttribute(long uid, java.lang.String key, java.lang.String value, org.apache.avro.ipc.Callback<java.lang.Void> callback) throws java.io.IOException;
     /** * 删除用户属性
 	 *
-	 * @tables 	identity_user_attribute */
+	 * @tables 	ids_user_attribute */
     void removeUserAttribute(long uid, java.lang.String key, org.apache.avro.ipc.Callback<java.lang.Void> callback) throws java.io.IOException;
     /** * 批量获取指定用户多个属性值
 	 *
 	 * @return 属性值Map
 	 *
-	 * @tables 	identity_user_attribute */
+	 * @tables 	ids_user_attribute */
     void getUserAttributes(long uid, java.util.List<java.lang.String> keys, org.apache.avro.ipc.Callback<java.util.Map<java.lang.String,java.lang.String>> callback) throws java.io.IOException;
     /** * 批量设置指定用户的多个属性值
 	 *
-	 * @tables 	identity_user_attribute
+	 * @tables 	ids_user_attribute
 	 * */
     void setUserAttributes(long uid, java.util.Map<java.lang.String,java.lang.String> values, org.apache.avro.ipc.Callback<java.lang.Void> callback) throws java.io.IOException;
     /** * 批量删除指定用户多个属性
 	 *
-	 * @tables 	identity_user_attribute */
+	 * @tables 	ids_user_attribute */
     void removeUserAttributes(long uid, java.util.List<java.lang.String> keys, org.apache.avro.ipc.Callback<java.lang.Void> callback) throws java.io.IOException;
     /** * 批量获取多个用户指定属性值
 	 *
 	 * @return 属性值Map
 	 *
-	 * @tables 	identity_user_attribute */
+	 * @tables 	ids_user_attribute */
     void batchGetUserAttribute(java.util.List<java.lang.Long> uids, java.lang.String key, org.apache.avro.ipc.Callback<java.util.Map<java.lang.String,java.lang.String>> callback) throws java.io.IOException;
     /** * 批量设置多个用户的指定属性值
 	 *
-	 * @tables 	identity_user_attribute */
+	 * @tables 	ids_user_attribute */
     void batchSetUserAttribute(java.lang.String key, java.util.Map<java.lang.String,java.lang.String> idValues, org.apache.avro.ipc.Callback<java.lang.Void> callback) throws java.io.IOException;
     /** * 批量删除多个用户指定属性
 	 *
-	 * @tables 	identity_user_attribute */
+	 * @tables 	ids_user_attribute */
     void batchRemoveUserAttribute(java.util.List<java.lang.Long> uids, java.lang.String key, org.apache.avro.ipc.Callback<java.lang.Void> callback) throws java.io.IOException;
     /** * 批量获取多个用户多个属性值
 	 *
 	 * @return 用户属性值Map
 	 *
-	 * @tables 	identity_user_attribute */
+	 * @tables 	ids_user_attribute */
     void batchGetUserAttributes(java.util.Map<java.lang.String,java.util.List<java.lang.String>> idKeys, org.apache.avro.ipc.Callback<java.util.Map<java.lang.String,java.util.Map<java.lang.String,java.lang.String>>> callback) throws java.io.IOException;
     /** * 批量设置多个用户的多个属性值
 	 *
-	 * @tables 	identity_user_attribute */
+	 * @tables 	ids_user_attribute */
     void batchSetUserAttributes(java.util.Map<java.lang.String,java.util.Map<java.lang.String,java.lang.String>> idValues, org.apache.avro.ipc.Callback<java.lang.Void> callback) throws java.io.IOException;
     /** * 批量删除多个用户多个属性
 	 *
-	 * @tables 	identity_user_attribute */
+	 * @tables 	ids_user_attribute */
     void batchRemoveUserAttributes(java.util.Map<java.lang.String,java.util.List<java.lang.String>> idKeys, org.apache.avro.ipc.Callback<java.lang.Void> callback) throws java.io.IOException;
     /** * 获取用户所有属性名
 	 *
 	 * @return 属性名集合
 	 *
-	 * @tables 	identity_user_attribute */
+	 * @tables 	ids_user_attribute */
     void getUserAttributeNames(long uid, org.apache.avro.ipc.Callback<java.util.List<java.lang.String>> callback) throws java.io.IOException;
     /** * 清除用户所有属性
 	 *
-	 * @tables 	identity_user_attribute */
+	 * @tables 	ids_user_attribute */
     void clearUserAttributes(long uid, org.apache.avro.ipc.Callback<java.lang.Void> callback) throws java.io.IOException;
     /** * 获取用户当前会话属性值
 	 *
 	 * @return 属性值
 	 *
-	 * @tables 	identity_session,
-	 * 			identity_session_attribute */
+	 * @tables 	ids_session,
+	 * 			ids_session_attribute */
     void getSessionAttribute(java.lang.String token, java.lang.String key, org.apache.avro.ipc.Callback<java.lang.String> callback) throws java.io.IOException;
     /** * 批量获取用户当前会话属性值
 	 *
 	 * @return 属性值Map
 	 *
-	 * @tables 	identity_session,
-	 * 			identity_session_attribute */
+	 * @tables 	ids_session,
+	 * 			ids_session_attribute */
     void getSessionAttributes(java.lang.String token, java.util.List<java.lang.String> keys, org.apache.avro.ipc.Callback<java.util.Map<java.lang.String,java.lang.String>> callback) throws java.io.IOException;
     /** * 设置用户当前会话属性值
 	 *
-	 * @tables 	identity_session,
-	 * 			identity_session_attribute */
+	 * @tables 	ids_session,
+	 * 			ids_session_attribute */
     void setSessionAttribute(java.lang.String token, java.lang.String key, java.lang.String value, org.apache.avro.ipc.Callback<java.lang.Void> callback) throws java.io.IOException;
     /** * 批量设置用户当前会话属性值
 	 *
-	 * @tables 	identity_session,
-	 * 			identity_session_attribute */
+	 * @tables 	ids_session,
+	 * 			ids_session_attribute */
     void setSessionAttributes(java.lang.String token, java.util.Map<java.lang.String,java.lang.String> values, org.apache.avro.ipc.Callback<java.lang.Void> callback) throws java.io.IOException;
     /** * 移除用户会话属性
 	 *
-	 * @tables 	identity_session,
-	 * 			identity_session_attribute */
+	 * @tables 	ids_session,
+	 * 			ids_session_attribute */
     void removeSessionAttribute(java.lang.String token, java.lang.String key, org.apache.avro.ipc.Callback<java.lang.Void> callback) throws java.io.IOException;
     /** * 批量移除用户会话属性
 	 *
-	 * @tables 	identity_session,
-	 * 			identity_session_attribute */
+	 * @tables 	ids_session,
+	 * 			ids_session_attribute */
     void removeSessionAttributes(java.lang.String token, java.util.List<java.lang.String> keys, org.apache.avro.ipc.Callback<java.lang.Void> callback) throws java.io.IOException;
     /** * 获取当前用户会话已有的属性名集合
 	 *
 	 * @return 属性名集合
 	 *
-	 * @tables 	identity_session,
-	 * 			identity_session_attribute */
+	 * @tables 	ids_session,
+	 * 			ids_session_attribute */
     void getSessionAttributeNames(java.lang.String token, org.apache.avro.ipc.Callback<java.util.List<java.lang.String>> callback) throws java.io.IOException;
     /** * 清除用户会话所有属性
 	 *
-	 * @tables 	identity_session,
-	 * 			identity_session_attribute */
+	 * @tables 	ids_session,
+	 * 			ids_session_attribute */
     void clearSessionAttributes(java.lang.String token, org.apache.avro.ipc.Callback<java.lang.Void> callback) throws java.io.IOException;
     /** * 创建临时会话
 	 *
 	 * @return 临时会话的token
 	 *
-	 * @tables 	identity_session */
+	 * @tables 	ids_session */
     void createGuestSession(org.apache.avro.ipc.Callback<java.lang.String> callback) throws java.io.IOException;
     /** * 检测昵称是否已存在
 	 *
 	 * @return 存在返回true，否则返回false
 	 *
-	 * @tables identity_user */
+	 * @tables ids_user */
     void isNickNameExists(long uid, java.lang.String nickName, org.apache.avro.ipc.Callback<java.lang.Boolean> callback) throws java.io.IOException;
     /** * 统计符合条件的用户总数
 	 *
 	 * @return 符合条件的用户数
 	 *
-	 * @tables identity_user,
-	 * 		   identity_credential */
+	 * @tables ids_user,
+	 * 		   ids_credential */
     void countUser(java.lang.String nickName, org.bear.api.identity.CredentialType type, java.lang.String name, long startTime, long endTime, java.util.Map<java.lang.String,java.lang.String> attributes, org.apache.avro.ipc.Callback<java.lang.Long> callback) throws java.io.IOException;
     /** * 列出符合条件的用户
 	 *
 	 * @return 分页用户列表
 	 *
-	 * @tables identity_user,
-	 * 		   identity_credential */
+	 * @tables ids_user,
+	 * 		   ids_credential */
     void listUser(java.lang.String nickName, org.bear.api.identity.CredentialType type, java.lang.String name, long startTime, long endTime, java.util.Map<java.lang.String,java.lang.String> attributes, long offset, long limit, org.apache.avro.ipc.Callback<java.util.List<org.bear.api.identity.User>> callback) throws java.io.IOException;
     /** * 创建用户组
 	 *
 	 * @return 返回用户组标识
 	 *
-	 * @tables identity_group */
+	 * @tables ids_group */
     void createGroup(org.bear.api.identity.Group group, org.apache.avro.ipc.Callback<java.lang.Long> callback) throws java.io.IOException;
     /** * 更新用户组
 	 *
-	 * @tables identity_group */
+	 * @tables ids_group */
     void updateGroup(org.bear.api.identity.Group group, org.apache.avro.ipc.Callback<java.lang.Void> callback) throws java.io.IOException;
     /** * 删除用户组
 	 *
-	 * @tables identity_group,
-	 * 		   identity_group_user */
+	 * @tables ids_group,
+	 * 		   ids_group_user */
     void removeGroup(long groupId, org.apache.avro.ipc.Callback<java.lang.Void> callback) throws java.io.IOException;
     /** * 判断用户组名称是否存在
 	 *
 	 * @return 存在返回true，否则false
 	 *
-	 * @tables identity_group */
+	 * @tables ids_group */
     void isGroupNameExists(long groupId, java.lang.String name, org.apache.avro.ipc.Callback<java.lang.Boolean> callback) throws java.io.IOException;
     /** * 获取用户组
 	 *
 	 * @return 用户组信息
 	 *
-	 * @tables identity_group */
+	 * @tables ids_group */
     void getGroup(long groupId, org.apache.avro.ipc.Callback<org.bear.api.identity.Group> callback) throws java.io.IOException;
     /** * 根据名称获取用户组
 	 *
 	 * @return 用户组信息
 	 *
-	 * @tables identity_group */
+	 * @tables ids_group */
     void getGroupByName(java.lang.String name, org.apache.avro.ipc.Callback<org.bear.api.identity.Group> callback) throws java.io.IOException;
     /** * 获取符合条件用户组数量
 	 *
-	 * @tables identity_group */
+	 * @tables ids_group */
     void countGroups(java.lang.String name, org.apache.avro.ipc.Callback<java.lang.Long> callback) throws java.io.IOException;
     /** * 获取符合条件用户组列表
 	 *
-	 * @tables identity_group */
+	 * @tables ids_group */
     void listGroups(java.lang.String name, long offset, long limit, org.apache.avro.ipc.Callback<java.util.List<org.bear.api.identity.Group>> callback) throws java.io.IOException;
     /** * 将用户添加到用户组
 	 *
-	 * @tables identity_group_user */
+	 * @tables ids_group_user */
     void addUserToGroup(long uid, long groupId, org.apache.avro.ipc.Callback<java.lang.Void> callback) throws java.io.IOException;
     /** * 从用户组中移除用户
 	 *
-	 * @tables identity_group_user */
+	 * @tables ids_group_user */
     void removeUserFromGroup(long uid, long groupId, org.apache.avro.ipc.Callback<java.lang.Void> callback) throws java.io.IOException;
     /** * 判断用户是否在指定组内
 	 *
-	 * @tables identity_group_user */
+	 * @tables ids_group_user */
     void isUserInGroup(long uid, long groupId, org.apache.avro.ipc.Callback<java.lang.Boolean> callback) throws java.io.IOException;
     /** * 获取指定用户组下的用户数
 	 *
-	 * @tables identity_group_user */
+	 * @tables ids_group_user */
     void countGroupUsers(long groupId, org.apache.avro.ipc.Callback<java.lang.Long> callback) throws java.io.IOException;
     /** * 列出指定用户组下的用户
 	 *
-	 * @tables identity_group_user
-	 * 		   identity_user
+	 * @tables ids_group_user
+	 * 		   ids_user
 	 * */
     void listGroupUsers(long groupId, long offset, long limit, org.apache.avro.ipc.Callback<java.util.List<org.bear.api.identity.User>> callback) throws java.io.IOException;
     /** * 获取指定用户所属的用户组列表
 	 *
-	 * @tables identity_group_user,
-	 * 		   identity_group */
+	 * @tables ids_group_user,
+	 * 		   ids_group */
     void getUserGroups(long uid, org.apache.avro.ipc.Callback<java.util.List<org.bear.api.identity.Group>> callback) throws java.io.IOException;
     /** * 判断用户是否超级管理员
 	 *
-	 * @tables  identity_user,
-	 * 			identity_user_attribute */
+	 * @tables  ids_user,
+	 * 			ids_user_attribute */
     void isAdminUser(long uid, org.apache.avro.ipc.Callback<java.lang.Boolean> callback) throws java.io.IOException;
     /** * 判断当前会话是否是否超级管理员会话
 	 *
-	 * @tables  identity_user,
-	 * 			identity_user_attribute,
-	 * 			identity_session */
+	 * @tables  ids_user,
+	 * 			ids_user_attribute,
+	 * 			ids_session */
     void isAdminSession(java.lang.String token, org.apache.avro.ipc.Callback<java.lang.Boolean> callback) throws java.io.IOException;
     /** * 重置超级管理员（系统仅有一个超级管理员）
 	 *
-	 * @tables  identity_user,
-	 * 			identity_user_attribute */
+	 * @tables  ids_user,
+	 * 			ids_user_attribute */
     void resetAdminUser(long uid, org.apache.avro.ipc.Callback<java.lang.Void> callback) throws java.io.IOException;
   }
 }

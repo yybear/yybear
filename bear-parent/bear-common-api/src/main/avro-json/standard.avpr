@@ -1,0 +1,7 @@
+{
+  "protocol" : "StandardService",
+  "namespace" : "org.bear.api.standard",
+  "types" : [ ],
+  "messages" : {
+  }
+}

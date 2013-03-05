@@ -23,9 +23,9 @@
 			<artifactId>avro</artifactId>
 		</dependency>
 		<dependency>
-            <groupId>org.apache.avro</groupId>
-            <artifactId>avro-ipc</artifactId>
-        </dependency>
+			<groupId>org.apache.avro</groupId>
+			<artifactId>avro-ipc</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -38,7 +38,7 @@
 					<execution>
 						<phase>generate-sources</phase>
 						<goals>
-                            <goal>idl-protocol</goal>
+							<goal>idl-protocol</goal>
 						</goals>
 						<configuration>
 							<sourceDirectory>${project.basedir}/src/main/avro/</sourceDirectory>
@@ -48,6 +48,47 @@
 					</execution>
 				</executions>
 			</plugin>
+			<!-- <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>generate-sources</id>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <tasks>
+                                <exec executable="java" failifexecutionfails="false">
+									<arg
+										line=" -jar E:/TDDOWNLOAD/avro-tools-1.7.3.jar 
+									idl ${project.basedir}/src/main/avro/fileStore.avdl 
+									${project.basedir}/src/main/avro-json/fileStore.avpr" />
+								</exec>
+                            </tasks>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin> -->
+			<plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <configuration>
+	                        <tasks>
+	                        	<exec executable="java" failifexecutionfails="false">
+									<arg
+										line=" -jar ${basedir}/../bear-tool/target/bear-tool.jar dl2pr ${project.basedir}/src/main/avro ${project.basedir}/src/main/avro-json" />
+								</exec>
+	                        </tasks>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>

@@ -74,7 +74,6 @@ public class IdentityServiceTest {
 		user.setBirthday(d.getTime());
 		user.setDescription(rndStr);
 		user.setPhoto("photo-" + rndStr);
-		user.setStatus(UserStatus.NORMAL);
 		return user;
 	}
 
@@ -152,7 +151,6 @@ public class IdentityServiceTest {
 		}
 	}
 	
-	@Test
 	public void getUser() throws Exception{
 		Long uid = 1l;
 		User serviceUser = this.identityService.getUser(uid);

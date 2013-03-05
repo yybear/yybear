@@ -1,0 +1,448 @@
+{
+  "protocol" : "FileStoreService",
+  "namespace" : "org.bear.api.fs",
+  "types" : [ {
+    "type" : "enum",
+    "name" : "Gender",
+    "namespace" : "org.bear.api.type",
+    "doc" : "",
+    "symbols" : [ "UNKNOWN", "MALE", "FEMALE" ]
+  }, {
+    "type" : "record",
+    "name" : "StackTrace",
+    "namespace" : "org.bear.api.type",
+    "doc" : "异常堆栈对象",
+    "fields" : [ {
+      "name" : "className",
+      "type" : "string",
+      "doc" : "发生异常的类"
+    }, {
+      "name" : "methodName",
+      "type" : "string",
+      "doc" : "发生异常的方法"
+    }, {
+      "name" : "fileName",
+      "type" : "string",
+      "doc" : "发生异常的文件"
+    }, {
+      "name" : "lineNumber",
+      "type" : "int",
+      "doc" : "发生异常的行号"
+    } ]
+  }, {
+    "type" : "enum",
+    "name" : "AccessScope",
+    "namespace" : "org.bear.api.type",
+    "doc" : "表示实体对象的访问权限级别",
+    "symbols" : [ "ALL", "USER", "ROLE", "TOKEN", "SELF", "SESSION" ]
+  }, {
+    "type" : "error",
+    "name" : "GlobalException",
+    "namespace" : "org.bear.api.type",
+    "doc" : "通用错误对象",
+    "fields" : [ {
+      "name" : "code",
+      "type" : "int",
+      "doc" : "错误代码"
+    }, {
+      "name" : "msg",
+      "type" : "string",
+      "doc" : "发生异常的方法"
+    }, {
+      "name" : "stackTraces",
+      "type" : {
+        "type" : "array",
+        "items" : "StackTrace"
+      },
+      "doc" : "发生错误堆栈，供调试用"
+    } ]
+  }, {
+    "type" : "enum",
+    "name" : "Operate",
+    "doc" : "* 表示支持的图片变换类型\r\n\t *\r\n\t * @field RESIZE 等比缩放\r\n\t *\r\n\t * @field CROP 裁剪\r\n\t *\r\n\t * @field ROTATE 旋转",
+    "symbols" : [ "RESIZE", "CROP", "ROTATE" ]
+  }, {
+    "type" : "record",
+    "name" : "File",
+    "doc" : "* 文件描述信息,通过主键或者业务加所有者即可获得所关联的文件信息\r\n\t *\r\n\t * @field id 文件的id,主键\r\n\t *\r\n\t * @field bizKey 文件所属的业务\r\n\t *\r\n\t * @field owner 文件的所有者,建议为业务对象的主键,这样配合bizKey就可以确定和这个业务对象向关联的所有文件\r\n\t *\r\n\t * @field userId 文件的关联用户,表示文件由哪个用户上传\r\n\t *\r\n\t * @field name 文件的名称\r\n\t *\r\n\t * @field size 文件的大小\r\n\t *\r\n\t * @field data 文件的附加属性\r\n\t *\r\n\t * @field updateAt 文件的最后更新时间\r\n\t *\r\n\t * @field scope 文件的访问权限级别",
+    "fields" : [ {
+      "name" : "id",
+      "type" : "long"
+    }, {
+      "name" : "bizKey",
+      "type" : "string"
+    }, {
+      "name" : "owner",
+      "type" : "string"
+    }, {
+      "name" : "userId",
+      "type" : "long"
+    }, {
+      "name" : "name",
+      "type" : "string"
+    }, {
+      "name" : "size",
+      "type" : "int"
+    }, {
+      "name" : "data",
+      "type" : {
+        "type" : "map",
+        "values" : "string"
+      }
+    }, {
+      "name" : "updateAt",
+      "type" : "long"
+    }, {
+      "name" : "scope",
+      "type" : "org.bear.api.type.AccessScope"
+    } ]
+  }, {
+    "type" : "record",
+    "name" : "FilePage",
+    "doc" : "* 文件列表分页对象\r\n\t *\r\n\t * @field items 文件列表\r\n\t *\r\n\t * @field total 文件总数",
+    "fields" : [ {
+      "name" : "items",
+      "type" : {
+        "type" : "array",
+        "items" : "File"
+      }
+    }, {
+      "name" : "total",
+      "type" : "int"
+    } ]
+  }, {
+    "type" : "record",
+    "name" : "Action",
+    "doc" : "* 图片变换操作\r\n\t *\r\n\t * @field operate 操作类型\r\n\t *\r\n\t * @field params 附加参数",
+    "fields" : [ {
+      "name" : "operate",
+      "type" : "Operate"
+    }, {
+      "name" : "param",
+      "type" : {
+        "type" : "map",
+        "values" : "string"
+      }
+    } ]
+  } ],
+  "messages" : {
+    "saveFile" : {
+      "doc" : "* 保存一个文件,当id为空时则为新建\r\n     * \r\n     * 1. 若id不为空,获取id对应的file对象,设置传入的新属性后更新 (可更新owner,userId,name,scope,data属性)\r\n     * 2. 若id为空,则新建一个file对象\r\n     *\r\n     * @param file 待保存的文件信\r\n     *\r\n     * @return 包含id的文件\r\n     *\r\n     * @tables fs_file",
+      "request" : [ {
+        "name" : "file",
+        "type" : "File"
+      } ],
+      "response" : "File",
+      "errors" : [ "org.bear.api.type.GlobalException" ]
+    },
+    "removeFiles" : {
+      "doc" : "* 批量删除文件\r\n     * 1. 批量将对应的数据库记录的status属性设置成Status.DELETED(逻辑删除)\r\n     * 2. 真实文件不做删除\r\n     * \r\n     * @param ids 文件id列表\r\n     *\r\n     * @tables fs_file",
+      "request" : [ {
+        "name" : "ids",
+        "type" : {
+          "type" : "array",
+          "items" : "long"
+        }
+      } ],
+      "response" : "null",
+      "errors" : [ "org.bear.api.type.GlobalException" ]
+    },
+    "removeFilesByOwner" : {
+      "doc" : "* 批量删除和某个所有者相关联的所有文件\r\n     * 1. 批量将对应的数据库记录的status属性设置成Status.DELETED(逻辑删除)\r\n     * 2. 真实文件不做删除\r\n     * \r\n     * @param bizKey 业务名\r\n     *\r\n     * @param owner 所有者\r\n     *\r\n     * @tables fs_file",
+      "request" : [ {
+        "name" : "bizKey",
+        "type" : "string"
+      }, {
+        "name" : "owner",
+        "type" : "string"
+      } ],
+      "response" : "null",
+      "errors" : [ "org.bear.api.type.GlobalException" ]
+    },
+    "writeFile" : {
+      "doc" : "* 将二进制内容写入到目标文件的指定位置\r\n     * \r\n     * 1. 根据文件编号获取数据库中的文件记录\r\n     * 2. 根据文件选择存储对象(storage)\r\n     * \t  2.1 file对象获取storage属性值(系统在初始化时默认配置了唯一一个id为s1的sanyuan.any123.filestore.fs.FileSystemStorage,它的capability=-1,enable=true,存储基本路径directory配置为application.properties的storage1.path)\r\n     *        若属性值未设置,遍历已有的storages列表,如果storage.isAvailable(如果是enable且,capability小于0或used大于capability),则选择这个storage\r\n     *        若属性值已设置(该值可以为多个存储id以逗号分隔连接而成),则分隔成id列表,遍历已有storages的map(key为storage的id,value为storage),匹配第一个有效的storage(同上storage.isAvaliable)\r\n     * 3. 获取file的key(fs-加上文件编号)\r\n     * 4. 把这个key进行md5加密,'加密结果前两位/加密结果第三、四位/加密结果',作为文件的子路径\r\n     * 5. 如果storage配置了useXsendfile为true的话,子路径前加上'/文件编号/'组成xpath\r\n     * 6. 检查并创建这个文件\r\n     * \t  6.1 若该路径下文件已存在,则跳过\r\n     *    6.2 若文件不存在,检查并创建父文件路径,创建该文件\r\n     * 7. 写入从起始位置开始,写入一定长度的二进制文件\r\n     * 8. 文件设置大小信息\r\n     * 9. 更新数据库中的文件信息\r\n     *  \r\n     * @param id 文件id\r\n     *\r\n     * @param binary 二进制内容\r\n     *\r\n     * @param position 起始位置\r\n     *\r\n     * @param binary 二进制内容\r\n     *\r\n     * @throws FsException <ul>\r\n     *     <li>201 io错误</li>\r\n     *     <li>202 文件未找到</li>\r\n     * </ul>\r\n     *\r\n     * @tables fs_file",
+      "request" : [ {
+        "name" : "id",
+        "type" : "long"
+      }, {
+        "name" : "bytes",
+        "type" : "bytes"
+      }, {
+        "name" : "position",
+        "type" : "int"
+      } ],
+      "response" : "null",
+      "errors" : [ "org.bear.api.type.GlobalException" ]
+    },
+    "readFile" : {
+      "doc" : "* 从目标文件中读取内容\r\n     * \r\n     * 1. 同writeFile逻辑一致,获取文件存放路径\r\n     * 2. 根据路径找到文件,读取文件起始位置开始,一定长度的二进制流\r\n     * \r\n     *\r\n     * @param id 文件id\r\n     *\r\n     * @param position 起始位置\r\n     *\r\n     * @param count 要读取的长度\r\n     *\r\n     * @return 读取的二进制内容\r\n     *\r\n     * @throws FsException <ul>\r\n     *     <li>201 io错误</li>\r\n     *     <li>202 文件未找到</li>\r\n     * </ul>\r\n     *\r\n     * @tables fs_file",
+      "request" : [ {
+        "name" : "id",
+        "type" : "long"
+      }, {
+        "name" : "position",
+        "type" : "int"
+      }, {
+        "name" : "count",
+        "type" : "int"
+      } ],
+      "response" : "bytes",
+      "errors" : [ "org.bear.api.type.GlobalException" ]
+    },
+    "transformImage" : {
+      "doc" : "* 变换一个图片\r\n     *  \r\n     * 涉及到的参数\r\n     * \r\n     *  \r\n     * 1. 同writeFile逻辑一致,获取文件存放路径\r\n     * 2. 如果文件是图片(后缀为\"gif\", \"bmp\", \"jpg\", \"jpeg\", \"png\"之一),则进行后续操作(本系统由AwtImageTransform进行图片相关操作)\r\n     * 3. 若操作为缩放,则调用图片缩放接口,由宽度为限制条件(若实际图片宽度>目标宽度,则缩放比例为目标宽度/实际宽度),等比缩放\r\n     * 4. 若操作为裁剪,则调用图片裁剪接口,截取从图片左上角为坐标轴原点,第四象限中(left,-top)这个点为起点,x轴正方向width宽度,y轴反方向height高度组成的矩形\r\n     * 5. 若操作为翻转,则选取从图片左上角为坐标轴原点,第四象限中(left,-top)这个点为旋转中心点,以逆时针方向旋转一定角度\r\n     * 6. 操作完成后,更新数据库中文件的大小\r\n     * \r\n     * @param id 文件id\r\n     *\r\n     * @param actions 变换操作列表\r\n     *\r\n     * @tables fs_file\r\n     *",
+      "request" : [ {
+        "name" : "id",
+        "type" : "long"
+      }, {
+        "name" : "actions",
+        "type" : {
+          "type" : "array",
+          "items" : "Action"
+        }
+      } ],
+      "response" : "null",
+      "errors" : [ "org.bear.api.type.GlobalException" ]
+    },
+    "getToken" : {
+      "doc" : "* 获取一个文件的访问token,通过url携带这个token实现文件的自定义权限\r\n     * 1. 用tokenService创建一个有效期为ttl的token (详见tokenService的createTokenEx)\r\n     * 2. 用tokenService在该token上绑定参数列表 (详见tokenService的bindListParam)\r\n     *    2.1 多个id\r\n     *    2.2 若可写,参数加上true\r\n     * 3. 返回该token\r\n     * \r\n     * @param ids 文件id\r\n     *\r\n     * @param writeable 是否可写\r\n     *\r\n     * @param ttl token的有效时间,单位秒\r\n     *\r\n     * @return token字符串\r\n     *\r\n     * @tables fs_file",
+      "request" : [ {
+        "name" : "ids",
+        "type" : {
+          "type" : "array",
+          "items" : "long"
+        }
+      }, {
+        "name" : "writeable",
+        "type" : "boolean"
+      }, {
+        "name" : "ttl",
+        "type" : "int"
+      } ],
+      "response" : "string",
+      "errors" : [ "org.bear.api.type.GlobalException" ]
+    },
+    "getBizToken" : {
+      "doc" : "* 获取业务文件的访问token,通过url携带这个token实现文件的自定义权限\r\n     *\r\n     * 1. 用tokenService创建一个有效期为ttl的token (详见tokenService的createTokenEx)\r\n     * 2. 用tokenService在该token上绑定参数列表 (详见tokenService的bindListParam)\r\n     *    2.1 多个owner\r\n     *    2.2 若可写,参数加上true\r\n     * 3. 返回该token\r\n     *\r\n     * @param bizKey 业务名\r\n     *\r\n     * @param owners 所有者列表\r\n     *\r\n     * @param writeable 是否可写\r\n     *\r\n     * @param ttl token的有效时间,单位秒\r\n     *\r\n     * @return 业务token字符串\r\n     *\r\n     * @tables fs_file",
+      "request" : [ {
+        "name" : "bizKey",
+        "type" : "string"
+      }, {
+        "name" : "owners",
+        "type" : {
+          "type" : "array",
+          "items" : "string"
+        }
+      }, {
+        "name" : "writeable",
+        "type" : "boolean"
+      }, {
+        "name" : "ttl",
+        "type" : "int"
+      } ],
+      "response" : "string",
+      "errors" : [ "org.bear.api.type.GlobalException" ]
+    },
+    "bindSession" : {
+      "doc" : "* 绑定文件的读取权限到会话session\r\n     * 1.遍历文件编号,将他们以 'fs'+文件编号 为key,'T'为value放入一个map\r\n     * 2.调用identityService的setSessionAttributes方法进行绑定(详见identityService)\r\n     *\r\n     * @param sessionId 会话id\r\n     *\r\n     * @param ids 文件id列表",
+      "request" : [ {
+        "name" : "sessionId",
+        "type" : "string"
+      }, {
+        "name" : "ids",
+        "type" : {
+          "type" : "array",
+          "items" : "long"
+        }
+      } ],
+      "response" : "null",
+      "errors" : [ "org.bear.api.type.GlobalException" ]
+    },
+    "unbindSession" : {
+      "doc" : "* 取消绑定文件的读取权限到会话session\r\n     * \r\n     * 1.遍历文件编号,将他们以 'fs'+文件编号 为key,'T'为value放入一个map\r\n     * 2.调用identityService的removeSessionAttributes方法取消绑定(详见identityService)\r\n     * \r\n     * @param sessionId 会话id\r\n     *\r\n     * @param ids 文件id列表",
+      "request" : [ {
+        "name" : "sessionId",
+        "type" : "string"
+      }, {
+        "name" : "ids",
+        "type" : {
+          "type" : "array",
+          "items" : "long"
+        }
+      } ],
+      "response" : "null",
+      "errors" : [ "org.bear.api.type.GlobalException" ]
+    },
+    "getFile" : {
+      "doc" : "* 获取一个文件\r\n     * \r\n     * 1.仅获取数据库中的一个文件对象\r\n     *\r\n     * @param id 文件id\r\n     *\r\n     * @return 文件\r\n     *\r\n     * @tables fs_file",
+      "request" : [ {
+        "name" : "id",
+        "type" : "long"
+      } ],
+      "response" : "File",
+      "errors" : [ "org.bear.api.type.GlobalException" ]
+    },
+    "getFileMap" : {
+      "doc" : "* 根据id批量获取文件\r\n     * \r\n     * @param id 文件id列表\r\n     *\r\n     * @return 文件map\r\n     *\r\n     * @tables fs_file",
+      "request" : [ {
+        "name" : "ids",
+        "type" : {
+          "type" : "array",
+          "items" : "long"
+        }
+      } ],
+      "response" : {
+        "type" : "map",
+        "values" : "File"
+      },
+      "errors" : [ "org.bear.api.type.GlobalException" ]
+    },
+    "getSingleFile" : {
+      "doc" : "* 获取某个业务对象关联的文件\r\n     * 例如用户的头像可以用getSingleFile(SPACE_AVATAR, \"888\")来获取888用户的头像文件信息\r\n     *\r\n     * @param bizKey 业务名\r\n     *\r\n     * @param owner 所有者\r\n     *\r\n     * @return 文件\r\n     *\r\n     * @tables fs_file",
+      "request" : [ {
+        "name" : "bizKey",
+        "type" : "string"
+      }, {
+        "name" : "owner",
+        "type" : "string"
+      } ],
+      "response" : "File",
+      "errors" : [ "org.bear.api.type.GlobalException" ]
+    },
+    "getFiles" : {
+      "doc" : "* 获取某个业务对象关联的文件,例如要获取某个帖子相关的附件,,按文件上传倒序排序\r\n     *\r\n     * @param bizKey 业务名\r\n     *\r\n     * @param owner 所有者\r\n     *\r\n     * @return 文件列表\r\n     *\r\n     * @tables fs_file",
+      "request" : [ {
+        "name" : "bizKey",
+        "type" : "string"
+      }, {
+        "name" : "owner",
+        "type" : "string"
+      } ],
+      "response" : {
+        "type" : "array",
+        "items" : "File"
+      },
+      "errors" : [ "org.bear.api.type.GlobalException" ]
+    },
+    "batchGetFiles" : {
+      "doc" : "* 根据owner列表批量获取某个业务对象关联的文件\r\n     *\r\n     * @param bizKey 业务名\r\n     *\r\n     * @param owners 所有者列表\r\n     *\r\n     * @return 文件列表map\r\n     *\r\n     * @tables fs_file",
+      "request" : [ {
+        "name" : "bizKey",
+        "type" : "string"
+      }, {
+        "name" : "owners",
+        "type" : {
+          "type" : "array",
+          "items" : "string"
+        }
+      } ],
+      "response" : {
+        "type" : "map",
+        "values" : {
+          "type" : "array",
+          "items" : "File"
+        }
+      },
+      "errors" : [ "org.bear.api.type.GlobalException" ]
+    },
+    "batchGetFilesEx" : {
+      "doc" : "* 根据多个bizKey,多个owner获取文件,格式map<bizKey, set<owner>>\r\n     *\r\n     * @param ownersMap 嵌套map,map<bizKey, set<owner>>\r\n     *\r\n     * @param owners 所有者列表\r\n     *\r\n     * @return 嵌套map,map<bizKey, map<owner, list<File>>>\r\n     *\r\n     * @tables fs_file",
+      "request" : [ {
+        "name" : "ownersMap",
+        "type" : {
+          "type" : "map",
+          "values" : {
+            "type" : "array",
+            "items" : "string"
+          }
+        }
+      } ],
+      "response" : {
+        "type" : "map",
+        "values" : {
+          "type" : "map",
+          "values" : {
+            "type" : "array",
+            "items" : "File"
+          }
+        }
+      },
+      "errors" : [ "org.bear.api.type.GlobalException" ]
+    },
+    "getEncryptedId" : {
+      "doc" : "* 获取某个文件的加密访问id\r\n     * \r\n     * 1. 将id和系统时间和有效期,以某种形式组合,并通过加密算法加密后形成的字符串\r\n     * \r\n     * @param id 文件id\r\n     *\r\n     * @param ttl 加密id的有效时间,单位秒，0为不限制\r\n     *\r\n     * @return 加密的id\r\n     *\r\n     * @tables fs_file",
+      "request" : [ {
+        "name" : "id",
+        "type" : "long"
+      }, {
+        "name" : "ttl",
+        "type" : "int"
+      } ],
+      "response" : "string",
+      "errors" : [ "org.bear.api.type.GlobalException" ]
+    },
+    "getEncryptedIds" : {
+      "doc" : "* 批量获取文件的加密访问\r\n     * \r\n     * 1.同getEncryptedId\r\n     * \r\n     * @param ids 文件id列表\r\n     *\r\n     * @param ttl 加密id的有效时间,单位秒，0为不限制\r\n     *\r\n     * @return 加密的id列表\r\n     *\r\n     * @tables fs_file",
+      "request" : [ {
+        "name" : "ids",
+        "type" : {
+          "type" : "array",
+          "items" : "long"
+        }
+      }, {
+        "name" : "ttl",
+        "type" : "int"
+      } ],
+      "response" : {
+        "type" : "map",
+        "values" : "string"
+      },
+      "errors" : [ "org.bear.api.type.GlobalException" ]
+    },
+    "getFileByEncryptedId" : {
+      "doc" : "* 根据加密的id获取文件\r\n     * \r\n     * 1. 根据加密规则解密出文件编号\r\n     * 2. 根据文件编号从数据库中获取文件对象\r\n     *\r\n     * @param encryptedId 加密的id\r\n     *\r\n     * @return 文件\r\n     *\r\n     * @tables fs_file",
+      "request" : [ {
+        "name" : "encryptedId",
+        "type" : "string"
+      } ],
+      "response" : "File",
+      "errors" : [ "org.bear.api.type.GlobalException" ]
+    },
+    "getFileMapByEncryptedId" : {
+      "doc" : "* 批量根据加密的id获取文件\r\n     * \r\n     * 1.同getFileByEncryptedId\r\n     *\r\n     * @param encryptedIds 加密的id列表\r\n     *\r\n     * @return 文件map\r\n     *\r\n     * @tables fs_file",
+      "request" : [ {
+        "name" : "encryptedIds",
+        "type" : {
+          "type" : "array",
+          "items" : "string"
+        }
+      } ],
+      "response" : {
+        "type" : "map",
+        "values" : "File"
+      },
+      "errors" : [ "org.bear.api.type.GlobalException" ]
+    },
+    "getUserFiles" : {
+      "doc" : "* 获取某个用户在目标业务的所有文件,如果业务为空则返回所有业务文件,按文件上传倒序排序\r\n     *\r\n     * @param bizKey 业务名 为空则忽略此条件\r\n     *\r\n     * @param owner 所有者 为空则忽略此条件\r\n     *\r\n     * @param userId 用户id\r\n     *\r\n     * @param start 开始位置\r\n     *\r\n     * @param size 获取个数\r\n     *\r\n     * @return 文件列表分页对象\r\n     *\r\n     * @tables fs_file",
+      "request" : [ {
+        "name" : "bizKey",
+        "type" : "string"
+      }, {
+        "name" : "owner",
+        "type" : "string"
+      }, {
+        "name" : "userId",
+        "type" : "long"
+      }, {
+        "name" : "start",
+        "type" : "int"
+      }, {
+        "name" : "size",
+        "type" : "int"
+      } ],
+      "response" : "FilePage",
+      "errors" : [ "org.bear.api.type.GlobalException" ]
+    }
+  }
+}

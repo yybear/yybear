@@ -76,8 +76,7 @@ public class IdentityManagerImpl implements IdentityManager {
 	}
 	@Override
 	public long validateToken(String token) {
-		// TODO Auto-generated method stub
-		return 0;
+		return sessionManager.validateToken(token);
 	}
 	@Override
 	public User validateTokenWithUser(String token) {
@@ -176,8 +175,7 @@ public class IdentityManagerImpl implements IdentityManager {
 	}
 	@Override
 	public User getUser(long uid) {
-		// TODO Auto-generated method stub
-		return null;
+		return userManager.getUser(uid);
 	}
 	@Override
 	public Map<Long, User> batchGetUser(Set<Long> uid) {

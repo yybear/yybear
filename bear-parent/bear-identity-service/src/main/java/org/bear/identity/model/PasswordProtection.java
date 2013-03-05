@@ -15,14 +15,11 @@ import org.bear.identity.type.ProtectionQuestion;
  * @author <a href="mailto:gan.qingx@qq.com">gan qing</a>
  * @version V1.0, 2013-2-20
  */
-@Entity
 /*@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)*/
-@Table(name="ids_password_protection")
 public class PasswordProtection implements Serializable {
 
 	private static final long serialVersionUID = -2500182814036361180L;
 
-	@Id
 	private Long uid;
 	private ProtectionQuestion question;
 	private String answer;

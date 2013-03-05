@@ -1,0 +1,35 @@
+[
+	{"namespace": "org.bear.api.type",
+	 "type": "enum",
+	 "name": "Gender",
+	 "doc": "",
+	 "symbols":["UNKNOWN","MALE","FEMALE"]
+	},
+	{"namespace": "org.bear.api.type",
+	 "type": "record",
+	 "name": "StackTrace",
+	 "doc": "异常堆栈对象",
+	 "fields":[
+	 	{"name":"className","type":"string","doc":"发生异常的类"},
+	 	{"name":"methodName","type":"string","doc":"发生异常的方法"},
+	 	{"name":"fileName","type":"string","doc":"发生异常的文件"},
+	 	{"name":"lineNumber","type":"int","doc":"发生异常的行号"}
+	 ]
+	},
+	{"namespace": "org.bear.api.type",
+	 "type": "enum",
+	 "name": "AccessScope",
+	 "doc": "表示实体对象的访问权限级别",
+	 "symbols":["ALL", "USER", "ROLE", "TOKEN", "SELF", "SESSION"]
+	},
+	{"namespace": "org.bear.api.type",
+	 "type": "error",
+	 "name": "GlobalException",
+	 "doc": "通用错误对象",
+	 "fields":[
+	 	{"name":"code","type":"int","doc":"错误代码"},
+	 	{"name":"msg","type":"string","doc":"发生异常的方法"},
+	 	{"name":"stackTraces","type":{"type":"array","items":"StackTrace"},"doc":"发生错误堆栈，供调试用"}
+	 ]
+	}
+]

@@ -1,0 +1,31 @@
+{
+  "protocol" : "ShortUrlService",
+  "namespace" : "org.bear.api",
+  "types" : [ ],
+  "messages" : {
+    "generate" : {
+      "request" : [ {
+        "name" : "url",
+        "type" : [ "null", "string" ]
+      }, {
+        "name" : "ttl",
+        "type" : "int"
+      } ],
+      "response" : "string"
+    },
+    "getUrl" : {
+      "request" : [ {
+        "name" : "code",
+        "type" : [ "null", "string" ]
+      } ],
+      "response" : "string"
+    },
+    "getAccessCount" : {
+      "request" : [ {
+        "name" : "code",
+        "type" : [ "null", "string" ]
+      } ],
+      "response" : "int"
+    }
+  }
+}

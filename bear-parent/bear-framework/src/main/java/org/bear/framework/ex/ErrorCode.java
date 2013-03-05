@@ -46,4 +46,29 @@ public interface ErrorCode {
      * 没有权限
      */
     public static final int NO_PERMISSON = 6;
+
+    /**
+     * 对象不存在
+     */
+    static final int ENTITY_NOT_FOUND = 50;
+
+    /**
+     * 对象已存在
+     */
+    static final int ENTITY_ALREADY_EXIST = 51;
+    
+    /**
+	 * 验证错误
+	 */
+	static final int VALIDATE_ERROR = 60;
+    
+    /**
+	 * 参数不在指定范围内
+	 */
+	static final int RANGE_ERROR = 61;
+
+	/**
+	 * 不匹配正则表达式
+	 */
+	static final int PATTERN_NOT_MATCH = 62;
 }

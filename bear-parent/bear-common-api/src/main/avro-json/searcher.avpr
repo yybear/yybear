@@ -1,0 +1,28 @@
+{
+  "protocol" : "SearcherService",
+  "namespace" : "org.bear.api",
+  "types" : [ {
+    "type" : "record",
+    "name" : "Index",
+    "fields" : [ {
+      "name" : "id",
+      "type" : "string"
+    } ]
+  }, {
+    "type" : "record",
+    "name" : "Query",
+    "fields" : [ {
+      "name" : "id",
+      "type" : "string"
+    } ]
+  } ],
+  "messages" : {
+    "searcher" : {
+      "request" : [ {
+        "name" : "query",
+        "type" : "Query"
+      } ],
+      "response" : "null"
+    }
+  }
+}

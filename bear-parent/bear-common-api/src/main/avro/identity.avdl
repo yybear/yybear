@@ -76,7 +76,7 @@ protocol IdentityService{
 		/**
 		 * 性别
 		 */
-		org.bear.api.type.Gender gender;
+		union { null, org.bear.api.type.Gender } gender;
 	
 		/**
 		 * 身份证号
@@ -110,7 +110,7 @@ protocol IdentityService{
 		/**
 		 * 状态
 		 */
-		UserStatus status;
+		union { null, UserStatus } status;
 	
 		/**
 		 * 创建时间
@@ -140,7 +140,7 @@ protocol IdentityService{
 		/**
 		 * 凭证类型
 		 */
-		CredentialType type;
+		union { null, CredentialType } type;
 	
 		/**
 		 * 凭证名称：如邮件地址、手机号等
@@ -167,7 +167,7 @@ protocol IdentityService{
 		/**
 		 * 问题
 		 */
-		ProtectionQuestion question;
+		union { null, ProtectionQuestion } question;
 	
 		/**
 		 * 问题答案
@@ -237,24 +237,24 @@ protocol IdentityService{
 	 *
 	 * @return 若注册成功则返回会话的Token，否则异常
 	 *
-	 * @tables 	identity_credential,
-	 * 			identity_password,
-	 * 			identity_session,
-	 * 			identity_user,
-	 * 			identity_user_attribute
+	 * @tables 	ids_credential,
+	 * 			ids_password,
+	 * 			ids_session,
+	 * 			ids_user,
+	 * 			ids_user_attribute
 	 */
 	string registerUser(
 			/**
 			 * 用户基本信息
 			 */
-			User user,
+			union { null, User } user,
 
 			/**
 			 * 凭证：其中，
 			 * 		name：登录所需的用户名
 			 * 		value：注册时提供的密码
 			 */
-			Credential credential,
+			union { null, Credential } credential,
 
 			/**
 			 * 用户扩展信息
@@ -268,18 +268,18 @@ protocol IdentityService{
 	 *
 	 * @return 若登录成功则返回会话的Token，否则异常
 	 *
-	 * @tables 	identity_credential,
-	 * 			identity_password,
-	 * 			identity_session,
-	 * 			identity_user,
-	 * 			identity_user_attribute
+	 * @tables 	ids_credential,
+	 * 			ids_password,
+	 * 			ids_session,
+	 * 			ids_user,
+	 * 			ids_user_attribute
 	 */
 	string login(
 			/**
 			 * 登录凭证：其中，
 			 * 		value：账户密码
 			 */
-			Credential credential,
+			union { null, Credential } credential,
 
 			/**
 			 * 需要保持会话的时间（单位：毫秒），若<=0则表示默认周期（取决于后台空闲时间设置）
@@ -306,7 +306,7 @@ protocol IdentityService{
 	 * 		-2：当前会话用户已经在其他地方登录
 	 * 		>0：已登录会话，且为用户ID
 	 *
-	 * @tables 	identity_user
+	 * @tables 	ids_user
 	 */
 	long validateToken(
 			/**
@@ -320,8 +320,8 @@ protocol IdentityService{
 	 *
 	 * @return 用户基本信息
 	 *
-	 * @tables 	identity_session,
-	 * 			identity_user
+	 * @tables 	ids_session,
+	 * 			ids_user
 	 */
 	User validateTokenWithUser(
 			/**
@@ -335,7 +335,7 @@ protocol IdentityService{
 	 *
 	 * @return 认证码ID，认证码验证时需要将此ID作为Credential的id进行传递
 	 *
-	 * @tables 	identity_credential_activation
+	 * @tables 	ids_credential_activation
 	 */
 	long requestActivation(
 			/**
@@ -343,7 +343,7 @@ protocol IdentityService{
 			 * 		uid：注册时为0，表示匿名，其余情况使用实际的用户ID
 			 * 		value：若为空则由后台产生随机认证码，否则以指定的value值作为认证码
 			 */
-			Credential credential,
+			union { null, Credential } credential,
 
 			/**
 			 * 认证码有效期（单位：毫秒），-1表示使用后台默认配置
@@ -356,7 +356,7 @@ protocol IdentityService{
 	 *
 	 * @return 校验认证码是否正确
 	 *
-	 * @tables 	identity_credential_activation
+	 * @tables 	ids_credential_activation
 	 */
 	boolean validateActivation(
 			/**
@@ -367,7 +367,7 @@ protocol IdentityService{
 			 *		name：与requestActivation时保持一致
 			 *		value：用户输入的认证码
 			 */
-			Credential credential
+			union { null, Credential } credential
 	) throws org.bear.api.type.GlobalException;
 
 	/**
@@ -375,8 +375,8 @@ protocol IdentityService{
 	 *
 	 * @return 校验认证码并创建凭证邦定是否成功
 	 *
-	 * @tables 	identity_credential,
-	 * 			identity_credential_activation
+	 * @tables 	ids_credential,
+	 * 			ids_credential_activation
 	 */
 	boolean validateActivationAndCreateCredential(
 			/**
@@ -387,13 +387,13 @@ protocol IdentityService{
 			 *		name：与requestActivation时保持一致
 			 *		value：用户输入的认证码
 			 */
-			Credential credential
+			union { null, Credential } credential
 	) throws org.bear.api.type.GlobalException;
 
 	/**
 	 * 修改用户密码
 	 *
-	 * @tables 	identity_password
+	 * @tables 	ids_password
 	 */
 	void changePassword(
 			/**
@@ -416,7 +416,7 @@ protocol IdentityService{
 	 * 重置用户的密码，将用户密码置为新的指定密码或随机密码（新密码为空“”时），并以消息形式通知用户（仅当采用随机密码时有效）
 	 * 		消息类型来源于用户的凭证邦定中的凭证类型，如：邮件、手机，将以一种形式发送消息，优先级：1）邮件，2）手机
 	 *
-	 * @tables 	identity_password
+	 * @tables 	ids_password
 	 */
 	void resetPassword(
 			/**
@@ -437,13 +437,13 @@ protocol IdentityService{
 	 *
 	 * @param pwd 当前用户密码
 	 *
-	 * @tables 	identity_password
+	 * @tables 	ids_password
 	 */
 	void protectPassword(
 			/**
 			 * 密保信息
 			 */
-			PasswordProtection protection,
+			union { null, PasswordProtection } protection,
 
 			/**
 			 * 账户密码，用于认证当前用户
@@ -456,13 +456,13 @@ protocol IdentityService{
 	 *
 	 * @return 验证是否通过
 	 *
-	 * @tables 	identity_password
+	 * @tables 	ids_password
 	 */
 	boolean validatePasswordProtection(
 			/**
 			 * 附带答案的用户密保
 			 */
-			PasswordProtection protection
+			union { null, PasswordProtection } protection
 	) throws org.bear.api.type.GlobalException;
 
 	/**
@@ -470,7 +470,7 @@ protocol IdentityService{
 	 *
 	 * @return 用户密保是否存在
 	 *
-	 * @tables 	identity_password
+	 * @tables 	ids_password
 	 */
 	boolean hasPasswordProtection(
 			/**
@@ -484,7 +484,7 @@ protocol IdentityService{
 	 *
 	 * @return 若密保问题存在则返回，否则异常
 	 *
-	 * @tables 	identity_password
+	 * @tables 	ids_password
 	 */
 	ProtectionQuestion getProtectionQuestion(
 			/**
@@ -497,42 +497,42 @@ protocol IdentityService{
 	 * 创建用户凭证绑定
 	 * 		会根据凭证的type和name检查唯一性
 	 *
-	 * @tables 	identity_credential
+	 * @tables 	ids_credential
 	 */
 	void createCredential(
 			/**
 			 * 凭证
 			 */
-			Credential credential
+			union { null, Credential } credential
 	) throws org.bear.api.type.GlobalException;
 
 	/**
 	 * 取消用户凭证绑定
 	 * 		如果凭证不存在则忽略
 	 *
-	 * @tables 	identity_credential,
-	 * 			identity_credential_attribute
+	 * @tables 	ids_credential,
+	 * 			ids_credential_attribute
 	 */
 	void removeCredential(
 			/**
 			 * 凭证：其中，
 			 * 		当id<=0时，会根据type和name去唯一匹配，否则直接根据id匹配
 			 */
-			Credential credential
+			union { null, Credential } credential
 	) throws org.bear.api.type.GlobalException;
 
 	/**
 	 * 更新用户凭证绑定
 	 * 		会根据凭证的type和name检查唯一性
 	 *
-	 * @tables 	identity_credential
+	 * @tables 	ids_credential
 	 */
 	void updateCredential(
 			/**
 			 * 凭证：其中，
 			 * 		新的type和name不能与已有的冲突
 			 */
-			Credential credential
+			union { null, Credential } credential
 	) throws org.bear.api.type.GlobalException;
 
 	/**
@@ -540,7 +540,7 @@ protocol IdentityService{
 	 *
 	 * @return 如果能匹配上则返回完整的凭证内容，否则异常
 	 *
-	 * @tables 	identity_credential
+	 * @tables 	ids_credential
 	 */
 	Credential matchCredential(
 			/**
@@ -548,7 +548,7 @@ protocol IdentityService{
 			 * 		如果id>0，则会根据id获取完整凭证信息；
 			 * 		如果id<=0，则会根据type和name匹配
 			 */
-			Credential credential
+			union { null, Credential } credential
 	) throws org.bear.api.type.GlobalException;
 
 	/**
@@ -556,7 +556,7 @@ protocol IdentityService{
 	 *
 	 * @return 用户所有的凭证列表
 	 *
-	 * @tables 	identity_credential
+	 * @tables 	ids_credential
 	 */
 	array<Credential> getUserCredentials(
 			/**
@@ -571,13 +571,13 @@ protocol IdentityService{
 	 *
 	 * @return 凭证是否存在
 	 *
-	 * @tables 	identity_credential
+	 * @tables 	ids_credential
 	 */
 	boolean isCredentialExists(
 			/**
 			 * 凭证
 			 */
-			Credential credential
+			union { null, Credential } credential
 	) throws org.bear.api.type.GlobalException;
 
 	/**
@@ -586,19 +586,19 @@ protocol IdentityService{
 	 *
 	 * @return 若凭证存在则返回此凭证的用户ID，否则异常
 	 *
-	 * @tables 	identity_credential
+	 * @tables 	ids_credential
 	 */
 	long getCredentialUid(
 			/**
 			 * 凭证
 			 */
-			Credential credential
+			union { null, Credential } credential
 	) throws org.bear.api.type.GlobalException;
 
 	/**
 	 * 设置用户状态
 	 *
-	 * @tables 	identity_user
+	 * @tables 	ids_user
 	 */
 	void updateUserStatus(
 			/**
@@ -609,7 +609,7 @@ protocol IdentityService{
 			/**
 			 * 状态
 			 */
-			UserStatus status
+			union { null, UserStatus } status
 	) throws org.bear.api.type.GlobalException;
 
 	/**
@@ -617,7 +617,7 @@ protocol IdentityService{
 	 *
 	 * @return 若用户存在则返回此用户的当前状态，否则异常
 	 *
-	 * @tables 	identity_user
+	 * @tables 	ids_user
 	 */
 	UserStatus getUserStatus(
 			/**
@@ -631,7 +631,7 @@ protocol IdentityService{
 	 *
 	 * @return 若用户存在则返回此用户的基本信息，否则异常
 	 *
-	 * @tables 	identity_user
+	 * @tables 	ids_user
 	 */
 	User getUser(
 			/**
@@ -643,7 +643,7 @@ protocol IdentityService{
 	/**
 	 * 根据昵称获取用户基本信息
 	 *
-	 * @tables 	identity_user
+	 * @tables 	ids_user
 	 */
 	User getUserByNick(
 			/**
@@ -657,7 +657,7 @@ protocol IdentityService{
 	 *
 	 * @return 用户信息Map
 	 *
-	 * @tables 	identity_user
+	 * @tables 	ids_user
 	 */
 	map<User> batchGetUser(
 			/**
@@ -669,25 +669,25 @@ protocol IdentityService{
 	/**
 	 * 更新用户信息
 	 *
-	 * @tables 	identity_user
+	 * @tables 	ids_user
 	 */
 	void updateUser(
 			/**
 			 * 用户基本信息
 			 */
-			User user
+			union { null, User } user
 	) throws org.bear.api.type.GlobalException;
 
 	/**
 	 * 批量更新用户信息
 	 *
-	 * @tables 	identity_user
+	 * @tables 	ids_user
 	 */
 	void batchUpdateUser(
 			/**
 			 * 用户信息集合
 			 */
-			array<User> users
+			union { null, array<User> } users
 	) throws org.bear.api.type.GlobalException;
 
 	/**
@@ -696,7 +696,7 @@ protocol IdentityService{
 	 * @return 属性值
 	 * 		注：属性不存在或null，统一返回为“”（空字符串）
 	 *
-	 * @tables 	identity_user_attribute
+	 * @tables 	ids_user_attribute
 	 */
 	union { null, string } getUserAttribute(
 			/**
@@ -713,7 +713,7 @@ protocol IdentityService{
 	/**
 	 * 设置用户属性值
 	 *
-	 * @tables 	identity_user_attribute
+	 * @tables 	ids_user_attribute
 	 */
 	void setUserAttribute(
 			/**
@@ -736,7 +736,7 @@ protocol IdentityService{
 	/**
 	 * 删除用户属性
 	 *
-	 * @tables 	identity_user_attribute
+	 * @tables 	ids_user_attribute
 	 */
 	void removeUserAttribute(
 			/**
@@ -755,7 +755,7 @@ protocol IdentityService{
 	 *
 	 * @return 属性值Map
 	 *
-	 * @tables 	identity_user_attribute
+	 * @tables 	ids_user_attribute
 	 */
 	map<union { null, string }> getUserAttributes(
 			/**
@@ -766,13 +766,13 @@ protocol IdentityService{
 			/**
 			 * 属性名集合
 			 */
-			array<union { null, string }> keys
+			union { null,array<union { null, string }>} keys
 	) throws org.bear.api.type.GlobalException;
 
 	/**
 	 * 批量设置指定用户的多个属性值
 	 *
-	 * @tables 	identity_user_attribute
+	 * @tables 	ids_user_attribute
 	 *
 	 */
 	void setUserAttributes(
@@ -784,13 +784,13 @@ protocol IdentityService{
 			/**
 			 * 属性值Map
 			 */
-			map<union { null, string }> values
+			union { null, map<union { null, string }>} values
 	) throws org.bear.api.type.GlobalException;
 
 	/**
 	 * 批量删除指定用户多个属性
 	 *
-	 * @tables 	identity_user_attribute
+	 * @tables 	ids_user_attribute
 	 */
 	void removeUserAttributes(
 			/**
@@ -801,7 +801,7 @@ protocol IdentityService{
 			/**
 			 * 属性名集合
 			 */
-			array<union { null, string }> keys
+			union { null,array<union { null, string }>} keys
 	) throws org.bear.api.type.GlobalException;
 
 	/**
@@ -809,7 +809,7 @@ protocol IdentityService{
 	 *
 	 * @return 属性值Map
 	 *
-	 * @tables 	identity_user_attribute
+	 * @tables 	ids_user_attribute
 	 */
 	map<union { null, string }> batchGetUserAttribute(
 			/**
@@ -826,7 +826,7 @@ protocol IdentityService{
 	/**
 	 * 批量设置多个用户的指定属性值
 	 *
-	 * @tables 	identity_user_attribute
+	 * @tables 	ids_user_attribute
 	 */
 	void batchSetUserAttribute(
 			/**
@@ -837,13 +837,13 @@ protocol IdentityService{
 			/**
 			 * 用户属性值Map
 			 */
-			map<union { null, string }> idValues
+			union { null,map<union { null, string }>} idValues
 	) throws org.bear.api.type.GlobalException;
 
 	/**
 	 * 批量删除多个用户指定属性
 	 *
-	 * @tables 	identity_user_attribute
+	 * @tables 	ids_user_attribute
 	 */
 	void batchRemoveUserAttribute(
 			/**
@@ -862,37 +862,37 @@ protocol IdentityService{
 	 *
 	 * @return 用户属性值Map
 	 *
-	 * @tables 	identity_user_attribute
+	 * @tables 	ids_user_attribute
 	 */
 	map<map<union { null, string }>> batchGetUserAttributes(
 			/**
 			 * 用户属性名Map
 			 */
-			map<array<union { null, string }>> idKeys
+			union { null,map<array<union { null, string }>>} idKeys
 	) throws org.bear.api.type.GlobalException;
 
 	/**
 	 * 批量设置多个用户的多个属性值
 	 *
-	 * @tables 	identity_user_attribute
+	 * @tables 	ids_user_attribute
 	 */
 	void batchSetUserAttributes(
 			/**
 			 * 用户属性值Map
 			 */
-			map<map<union { null, string }>> idValues
+			union { null,map<map<union { null, string }>>} idValues
 	) throws org.bear.api.type.GlobalException;
 
 	/**
 	 * 批量删除多个用户多个属性
 	 *
-	 * @tables 	identity_user_attribute
+	 * @tables 	ids_user_attribute
 	 */
 	void batchRemoveUserAttributes(
 			/**
 			 * 用户属性名Map
 			 */
-			map<array<union { null, string }>> idKeys
+			union { null,map<array<union { null, string }>>} idKeys
 	) throws org.bear.api.type.GlobalException;
 
 	/**
@@ -900,7 +900,7 @@ protocol IdentityService{
 	 *
 	 * @return 属性名集合
 	 *
-	 * @tables 	identity_user_attribute
+	 * @tables 	ids_user_attribute
 	 */
 	array<union { null, string }> getUserAttributeNames(
 			/**
@@ -912,7 +912,7 @@ protocol IdentityService{
 	/**
 	 * 清除用户所有属性
 	 *
-	 * @tables 	identity_user_attribute
+	 * @tables 	ids_user_attribute
 	 */
 	void clearUserAttributes(
 			/**
@@ -926,8 +926,8 @@ protocol IdentityService{
 	 *
 	 * @return 属性值
 	 *
-	 * @tables 	identity_session,
-	 * 			identity_session_attribute
+	 * @tables 	ids_session,
+	 * 			ids_session_attribute
 	 */
 	union { null, string } getSessionAttribute(
 			/**
@@ -946,8 +946,8 @@ protocol IdentityService{
 	 *
 	 * @return 属性值Map
 	 *
-	 * @tables 	identity_session,
-	 * 			identity_session_attribute
+	 * @tables 	ids_session,
+	 * 			ids_session_attribute
 	 */
 	map<union { null, string }> getSessionAttributes(
 			/**
@@ -958,14 +958,14 @@ protocol IdentityService{
 			/**
 			 * 属性名集合
 			 */
-			array<union { null, string }> keys
+			union { null,array<union { null, string }>} keys
 	) throws org.bear.api.type.GlobalException;
 
 	/**
 	 * 设置用户当前会话属性值
 	 *
-	 * @tables 	identity_session,
-	 * 			identity_session_attribute
+	 * @tables 	ids_session,
+	 * 			ids_session_attribute
 	 */
 	void setSessionAttribute(
 			/**
@@ -987,8 +987,8 @@ protocol IdentityService{
 	/**
 	 * 批量设置用户当前会话属性值
 	 *
-	 * @tables 	identity_session,
-	 * 			identity_session_attribute
+	 * @tables 	ids_session,
+	 * 			ids_session_attribute
 	 */
 	void setSessionAttributes(
 			/**
@@ -999,14 +999,14 @@ protocol IdentityService{
 			/**
 			 * 属性值Map
 			 */
-			map<union { null, string }> values
+			union { null,map<union { null, string }>} values
 	) throws org.bear.api.type.GlobalException;
 
 	/**
 	 * 移除用户会话属性
 	 *
-	 * @tables 	identity_session,
-	 * 			identity_session_attribute
+	 * @tables 	ids_session,
+	 * 			ids_session_attribute
 	 */
 	void removeSessionAttribute(
 			/**
@@ -1023,8 +1023,8 @@ protocol IdentityService{
 	/**
 	 * 批量移除用户会话属性
 	 *
-	 * @tables 	identity_session,
-	 * 			identity_session_attribute
+	 * @tables 	ids_session,
+	 * 			ids_session_attribute
 	 */
 	void removeSessionAttributes(
 			/**
@@ -1035,7 +1035,7 @@ protocol IdentityService{
 			/**
 			 * 属性名集合
 			 */
-			array<union { null, string }> keys
+			union { null,array<union { null, string }>} keys
 	) throws org.bear.api.type.GlobalException;
 
 	/**
@@ -1043,8 +1043,8 @@ protocol IdentityService{
 	 *
 	 * @return 属性名集合
 	 *
-	 * @tables 	identity_session,
-	 * 			identity_session_attribute
+	 * @tables 	ids_session,
+	 * 			ids_session_attribute
 	 */
 	array<union { null, string }> getSessionAttributeNames(
 			/**
@@ -1056,8 +1056,8 @@ protocol IdentityService{
 	/**
 	 * 清除用户会话所有属性
 	 *
-	 * @tables 	identity_session,
-	 * 			identity_session_attribute
+	 * @tables 	ids_session,
+	 * 			ids_session_attribute
 	 */
 	void clearSessionAttributes(
 			/**
@@ -1071,7 +1071,7 @@ protocol IdentityService{
 	 *
 	 * @return 临时会话的token
 	 *
-	 * @tables 	identity_session
+	 * @tables 	ids_session
 	 */
 	union { null, string } createGuestSession() throws org.bear.api.type.GlobalException;
 
@@ -1080,7 +1080,7 @@ protocol IdentityService{
 	 *
 	 * @return 存在返回true，否则返回false
 	 *
-	 * @tables identity_user
+	 * @tables ids_user
 	 */
 	boolean isNickNameExists(
 			/**
@@ -1099,8 +1099,8 @@ protocol IdentityService{
 	 *
 	 * @return 符合条件的用户数
 	 *
-	 * @tables identity_user,
-	 * 		   identity_credential
+	 * @tables ids_user,
+	 * 		   ids_credential
 	 */
 	long countUser(
 			/**
@@ -1111,7 +1111,7 @@ protocol IdentityService{
 			/**
 			 * 凭证类型
 			 */
-			CredentialType type,
+			union { null,CredentialType} type,
 
 			/**
 			 * 凭证名(登录名)
@@ -1131,7 +1131,7 @@ protocol IdentityService{
 			/**
 			 * 扩展属性
 			 */
-			map<union { null, string }> attributes
+			union { null,map<union { null, string }>} attributes
 	) throws org.bear.api.type.GlobalException;
 
 	/**
@@ -1139,8 +1139,8 @@ protocol IdentityService{
 	 *
 	 * @return 分页用户列表
 	 *
-	 * @tables identity_user,
-	 * 		   identity_credential
+	 * @tables ids_user,
+	 * 		   ids_credential
 	 */
 	array<User> listUser(
 			/**
@@ -1151,7 +1151,7 @@ protocol IdentityService{
 			/**
 			 * 凭证类型
 			 */
-			CredentialType type,
+			union { null,CredentialType} type,
 
 			/**
 			 * 凭证名(登录名)
@@ -1171,7 +1171,7 @@ protocol IdentityService{
 			/**
 			 * 扩展属性
 			 */
-			map<union { null, string }> attributes,
+			union { null,map<union { null, string }>} attributes,
 
 			/**
 			 * 分页起始位置
@@ -1189,7 +1189,7 @@ protocol IdentityService{
 	 *
 	 * @return 返回用户组标识
 	 *
-	 * @tables identity_group
+	 * @tables ids_group
 	 */
 	long createGroup(
 			Group group
@@ -1198,7 +1198,7 @@ protocol IdentityService{
 	/**
 	 * 更新用户组
 	 *
-	 * @tables identity_group
+	 * @tables ids_group
 	 */
 	void updateGroup(
 			Group group
@@ -1207,8 +1207,8 @@ protocol IdentityService{
 	/**
 	 * 删除用户组
 	 *
-	 * @tables identity_group,
-	 * 		   identity_group_user
+	 * @tables ids_group,
+	 * 		   ids_group_user
 	 */
 	void removeGroup(
 			/**
@@ -1222,7 +1222,7 @@ protocol IdentityService{
 	 *
 	 * @return 存在返回true，否则false
 	 *
-	 * @tables identity_group
+	 * @tables ids_group
 	 */
 	boolean isGroupNameExists(
 			/**
@@ -1241,7 +1241,7 @@ protocol IdentityService{
 	 *
 	 * @return 用户组信息
 	 *
-	 * @tables identity_group
+	 * @tables ids_group
 	 */
 	Group getGroup(
 			/**
@@ -1255,7 +1255,7 @@ protocol IdentityService{
 	 *
 	 * @return 用户组信息
 	 *
-	 * @tables identity_group
+	 * @tables ids_group
 	 */
 	Group getGroupByName(
 			/**
@@ -1267,7 +1267,7 @@ protocol IdentityService{
 	/**
 	 * 获取符合条件用户组数量
 	 *
-	 * @tables identity_group
+	 * @tables ids_group
 	 */
 	long countGroups(
 			/**
@@ -1279,7 +1279,7 @@ protocol IdentityService{
 	/**
 	 * 获取符合条件用户组列表
 	 *
-	 * @tables identity_group
+	 * @tables ids_group
 	 */
 	array<Group> listGroups(
 			/**
@@ -1301,7 +1301,7 @@ protocol IdentityService{
 	/**
 	 * 将用户添加到用户组
 	 *
-	 * @tables identity_group_user
+	 * @tables ids_group_user
 	 */
 	void addUserToGroup(
 			/**
@@ -1318,7 +1318,7 @@ protocol IdentityService{
 	/**
 	 * 从用户组中移除用户
 	 *
-	 * @tables identity_group_user
+	 * @tables ids_group_user
 	 */
 	void removeUserFromGroup(
 			/**
@@ -1335,7 +1335,7 @@ protocol IdentityService{
 	/**
 	 * 判断用户是否在指定组内
 	 *
-	 * @tables identity_group_user
+	 * @tables ids_group_user
 	 */
 	boolean isUserInGroup(
 			/**
@@ -1352,7 +1352,7 @@ protocol IdentityService{
 	/**
 	 * 获取指定用户组下的用户数
 	 *
-	 * @tables identity_group_user
+	 * @tables ids_group_user
 	 */
 	long countGroupUsers(
 			/**
@@ -1364,8 +1364,8 @@ protocol IdentityService{
 	/**
 	 * 列出指定用户组下的用户
 	 *
-	 * @tables identity_group_user
-	 * 		   identity_user
+	 * @tables ids_group_user
+	 * 		   ids_user
 	 *
 	 */
 	array<User> listGroupUsers(
@@ -1382,8 +1382,8 @@ protocol IdentityService{
 	/**
 	 * 获取指定用户所属的用户组列表
 	 *
-	 * @tables identity_group_user,
-	 * 		   identity_group
+	 * @tables ids_group_user,
+	 * 		   ids_group
 	 */
 	array<Group> getUserGroups(
 			/**
@@ -1395,8 +1395,8 @@ protocol IdentityService{
 	/**
 	 * 判断用户是否超级管理员
 	 *
-	 * @tables  identity_user,
-	 * 			identity_user_attribute
+	 * @tables  ids_user,
+	 * 			ids_user_attribute
 	 */
 	boolean isAdminUser(
 			/**
@@ -1408,9 +1408,9 @@ protocol IdentityService{
 	/**
 	 * 判断当前会话是否是否超级管理员会话
 	 *
-	 * @tables  identity_user,
-	 * 			identity_user_attribute,
-	 * 			identity_session
+	 * @tables  ids_user,
+	 * 			ids_user_attribute,
+	 * 			ids_session
 	 */
 	boolean isAdminSession(
 			/**
@@ -1422,8 +1422,8 @@ protocol IdentityService{
 	/**
 	 * 重置超级管理员（系统仅有一个超级管理员）
 	 *
-	 * @tables  identity_user,
-	 * 			identity_user_attribute
+	 * @tables  ids_user,
+	 * 			ids_user_attribute
 	 */
 	void resetAdminUser(
 			/**
