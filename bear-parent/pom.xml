@@ -522,7 +522,6 @@
 		<module>bear-common-service</module>
 		<module>bear-common-api</module>
     <module>bear-identity-service</module>
-    <module>bear-api-tester</module>
     <module>bear-tool</module>
   </modules>
 </project>
