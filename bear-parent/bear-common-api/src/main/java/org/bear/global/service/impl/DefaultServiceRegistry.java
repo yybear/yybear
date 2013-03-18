@@ -46,13 +46,4 @@ public class DefaultServiceRegistry implements ServiceRegistry {
     public Collection<ServiceReference> getServices() {
         return registry.values();
     }
-    
-    public static String getSuffix(String fileName) {
-		int index = fileName.indexOf(".");
-		return fileName.substring(index+1);
-	}
-	public static void main(String[] args) {
-		System.out.println(getSuffix("type.avsc"));
-	}
-
 }

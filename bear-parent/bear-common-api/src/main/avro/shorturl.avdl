@@ -1,4 +1,4 @@
-@namespace("org.bear.api")
+@namespace("org.bear.api.shorturl")
 protocol ShortUrlService{
 	string generate(union { null, string } url, int ttl);
 	

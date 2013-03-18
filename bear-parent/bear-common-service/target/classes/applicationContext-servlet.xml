@@ -15,4 +15,12 @@
         <property name="serviceInterface" value="org.bear.api.ShortUrlService"/>
         <property name="serviceRegistry" ref="serviceRegistry"></property>
     </bean>
+    <mvc:interceptors>
+        <bean class="org.bear.framework.security.web.SecContextInterceptor">
+            <property name="excludes" value="/static/**"/>
+            <property name="userProvider">
+            	<bean class="org.bear.framework.security.impl.DefaultUserProviderImpl"/>
+            </property>
+        </bean>
+    </mvc:interceptors>
 </beans>

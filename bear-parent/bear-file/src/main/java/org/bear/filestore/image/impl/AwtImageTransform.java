@@ -26,11 +26,11 @@ import org.bear.filestore.model.Dimension;
  */
 public class AwtImageTransform implements ImageTransform {
 
-	private BufferedImage srcBImage;
-	private BufferedImage destBImage;
-	private int imgWidth;
-	private int imgHeight;
-	private boolean modified = false;
+	protected BufferedImage srcBImage;
+	protected BufferedImage destBImage;
+	protected int imgWidth;
+	protected int imgHeight;
+	protected boolean modified = false;
 
 	@Override
 	public void load(String srcFilePath) throws IOException {

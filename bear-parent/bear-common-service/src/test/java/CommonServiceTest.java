@@ -1,7 +1,7 @@
 import org.apache.avro.AvroRemoteException;
 import org.bear.api.Query;
 import org.bear.api.SearcherService;
-import org.bear.api.ShortUrlService;
+import org.bear.api.shorturl.ShortUrlService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,6 @@ public class CommonServiceTest {
 		System.out.println("shortUrlTest:" + s);
 	}
 	
-	@Test
 	public void searcherTest() throws AvroRemoteException {
 		Query query = new Query();
 		query.setId("id");

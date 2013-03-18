@@ -171,6 +171,13 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.im4java</groupId>
+			<artifactId>im4java</artifactId>
+			<version>1.4.0</version>
+			<optional>true</optional>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>bear-file</finalName>

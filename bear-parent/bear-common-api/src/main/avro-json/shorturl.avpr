@@ -1,6 +1,6 @@
 {
   "protocol" : "ShortUrlService",
-  "namespace" : "org.bear.api",
+  "namespace" : "org.bear.api.shorturl",
   "types" : [ ],
   "messages" : {
     "generate" : {

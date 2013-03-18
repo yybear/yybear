@@ -3,19 +3,19 @@
  * 
  * DO NOT EDIT DIRECTLY
  */
-package org.bear.api;
+package org.bear.api.shorturl;
 
 @SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
 public interface ShortUrlService {
-  public static final org.apache.avro.Protocol PROTOCOL = org.apache.avro.Protocol.parse("{\"protocol\":\"ShortUrlService\",\"namespace\":\"org.bear.api\",\"types\":[],\"messages\":{\"generate\":{\"request\":[{\"name\":\"url\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]},{\"name\":\"ttl\",\"type\":\"int\"}],\"response\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},\"getUrl\":{\"request\":[{\"name\":\"code\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]}],\"response\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},\"getAccessCount\":{\"request\":[{\"name\":\"code\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]}],\"response\":\"int\"}}}");
+  public static final org.apache.avro.Protocol PROTOCOL = org.apache.avro.Protocol.parse("{\"protocol\":\"ShortUrlService\",\"namespace\":\"org.bear.api.shorturl\",\"types\":[],\"messages\":{\"generate\":{\"request\":[{\"name\":\"url\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]},{\"name\":\"ttl\",\"type\":\"int\"}],\"response\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},\"getUrl\":{\"request\":[{\"name\":\"code\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]}],\"response\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},\"getAccessCount\":{\"request\":[{\"name\":\"code\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]}],\"response\":\"int\"}}}");
   java.lang.String generate(java.lang.String url, int ttl) throws org.apache.avro.AvroRemoteException;
   java.lang.String getUrl(java.lang.String code) throws org.apache.avro.AvroRemoteException;
   int getAccessCount(java.lang.String code) throws org.apache.avro.AvroRemoteException;
 
   @SuppressWarnings("all")
   public interface Callback extends ShortUrlService {
-    public static final org.apache.avro.Protocol PROTOCOL = org.bear.api.ShortUrlService.PROTOCOL;
+    public static final org.apache.avro.Protocol PROTOCOL = org.bear.api.shorturl.ShortUrlService.PROTOCOL;
     void generate(java.lang.String url, int ttl, org.apache.avro.ipc.Callback<java.lang.String> callback) throws java.io.IOException;
     void getUrl(java.lang.String code, org.apache.avro.ipc.Callback<java.lang.String> callback) throws java.io.IOException;
     void getAccessCount(java.lang.String code, org.apache.avro.ipc.Callback<java.lang.Integer> callback) throws java.io.IOException;

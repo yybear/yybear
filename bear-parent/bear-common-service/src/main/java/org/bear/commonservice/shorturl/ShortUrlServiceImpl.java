@@ -1,7 +1,7 @@
 package org.bear.commonservice.shorturl;
 
 import org.apache.avro.AvroRemoteException;
-import org.bear.api.ShortUrlService;
+import org.bear.api.shorturl.ShortUrlService;
 
 public class ShortUrlServiceImpl implements ShortUrlService{
 

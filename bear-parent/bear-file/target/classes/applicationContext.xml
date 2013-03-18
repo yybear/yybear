@@ -80,5 +80,7 @@
 	</bean>
 	<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
 
-	<bean id="avroFileStoreService" class="org.bear.file.service.impl.FileStoreServiceImpl"></bean>
+	<bean id="avroFileStoreService" class="org.bear.filestore.service.impl.FileStoreServiceImpl"></bean>
+	
+	<bean id="imageTransformFactory" class="org.bear.filestore.image.ImageTransformFactory"/>
 </beans>
