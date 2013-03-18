@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>bear</groupId>
@@ -408,7 +409,7 @@
 				<artifactId>validation-api</artifactId>
 				<version>1.0.0.GA</version>
 			</dependency>
-			
+
 			<!-- spring data jpa -->
 			<dependency>
 				<groupId>org.springframework.data</groupId>
@@ -506,14 +507,30 @@
 				<version>${avro.version}</version>
 			</dependency>
 			<dependency>
-		    	<groupId>org.apache.avro</groupId>
-		    	<artifactId>avro-maven-plugin</artifactId>
-		    	<version>1.7.4</version>
-		    	<type>maven-plugin</type>
-		    </dependency>
+				<groupId>org.apache.avro</groupId>
+				<artifactId>avro-maven-plugin</artifactId>
+				<version>1.7.4</version>
+				<type>maven-plugin</type>
+			</dependency>
 		</dependencies>
 
 	</dependencyManagement>
+
+	<build>
+		<defaultGoal>install</defaultGoal>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>**/*.properties</include>
+				</includes>
+			</resource>
+		</resources>
+	</build>
 
 	<modules>
 		<module>bear-searcher</module>
@@ -521,7 +538,7 @@
 		<module>bear-framework</module>
 		<module>bear-common-service</module>
 		<module>bear-common-api</module>
-    <module>bear-identity-service</module>
-    <module>bear-tool</module>
-  </modules>
+		<module>bear-identity-service</module>
+		<module>bear-tool</module>
+	</modules>
 </project>

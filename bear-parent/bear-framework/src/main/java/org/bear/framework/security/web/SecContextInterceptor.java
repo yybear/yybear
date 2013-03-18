@@ -45,7 +45,7 @@ public class SecContextInterceptor extends ConfigurableInterceptor{
 	@Override
     public boolean internalPreHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
     	LOG.debug("SecContextInterceptor");
-    	/*SecContext.getContext().set(Constants.CLIENT_IP, RequestUtils.getClientIP(request));
+    	SecContext.getContext().set(Constants.CLIENT_IP, RequestUtils.getClientIP(request));
         SecContext.getContext().setSessionUser(userProvider.getUser(request));
         if (ArrayUtils.isNotEmpty(needLogins) && RequestUtils.matchAny(request, urlPathHelper, pathMatcher, needLogins) && SecHelper.isGuest()) {
             if (redirectUrl != null) {
@@ -54,7 +54,7 @@ public class SecContextInterceptor extends ConfigurableInterceptor{
                 throw new NoPermissonException("need login");
             }
             return false;
-        }*/
+        }
         return true;
     }
 

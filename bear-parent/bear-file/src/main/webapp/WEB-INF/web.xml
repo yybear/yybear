@@ -47,7 +47,7 @@
     </filter-mapping> -->
 
     <listener>
-        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+        <listener-class>org.bear.framework.context.GlobalContextLoaderListener</listener-class>
     </listener>
 
     <servlet>

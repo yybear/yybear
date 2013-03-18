@@ -21,18 +21,6 @@ public class GMImageTransform extends AwtImageTransform {
 			.getLogger(GMImageTransform.class);
 	private static final String ACTION = "convert";
 
-
-	@Override
-	public Dimension getSize(String filePath) throws IOException {
-		load(filePath);
-		return new Dimension(imgWidth, imgHeight);
-	}
-
-	@Override
-	public Dimension getSize() throws IOException {
-		return new Dimension(imgWidth, imgHeight);
-	}
-
 	@Override
 	public void resize(int width, int height) throws IOException {
 		zoomImage(width, height);

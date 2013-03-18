@@ -13,6 +13,8 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 	
+	<import resource="profile.xml"/>
+	
 	<bean id="shortUrlService" class="org.bear.commonservice.shorturl.ShortUrlServiceImpl"></bean>
 	
 	<bean id="serviceRegistry" class="org.bear.framework.support.spring.ServiceRegistryFactoryBean"></bean>
