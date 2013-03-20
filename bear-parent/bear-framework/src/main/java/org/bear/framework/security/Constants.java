@@ -16,7 +16,7 @@ import org.bear.framework.security.impl.DefaultRole;
  */
 public class Constants {
 
-	public static final String TOKEN = "identity_ut";
+	public static final String TOKEN = "bear_identity_ut";
     public static final String CLIENT_IP = "clientIp";
 
     public static final AbstractUser GUEST_USER = new AbstractUser("") {

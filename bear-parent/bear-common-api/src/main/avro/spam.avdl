@@ -1,0 +1,25 @@
+@namespace("org.bear.api.spam")
+protocol SpamService{
+	import schema "type.avsc";
+
+	boolean contain(string content) throws org.bear.api.type.GlobalException;
+	
+	boolean containAny(array<string> contents) throws org.bear.api.type.GlobalException;
+	
+	string replace(string content) throws org.bear.api.type.GlobalException;
+	
+	/**
+	 * 使用用户指定的mark替换content里面的敏感词.
+	 * @param content
+	 * @param mark
+	 */
+	string replaceWith(string content, string mark) throws org.bear.api.type.GlobalException;
+	
+	map<string> batchReplace(map<string> contents) throws org.bear.api.type.GlobalException;
+	
+	array<string> getWords() throws org.bear.api.type.GlobalException;
+	
+	void addWord(array<string> words) throws org.bear.api.type.GlobalException;
+	
+	void removeWords(array<string> words) throws org.bear.api.type.GlobalException;
+}

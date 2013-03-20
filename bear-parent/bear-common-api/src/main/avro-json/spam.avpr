@@ -1,0 +1,145 @@
+{
+  "protocol" : "SpamService",
+  "namespace" : "org.bear.api.spam",
+  "types" : [ {
+    "type" : "enum",
+    "name" : "Gender",
+    "namespace" : "org.bear.api.type",
+    "doc" : "",
+    "symbols" : [ "UNKNOWN", "MALE", "FEMALE" ]
+  }, {
+    "type" : "record",
+    "name" : "StackTrace",
+    "namespace" : "org.bear.api.type",
+    "doc" : "异常堆栈对象",
+    "fields" : [ {
+      "name" : "className",
+      "type" : "string",
+      "doc" : "发生异常的类"
+    }, {
+      "name" : "methodName",
+      "type" : "string",
+      "doc" : "发生异常的方法"
+    }, {
+      "name" : "fileName",
+      "type" : "string",
+      "doc" : "发生异常的文件"
+    }, {
+      "name" : "lineNumber",
+      "type" : "int",
+      "doc" : "发生异常的行号"
+    } ]
+  }, {
+    "type" : "enum",
+    "name" : "AccessScope",
+    "namespace" : "org.bear.api.type",
+    "doc" : "表示实体对象的访问权限级别",
+    "symbols" : [ "ALL", "USER", "ROLE", "TOKEN", "SELF", "SESSION" ]
+  }, {
+    "type" : "error",
+    "name" : "GlobalException",
+    "namespace" : "org.bear.api.type",
+    "doc" : "通用错误对象",
+    "fields" : [ {
+      "name" : "code",
+      "type" : "int",
+      "doc" : "错误代码"
+    }, {
+      "name" : "msg",
+      "type" : "string",
+      "doc" : "发生异常的方法"
+    }, {
+      "name" : "stackTraces",
+      "type" : {
+        "type" : "array",
+        "items" : "StackTrace"
+      },
+      "doc" : "发生错误堆栈，供调试用"
+    } ]
+  } ],
+  "messages" : {
+    "contain" : {
+      "request" : [ {
+        "name" : "content",
+        "type" : "string"
+      } ],
+      "response" : "boolean",
+      "errors" : [ "org.bear.api.type.GlobalException" ]
+    },
+    "containAny" : {
+      "request" : [ {
+        "name" : "contents",
+        "type" : {
+          "type" : "array",
+          "items" : "string"
+        }
+      } ],
+      "response" : "boolean",
+      "errors" : [ "org.bear.api.type.GlobalException" ]
+    },
+    "replace" : {
+      "request" : [ {
+        "name" : "content",
+        "type" : "string"
+      } ],
+      "response" : "string",
+      "errors" : [ "org.bear.api.type.GlobalException" ]
+    },
+    "replaceWith" : {
+      "doc" : "* 使用用户指定的mark替换content里面的敏感词.\r\n\t * @param content\r\n\t * @param mark",
+      "request" : [ {
+        "name" : "content",
+        "type" : "string"
+      }, {
+        "name" : "mark",
+        "type" : "string"
+      } ],
+      "response" : "string",
+      "errors" : [ "org.bear.api.type.GlobalException" ]
+    },
+    "batchReplace" : {
+      "request" : [ {
+        "name" : "contents",
+        "type" : {
+          "type" : "map",
+          "values" : "string"
+        }
+      } ],
+      "response" : {
+        "type" : "map",
+        "values" : "string"
+      },
+      "errors" : [ "org.bear.api.type.GlobalException" ]
+    },
+    "getWords" : {
+      "request" : [ ],
+      "response" : {
+        "type" : "array",
+        "items" : "string"
+      },
+      "errors" : [ "org.bear.api.type.GlobalException" ]
+    },
+    "addWord" : {
+      "request" : [ {
+        "name" : "words",
+        "type" : {
+          "type" : "array",
+          "items" : "string"
+        }
+      } ],
+      "response" : "null",
+      "errors" : [ "org.bear.api.type.GlobalException" ]
+    },
+    "removeWords" : {
+      "request" : [ {
+        "name" : "words",
+        "type" : {
+          "type" : "array",
+          "items" : "string"
+        }
+      } ],
+      "response" : "null",
+      "errors" : [ "org.bear.api.type.GlobalException" ]
+    }
+  }
+}

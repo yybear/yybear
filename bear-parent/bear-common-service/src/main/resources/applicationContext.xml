@@ -15,7 +15,19 @@
 	
 	<import resource="profile.xml"/>
 	
-	<bean id="shortUrlService" class="org.bear.commonservice.shorturl.ShortUrlServiceImpl"></bean>
+	<bean id="csCacheManager" class="org.bear.framework.cache.redis.RedisCacheManager">
+        <property name="connectionFactory" ref="redisConnectionFactory"/>
+        <property name="namespace" value="cs"/>
+        <property name="defaultConfig">
+            <bean class="org.bear.framework.cache.redis.RedisCacheConfig">
+                <property name="enableKeyList" value="true"/>
+            </bean>
+        </property>
+    </bean>
+    
+	<bean id="shortUrlService" class="org.bear.commonservice.shorturl.ShortUrlServiceImpl">
+		<property name="cacheManager" ref="csCacheManager"></property>
+	</bean>
 	
 	<bean id="serviceRegistry" class="org.bear.framework.support.spring.ServiceRegistryFactoryBean"></bean>
 	

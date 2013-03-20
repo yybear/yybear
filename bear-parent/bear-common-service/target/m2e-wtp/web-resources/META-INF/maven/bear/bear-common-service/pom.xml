@@ -102,11 +102,11 @@
 
         <dependency>
         	<groupId>bear</groupId>
-        	<artifactId>bear-common-api</artifactId>
+        	<artifactId>bear-framework</artifactId>
         </dependency>
         <dependency>
         	<groupId>bear</groupId>
-        	<artifactId>bear-framework</artifactId>
+        	<artifactId>bear-common-api</artifactId>
         </dependency>
 	</dependencies>
 	<build>
