@@ -46,8 +46,6 @@ public class File implements Statusable, Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateAt;
     private int size;
-    @Column(length = 128)
-    private String storage;
     @Type(type = "json")
     @Column(length = 4000)
     private Map<String, Object> data = new HashMap<String, Object>();
@@ -122,15 +120,6 @@ public class File implements Statusable, Serializable {
 
     public void setSize(int size) {
         this.size = size;
-    }
-
-    @JSONField(serialize = false)
-    public String getStorage() {
-        return storage;
-    }
-
-    public void setStorage(String storage) {
-        this.storage = storage;
     }
 
     @JSONField(serialize = false)

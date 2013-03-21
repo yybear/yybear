@@ -6,11 +6,11 @@ package org.bear.framework.ex;
  * @author <a href="mailto:ganqing@any123.com">gan qing</a>
  * @version V1.0, 13-2-19
  */
-public class GlobalException extends RuntimeException {
+public class GlobalException extends RuntimeException implements ErrorCode{
 
 	private static final long serialVersionUID = 6775248361588205777L;
 	
-	private int code = ErrorCode.SERVER_ERROR;
+	private int code = SERVER_ERROR;
 	private Object args[];
 
 	private String renderedMessage;

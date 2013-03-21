@@ -15,7 +15,8 @@ import java.io.File;
  * @version V1.0, 2013-2-22
  */
 public class FileSystemStorage extends AbstractStorage {
-    private static final Logger LOG = LoggerFactory.getLogger(AbstractStorageStrategy.class);
+	private static final String ROOT = "yybear";
+    private static final Logger LOG = LoggerFactory.getLogger(FileSystemStorage.class);
     private File directory;
     private boolean useXsendfile;
 
@@ -58,7 +59,7 @@ public class FileSystemStorage extends AbstractStorage {
         String xpath = null;
         if (useXsendfile) {
             StringBuilder sb = new StringBuilder("/");
-            sb.append(getId()).append("/").append(path);
+            sb.append(ROOT).append("/").append(path);
             xpath = sb.toString();
         }
         return new FileSystemVirtualFile(key, new File(directory, path), xpath);
@@ -68,6 +69,11 @@ public class FileSystemStorage extends AbstractStorage {
         return new File(directory, getPath(key));
     }
 
+    /**
+     * 文件名及它的目录生成策略
+     * @param key
+     * @return
+     */
     private String getPath(String key) {
         String hash = DigestUtils.md5Hex(key);
         StringBuilder path = new StringBuilder();
@@ -78,4 +84,5 @@ public class FileSystemStorage extends AbstractStorage {
         path.append(hash);
         return path.toString();
     }
+
 }

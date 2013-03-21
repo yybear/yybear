@@ -36,6 +36,12 @@ public interface FileStoreManager {
 
     void transformImage(long id, List<ImageAction> actions);
 
+    /**
+     * 获取加密id
+     * @param id
+     * @param ttl <=0 表示没有时间限制
+     * @return
+     */
     String getEncryptedId(Long id, int ttl);
 
     Map<Long, String> getEncryptedIdMap(List<Long> ids, int ttl);

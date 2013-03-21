@@ -12,19 +12,10 @@ import java.util.concurrent.atomic.AtomicLong;
  * @version V1.0, 2013-2-22
  */
 public abstract class AbstractStorage implements Storage {
-    private String id;
     private int order = 100;
     private long capability = -1;
     private AtomicLong used = new AtomicLong(0);
     private boolean enable = false;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public int getOrder() {
         return order;

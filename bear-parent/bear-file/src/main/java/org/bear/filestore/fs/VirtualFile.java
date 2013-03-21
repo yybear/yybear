@@ -8,7 +8,7 @@ import java.io.OutputStream;
 import java.nio.channels.WritableByteChannel;
 
 /**
- * .
+ * 虚拟化文件，持有一个物理文件.
  * <p/>
  *
  * @author <a href="mailto:gan.qingx@qq.com">gan qing</a>

@@ -25,6 +25,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
  * @author <a href="mailto:gan.qingx@qq.com">gan qing</a>
  * @version V1.0, 2013-3-19
  */
+@SuppressWarnings("unchecked")
 public class HibernateEntityDAO<E, PK extends Serializable> implements
 		GeneralEntityDAO<E, PK> {
 	@Autowired
