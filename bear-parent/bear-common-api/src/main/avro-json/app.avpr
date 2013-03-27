@@ -1,0 +1,274 @@
+{
+  "protocol" : "AppService",
+  "namespace" : "org.bear.api.app",
+  "types" : [ {
+    "type" : "enum",
+    "name" : "Gender",
+    "namespace" : "org.bear.api.type",
+    "doc" : "",
+    "symbols" : [ "UNKNOWN", "MALE", "FEMALE" ]
+  }, {
+    "type" : "record",
+    "name" : "StackTrace",
+    "namespace" : "org.bear.api.type",
+    "doc" : "异常堆栈对象",
+    "fields" : [ {
+      "name" : "className",
+      "type" : "string",
+      "doc" : "发生异常的类"
+    }, {
+      "name" : "methodName",
+      "type" : "string",
+      "doc" : "发生异常的方法"
+    }, {
+      "name" : "fileName",
+      "type" : "string",
+      "doc" : "发生异常的文件"
+    }, {
+      "name" : "lineNumber",
+      "type" : "int",
+      "doc" : "发生异常的行号"
+    } ]
+  }, {
+    "type" : "enum",
+    "name" : "AccessScope",
+    "namespace" : "org.bear.api.type",
+    "doc" : "表示实体对象的访问权限级别",
+    "symbols" : [ "ALL", "USER", "ROLE", "TOKEN", "SELF", "SESSION" ]
+  }, {
+    "type" : "error",
+    "name" : "GlobalException",
+    "namespace" : "org.bear.api.type",
+    "doc" : "通用错误对象",
+    "fields" : [ {
+      "name" : "code",
+      "type" : "int",
+      "doc" : "错误代码"
+    }, {
+      "name" : "msg",
+      "type" : "string",
+      "doc" : "发生异常的方法"
+    }, {
+      "name" : "stackTraces",
+      "type" : {
+        "type" : "array",
+        "items" : "StackTrace"
+      },
+      "doc" : "发生错误堆栈，供调试用"
+    } ]
+  }, {
+    "type" : "enum",
+    "name" : "Status",
+    "namespace" : "org.bear.api.type",
+    "doc" : "表示实体对象的状态",
+    "symbols" : [ "ENABLED", "DISABLED", "DELETED" ]
+  }, {
+    "type" : "record",
+    "name" : "App",
+    "doc" : "* 表示一个需要公用服务支持的应用,包含多个业务",
+    "fields" : [ {
+      "name" : "id",
+      "type" : "int",
+      "doc" : "* 应用的编号\r\n\t\t *\r\n\t\t * @readonly"
+    }, {
+      "name" : "key",
+      "type" : "string",
+      "doc" : "* 应用的key,必须唯一"
+    }, {
+      "name" : "name",
+      "type" : "string",
+      "doc" : "* 应用的名称"
+    }, {
+      "name" : "status",
+      "type" : "org.bear.api.type.Status",
+      "doc" : "* 应用的状态"
+    } ]
+  }, {
+    "type" : "record",
+    "name" : "Biz",
+    "doc" : "* 表示一个需要公用服务支持的业务,多个业务归属于一个应用",
+    "fields" : [ {
+      "name" : "id",
+      "type" : "int",
+      "doc" : "* 业务的编号\r\n\t\t *\r\n\t\t * @readonly"
+    }, {
+      "name" : "appId",
+      "type" : "int",
+      "doc" : "* 业务所属应用的编号"
+    }, {
+      "name" : "key",
+      "type" : "string",
+      "doc" : "* 业务的key,必须唯一"
+    }, {
+      "name" : "name",
+      "type" : "string",
+      "doc" : "* 业务的名称"
+    }, {
+      "name" : "status",
+      "type" : "org.bear.api.type.Status",
+      "doc" : "* 业务的状态"
+    } ]
+  }, {
+    "type" : "record",
+    "name" : "BizConfig",
+    "doc" : "* 表示一个业务配置",
+    "fields" : [ {
+      "name" : "bizId",
+      "type" : "int",
+      "doc" : "* 业务的编号\r\n\t\t *\r\n\t\t * @readonly"
+    }, {
+      "name" : "bizKey",
+      "type" : "string",
+      "doc" : "* 业务的key"
+    }, {
+      "name" : "bizName",
+      "type" : "string",
+      "doc" : "* 业务的名称"
+    }, {
+      "name" : "configKey",
+      "type" : "string",
+      "doc" : "* 配置key\r\n\t\t *\r\n\t\t * @readonly"
+    }, {
+      "name" : "configValue",
+      "type" : "string",
+      "doc" : "* 配置值"
+    } ]
+  } ],
+  "messages" : {
+    "saveApp" : {
+      "doc" : "* 保存一个应用\r\n\t * 1. 如果app有设置id,则更新. 没有设置，则新增。\r\n\t *\r\n\t * @param app 待保存的应用\r\n\t *\r\n\t * @return 包含id的应用\r\n\t *\r\n\t * @tables cs_app",
+      "request" : [ {
+        "name" : "app",
+        "type" : "App"
+      } ],
+      "response" : "App",
+      "errors" : [ "org.bear.api.type.GlobalException" ]
+    },
+    "removeApps" : {
+      "doc" : "* 删除多个应用\r\n\t *\r\n\t * @param ids 应用id列表\r\n\t *\r\n\t * @tables cs_app",
+      "request" : [ {
+        "name" : "ids",
+        "type" : {
+          "type" : "array",
+          "items" : "int"
+        }
+      } ],
+      "response" : "null",
+      "errors" : [ "org.bear.api.type.GlobalException" ]
+    },
+    "getApp" : {
+      "doc" : "* 获取一个应用信息\r\n\t *\r\n\t * @param id 应用id\r\n\t *\r\n\t * @return 应用\r\n\t *\r\n\t * @tables cs_app",
+      "request" : [ {
+        "name" : "id",
+        "type" : "int"
+      } ],
+      "response" : "App",
+      "errors" : [ "org.bear.api.type.GlobalException" ]
+    },
+    "getApps" : {
+      "doc" : "* 获取应用列表\r\n\t *\r\n\t * @return 应用列表\r\n\t *\r\n\t * @tables cs_app",
+      "request" : [ ],
+      "response" : {
+        "type" : "array",
+        "items" : "App"
+      },
+      "errors" : [ "org.bear.api.type.GlobalException" ]
+    },
+    "saveBiz" : {
+      "doc" : "* 保存一个业务\r\n\t *\r\n\t * @param biz 待保存的业务\r\n\t *\r\n\t * @return 业务\r\n\t *\r\n\t * @tables cs_biz",
+      "request" : [ {
+        "name" : "biz",
+        "type" : "Biz"
+      } ],
+      "response" : "Biz",
+      "errors" : [ "org.bear.api.type.GlobalException" ]
+    },
+    "removeBizs" : {
+      "doc" : "* 删除多个业务\r\n\t *\r\n\t * @param ids 业务id列表\r\n\t *\r\n\t * @tables cs_biz",
+      "request" : [ {
+        "name" : "ids",
+        "type" : {
+          "type" : "array",
+          "items" : "int"
+        }
+      } ],
+      "response" : "null",
+      "errors" : [ "org.bear.api.type.GlobalException" ]
+    },
+    "getBiz" : {
+      "doc" : "* 获取一个业务\r\n\t *\r\n\t * @param id 业务id\r\n\t *\r\n\t * @return 业务\r\n\t *\r\n\t * @tables cs_biz",
+      "request" : [ {
+        "name" : "id",
+        "type" : "int"
+      } ],
+      "response" : "Biz",
+      "errors" : [ "org.bear.api.type.GlobalException" ]
+    },
+    "getBizs" : {
+      "doc" : "* 获取业务列表\r\n\t *\r\n\t * @return 业务列表\r\n\t *\r\n\t * @tables cs_biz",
+      "request" : [ ],
+      "response" : {
+        "type" : "array",
+        "items" : "Biz"
+      },
+      "errors" : [ "org.bear.api.type.GlobalException" ]
+    },
+    "getAppBizs" : {
+      "doc" : "* 获取某个应用的业务列表\r\n\t *\r\n\t * @param id 应用id\r\n\t *\r\n\t * @return 业务列表\r\n\t *\r\n\t * @tables cs_biz",
+      "request" : [ {
+        "name" : "appId",
+        "type" : "int"
+      } ],
+      "response" : {
+        "type" : "array",
+        "items" : "Biz"
+      },
+      "errors" : [ "org.bear.api.type.GlobalException" ]
+    },
+    "getBizConfig" : {
+      "doc" : "* 根据业务key获取业务配置对象\r\n\t *\r\n\t * @param bizKey    业务key\r\n\t * @param configKey 配置key\r\n\t * @return 业务配置对象\r\n\t *\r\n\t * @tables cs_biz, cs_biz_attr",
+      "request" : [ {
+        "name" : "bizKey",
+        "type" : "string"
+      }, {
+        "name" : "configKey",
+        "type" : "string"
+      } ],
+      "response" : "BizConfig",
+      "errors" : [ "org.bear.api.type.GlobalException" ]
+    },
+    "getBizConfigById" : {
+      "doc" : "* 根据业务id获取业务配置对象\r\n\t *\r\n\t * @param bizId     业务id\r\n\t * @param configKey 配置key\r\n\t * @return 业务配置对象\r\n\t *\r\n\t * @tables cs_biz, cs_biz_attr",
+      "request" : [ {
+        "name" : "bizId",
+        "type" : "int"
+      }, {
+        "name" : "configKey",
+        "type" : "string"
+      } ],
+      "response" : "BizConfig",
+      "errors" : [ "org.bear.api.type.GlobalException" ]
+    },
+    "saveBizConfig" : {
+      "doc" : "* 保存一个业务配置\r\n\t *\r\n\t * @param bizConfig 业务配置对象\r\n\t *\r\n\t * @tables cs_biz, cs_biz_attr",
+      "request" : [ {
+        "name" : "bizConfig",
+        "type" : "BizConfig"
+      } ],
+      "response" : "null",
+      "errors" : [ "org.bear.api.type.GlobalException" ]
+    },
+    "getBizConfigs" : {
+      "doc" : "* 获取已配置的所有业务配置对象列表\r\n\t *\r\n\t * @param configKey 配置key\r\n\t * @return 业务配置对象列表\r\n\t *\r\n\t * @tables cs_biz, cs_biz_attr",
+      "request" : [ {
+        "name" : "configKey",
+        "type" : "string"
+      } ],
+      "response" : {
+        "type" : "array",
+        "items" : "BizConfig"
+      },
+      "errors" : [ "org.bear.api.type.GlobalException" ]
+    }
+  }
+}

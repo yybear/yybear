@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Project:  any
+  ~ Module:   any-console
+  ~ File:     applicationContext.xml
+  ~ Modifier: xyang
+  ~ Modified: 2012-08-27 08:27
+  ~
+  ~ Copyright (c) 2012 Sanyuan Ltd. All Rights Reserved.
+  ~
+  ~ Copying of this document or code and giving it to others and the
+  ~ use or communication of the contents thereof, are forbidden without
+  ~ expressed authority. Offenders are liable to the payment of damages.
+  ~ All rights reserved in the event of the grant of a invention patent or the
+  ~ registration of a utility model, design or code.
+  -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:redis="http://www.springframework.org/schema/redis"
+	xsi:schemaLocation="http://www.springframework.org/schema/redis http://www.springframework.org/schema/redis/spring-redis.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+    <import resource="applicationContext-profile.xml"/>
+
+    <context:annotation-config/>
+
+    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basenames" value="classpath:message/errors,classpath:message/messages"/>
+        <property name="defaultEncoding" value="UTF-8"/>
+    </bean>
+
+    <bean class="org.bear.framework.message.NLS">
+    	<property name="messageSource" ref="messageSource"/>
+    </bean>
+    
+    <bean id="appService" class="org.bear.framework.support.avro.AvroHttpProxyFactoryBean">
+        <property name="serviceUrl" value="${cs.url}/appService"/>
+        <property name="serviceInterface" value="org.bear.api.app.AppService"/>
+    </bean>
+
+    <!-- <bean id="messageService" class="org.bear.framework.support.avro.AvroHttpProxyFactoryBean">
+        <property name="serviceUrl" value="${cs.url}/messageService"/>
+        <property name="serviceInterface" value="org.bear.api.message.MessageService$Iface"/>
+    </bean> -->
+    
+    <bean id="userProvider" class="org.bear.framework.security.impl.DefaultUserProviderImpl">
+    </bean>
+    
+    <bean id="identityService" class="org.bear.framework.support.avro.AvroHttpProxyFactoryBean">
+        <property name="serviceUrl" value="${ids.url}"/>
+        <property name="serviceInterface" value="org.bear.api.identity.IdentityService"/>
+    </bean>
+    
+    <!-- <bean id="authorizationService"
+		class="org.bear.framework.support.avro.AvroHttpProxyFactoryBean">
+		<property name="serviceUrl" value="${auth.url}/authorizationService" />
+		<property name="serviceInterface"
+			value="org.bear.api.authorization.AuthorizationService$Iface" />
+	</bean> -->
+
+</beans>

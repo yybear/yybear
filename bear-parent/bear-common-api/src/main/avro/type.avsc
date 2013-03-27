@@ -31,5 +31,11 @@
 	 	{"name":"msg","type":"string","doc":"发生异常的方法"},
 	 	{"name":"stackTraces","type":{"type":"array","items":"StackTrace"},"doc":"发生错误堆栈，供调试用"}
 	 ]
+	},
+	{"namespace": "org.bear.api.type",
+	 "type":"enum",
+	 "name": "Status",
+	 "doc": "表示实体对象的状态",
+	 "symbols":["ENABLED", "DISABLED", "DELETED"]
 	}
 ]

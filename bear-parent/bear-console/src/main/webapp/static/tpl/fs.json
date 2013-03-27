@@ -1,0 +1,33 @@
+{
+	"accessType":-1,
+	"allowExts":[],
+	"cacheSeconds":0,
+	"defaultIds":[1,2],
+	"initCrop":{
+		"height":0,
+		"left":200,
+		"top":200,
+		"width":0
+	},
+	"initResize":{
+		"height":800,
+		"width":800
+	},
+	"maxSize":-1,
+	"quota":-1,
+	"readScope":"ALL",
+	"status":"ENABLED",
+	"type":"IMAGE",
+	"used":0,
+	"userQuita":-1,
+	"writeScope":"ALL",
+    "saveMetadata":false,
+	"xsendfileLimitRate":0,
+	"zooms":[{
+		"height":10,
+		"width":10
+	},{
+		"height":50,
+		"width":50
+	}]
+}

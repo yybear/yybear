@@ -11,6 +11,7 @@ import org.bear.framework.cache.CacheManager;
 import org.bear.framework.ex.ErrorCode;
 import org.bear.framework.util.Codecs;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.stereotype.Service;
 
 public class ShortUrlServiceImpl implements ShortUrlService, InitializingBean{
 	private String domainUrl;

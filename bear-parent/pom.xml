@@ -512,6 +512,11 @@
 				<version>1.7.4</version>
 				<type>maven-plugin</type>
 			</dependency>
+			<dependency>
+				<groupId>org.sitemesh</groupId>
+				<artifactId>sitemesh</artifactId>
+				<version>3.0-alpha-2</version>
+			</dependency>
 		</dependencies>
 
 	</dependencyManagement>
@@ -540,5 +545,6 @@
 		<module>bear-common-api</module>
 		<module>bear-identity-service</module>
 		<module>bear-tool</module>
+		<module>bear-console</module>
 	</modules>
 </project>

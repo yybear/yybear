@@ -1,0 +1,9 @@
+{
+    "tpls":{
+        "subject":"你好${to!},测试邮件",
+        "body":"${email} ${_u.user(to).userName!} ${url}"
+    },
+    "vars":{
+        "url":"http://www.jiaoyu365.net:8000"
+    }
+}

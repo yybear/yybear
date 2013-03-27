@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.MapUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.bear.filestore.dao.FileDao;
@@ -18,16 +19,25 @@ import org.bear.filestore.ex.FileStoreException;
 import org.bear.filestore.model.File;
 import org.bear.filestore.model.ImageAction;
 import org.bear.filestore.service.FileStoreManager;
+import org.bear.filestore.service.SpaceManager;
+import org.bear.filestore.util.EncryptUtils;
 import org.bear.filestore.fs.Storage;
 import org.bear.filestore.fs.VirtualFile;
 import org.bear.filestore.image.ImageTransform;
 import org.bear.filestore.image.ImageTransformFactory;
 import org.bear.framework.encrypt.EncryptService;
+import org.bear.framework.ex.EntityNotFoundException;
+import org.bear.framework.ex.ErrorCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 
 /**
  * .
@@ -50,6 +60,8 @@ public class FileStoreManageImpl implements FileStoreManager {
     private Storage storage;
 	@Autowired
     private ImageTransformFactory imageTransformFactory;
+	@Autowired(required=false)
+	private SpaceManager spaceManager;
 	
 	@Override
 	public File saveFile(File file) {
@@ -165,77 +177,107 @@ public class FileStoreManageImpl implements FileStoreManager {
 
 	@Override
 	public Map<Long, String> getEncryptedIdMap(List<Long> ids, int ttl) {
-		// TODO Auto-generated method stub
-		return null;
+		if(CollectionUtils.isEmpty(ids))
+			return MapUtils.EMPTY_MAP;
+		Map<Long, String> map = Maps.newHashMapWithExpectedSize(ids.size());
+		for(Long id:ids) {
+			map.put(id, getEncryptedId(id, ttl));
+		}
+		return map;
 	}
 
 	@Override
 	public File getFile(long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return fileDao.findOne(id);
 	}
 
 	@Override
 	public Map<Long, File> getFileMap(Set<Long> ids) {
-		// TODO Auto-generated method stub
-		return null;
+		if(CollectionUtils.isEmpty(ids))
+			return MapUtils.EMPTY_MAP;
+		Map<Long, File> map = Maps.newHashMapWithExpectedSize(ids.size());
+		Iterable<File> files = fileDao.findAll(ids);
+		for(File f : files) {
+			map.put(f.getId(), f);
+		}
+		return map;
 	}
 
 	@Override
 	public File getFileByEncryptedId(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		if(StringUtils.isEmpty(id))
+			throw new EntityNotFoundException(File.class, id);
+		Long fId;
+		try {
+			fId = Long.valueOf(EncryptUtils.getSrcFileId(encryptService.decrypt(id)));
+		} catch (Exception e) {
+			throw new EntityNotFoundException(File.class, id);
+		} 
+		return fileDao.findOne(fId);
 	}
 
 	@Override
 	public Map<Long, File> getFileMapByEncryptedId(Set<String> ids) {
-		// TODO Auto-generated method stub
-		return null;
+		Set<Long> fIds = Sets.newHashSetWithExpectedSize(ids.size());
+		for(String id : ids) {
+			try {
+				fIds.add(Long.valueOf(EncryptUtils.getSrcFileId(encryptService.decrypt(id))));
+			} catch (Exception ignored) {
+			}
+		}
+		return getFileMap(fIds);
 	}
 
 	@Override
 	public File getSingleFile(String bizKey, String owner) {
-		// TODO Auto-generated method stub
-		return null;
+		List<File> list = getFiles(bizKey, owner);
+		return CollectionUtils.isEmpty(list)? null:list.get(0);
 	}
 
 	@Override
 	public List<File> getFiles(String bizKey, String owner) {
-		// TODO Auto-generated method stub
-		return null;
+		if (StringUtils.isBlank(bizKey)) {
+            throw new FileStoreException(ErrorCode.ILLEGAL_PARAM, "bizKey is required");
+        }
+		List<File> list = fileDao.findByBizIdAndOwner(getBizId(bizKey), owner);
+		return list;
 	}
 
 	@Override
 	public Map<String, List<File>> batchGetFiles(String bizKey,
 			Set<String> owners) {
-		// TODO Auto-generated method stub
-		return null;
+		if (StringUtils.isBlank(bizKey)) {
+            throw new FileStoreException(ErrorCode.ILLEGAL_PARAM, "bizKey is required");
+        }
+		Map<String, List<File>> map = Maps.newHashMap();
+		for(String owner : owners) {
+			map.put(owner, getFiles(bizKey, owner));
+		}
+		return map;
 	}
 
 	@Override
 	public int countUserFiles(String bizKey, String owner, long userId) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		return fileDao.countUserFiles(getBizId(bizKey), owner, userId).intValue();
 	}
 
 	@Override
 	public List<File> getUserFiles(String bizKey, String owner, long userId,
 			int start, int size) {
-		// TODO Auto-generated method stub
-		return null;
+		PageRequest pageRequest = new PageRequest(start, (int) size);
+		return fileDao.listUserFiles(getBizId(bizKey), owner, userId, pageRequest);
 	}
 
 	@Override
 	public boolean hasPermission(String token, Long id, boolean writeable) {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean hasPermission(String token, String bizKey, String owner,
 			boolean writeable) {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 	
 	private Integer getInt(Map<String, Object> params, String key) {
@@ -252,6 +294,10 @@ public class FileStoreManageImpl implements FileStoreManager {
             return v instanceof Number ? ((Number) v).doubleValue() : Double.valueOf(v.toString());
         }
         return null;
+    }
+    
+    private int getBizId(String bizKey) {
+        return spaceManager.getSpace(bizKey).getBizId();
     }
 
 }

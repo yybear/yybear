@@ -58,6 +58,12 @@
     } ]
   }, {
     "type" : "enum",
+    "name" : "Status",
+    "namespace" : "org.bear.api.type",
+    "doc" : "表示实体对象的状态",
+    "symbols" : [ "ENABLED", "DISABLED", "DELETED" ]
+  }, {
+    "type" : "enum",
     "name" : "Operate",
     "doc" : "* 表示支持的图片变换类型\r\n\t *\r\n\t * @field RESIZE 等比缩放\r\n\t *\r\n\t * @field CROP 裁剪\r\n\t *\r\n\t * @field ROTATE 旋转",
     "symbols" : [ "RESIZE", "CROP", "ROTATE" ]

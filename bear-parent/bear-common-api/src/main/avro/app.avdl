@@ -1,0 +1,235 @@
+@namespace("org.bear.api.app")
+protocol AppService{
+	import schema "type.avsc";
+	
+	/**
+	 * 表示一个需要公用服务支持的应用,包含多个业务
+	 */
+	record App {
+		/**
+		 * 应用的编号
+		 *
+		 * @readonly
+		 */
+		int id;
+	
+		/**
+		 * 应用的key,必须唯一
+		 */
+		string key;
+	
+		/**
+		 * 应用的名称
+		 */
+		string name;
+	
+		/**
+		 * 应用的状态
+		 */
+		org.bear.api.type.Status status;
+	}
+	
+	/**
+	 * 表示一个需要公用服务支持的业务,多个业务归属于一个应用
+	 */
+	record Biz {
+		/**
+		 * 业务的编号
+		 *
+		 * @readonly
+		 */
+		int id;
+	
+		/**
+		 * 业务所属应用的编号
+		 */
+		int appId;
+	
+		/**
+		 * 业务的key,必须唯一
+		 */
+		string key;
+	
+		/**
+		 * 业务的名称
+		 */
+		string name;
+	
+		/**
+		 * 业务的状态
+		 */
+		org.bear.api.type.Status status;
+	}
+	
+	/**
+	 * 表示一个业务配置
+	 */
+	record BizConfig {
+		/**
+		 * 业务的编号
+		 *
+		 * @readonly
+		 */
+		int bizId;
+		
+		/**
+		 * 业务的key
+		 */
+		string bizKey;
+		
+		/**
+		 * 业务的名称
+		 */
+		string bizName;
+	
+		/**
+		 * 配置key
+		 *
+		 * @readonly
+		 */
+		string configKey;
+	
+		/**
+		 * 配置值
+		 */
+		string configValue;
+	}
+	
+	/**
+	 * 保存一个应用
+	 * 1. 如果app有设置id,则更新. 没有设置，则新增。
+	 *
+	 * @param app 待保存的应用
+	 *
+	 * @return 包含id的应用
+	 *
+	 * @tables cs_app
+	 */
+	App saveApp(App app) throws org.bear.api.type.GlobalException;
+
+	/**
+	 * 删除多个应用
+	 *
+	 * @param ids 应用id列表
+	 *
+	 * @tables cs_app
+	 */
+	void removeApps(array<int> ids) throws org.bear.api.type.GlobalException;
+
+	/**
+	 * 获取一个应用信息
+	 *
+	 * @param id 应用id
+	 *
+	 * @return 应用
+	 *
+	 * @tables cs_app
+	 */
+	App getApp(int id) throws org.bear.api.type.GlobalException;
+
+	/**
+	 * 获取应用列表
+	 *
+	 * @return 应用列表
+	 *
+	 * @tables cs_app
+	 */
+	array<App> getApps() throws org.bear.api.type.GlobalException;
+
+	/**
+	 * 保存一个业务
+	 *
+	 * @param biz 待保存的业务
+	 *
+	 * @return 业务
+	 *
+	 * @tables cs_biz
+	 */
+	Biz saveBiz(Biz biz) throws org.bear.api.type.GlobalException;
+
+	/**
+	 * 删除多个业务
+	 *
+	 * @param ids 业务id列表
+	 *
+	 * @tables cs_biz
+	 */
+	void removeBizs(array<int> ids) throws org.bear.api.type.GlobalException;
+
+	/**
+	 * 获取一个业务
+	 *
+	 * @param id 业务id
+	 *
+	 * @return 业务
+	 *
+	 * @tables cs_biz
+	 */
+	Biz getBiz(int id) throws org.bear.api.type.GlobalException;
+
+	/**
+	 * 获取业务列表
+	 *
+	 * @return 业务列表
+	 *
+	 * @tables cs_biz
+	 */
+	array<Biz> getBizs() throws org.bear.api.type.GlobalException;
+
+	/**
+	 * 获取某个应用的业务列表
+	 *
+	 * @param id 应用id
+	 *
+	 * @return 业务列表
+	 *
+	 * @tables cs_biz
+	 */
+	array<Biz> getAppBizs(int appId) throws org.bear.api.type.GlobalException;
+
+	/**
+	 * 根据业务key获取业务配置对象
+	 *
+	 * @param bizKey    业务key
+	 * @param configKey 配置key
+	 * @return 业务配置对象
+	 *
+	 * @tables cs_biz, cs_biz_attr
+	 */
+	BizConfig getBizConfig(string bizKey, string configKey) throws org.bear.api.type.GlobalException;
+
+	/**
+	 * 根据业务id获取业务配置对象
+	 *
+	 * @param bizId     业务id
+	 * @param configKey 配置key
+	 * @return 业务配置对象
+	 *
+	 * @tables cs_biz, cs_biz_attr
+	 */
+	BizConfig getBizConfigById(int bizId, string configKey) throws org.bear.api.type.GlobalException;
+
+	/**
+	 * 保存一个业务配置
+	 *
+	 * @param bizConfig 业务配置对象
+	 *
+	 * @tables cs_biz, cs_biz_attr
+	 */
+	void saveBizConfig(BizConfig bizConfig) throws org.bear.api.type.GlobalException;
+
+	/**
+	 * 获取已配置的所有业务配置对象列表
+	 *
+	 * @param configKey 配置key
+	 * @return 业务配置对象列表
+	 *
+	 * @tables cs_biz, cs_biz_attr
+	 */
+	array<BizConfig> getBizConfigs(string configKey) throws org.bear.api.type.GlobalException;
+}
+
+
+
+
+

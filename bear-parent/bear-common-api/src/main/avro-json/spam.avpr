@@ -56,6 +56,12 @@
       },
       "doc" : "发生错误堆栈，供调试用"
     } ]
+  }, {
+    "type" : "enum",
+    "name" : "Status",
+    "namespace" : "org.bear.api.type",
+    "doc" : "表示实体对象的状态",
+    "symbols" : [ "ENABLED", "DISABLED", "DELETED" ]
   } ],
   "messages" : {
     "contain" : {
