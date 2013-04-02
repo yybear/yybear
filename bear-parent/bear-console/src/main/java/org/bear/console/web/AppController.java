@@ -1,5 +1,6 @@
 package org.bear.console.web;
 
+import org.apache.http.HttpRequest;
 import org.bear.api.app.App;
 import org.bear.api.app.AppService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Collections;
+
+import javax.servlet.http.HttpServlet;
 
 /**
  * .
@@ -29,7 +32,8 @@ public class AppController extends BaseController{
 
     @ModelAttribute("app")
     public App getFile(@RequestParam(value = "id", required = false) Integer id) throws Exception {
-        return id == null ? new App() : appService.getApp(id);
+    	
+    	return id == null ? new App() : appService.getApp(id);
     }
 
     @RequestMapping(method = RequestMethod.GET)

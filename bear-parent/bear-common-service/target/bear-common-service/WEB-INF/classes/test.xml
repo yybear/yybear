@@ -8,7 +8,7 @@
 	<context:property-placeholder location="classpath:config.properties" ignore-resource-not-found="true"/>
 	<context:annotation-config />
     <bean id="shortUrlService" class="org.bear.framework.support.avro.AvroHttpProxyFactoryBean">
-        <property name="serviceInterface" value="org.bear.api.ShortUrlService"/>
+        <property name="serviceInterface" value="org.bear.api.shorturl.ShortUrlService"/>
         <property name="serviceUrl" value="${cs.shorturl}"/>
     </bean>
     

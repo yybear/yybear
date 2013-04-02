@@ -11,6 +11,8 @@ import javax.servlet.ServletContextListener;
 
 import org.slf4j.bridge.SLF4JBridgeHandler;
 import org.springframework.core.env.AbstractEnvironment;
+import org.springframework.mock.web.MockServletContext;
+import org.springframework.util.ClassUtils;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.ContextLoaderListener;
@@ -34,7 +36,6 @@ public class GlobalContextLoaderListener extends ContextLoaderListener {
     @Override
     public WebApplicationContext initWebApplicationContext(ServletContext servletContext) {
     	GlobalConfigLoader.load();
-    	
         String activeProfile = System.getProperty(PROFILE_ACTIVE);
         if (activeProfile == null) {
             activeProfile = loadFromApplicationProperties(servletContext);

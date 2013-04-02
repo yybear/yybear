@@ -2,6 +2,8 @@ package org.bear.commonservice.app;
 
 import java.util.List;
 
+import javax.servlet.ServletContext;
+
 import org.apache.avro.AvroRemoteException;
 import org.bear.api.app.App;
 import org.bear.api.app.Biz;
@@ -11,6 +13,7 @@ import org.bear.commonservice.dao.AppDao;
 import org.bear.commonservice.dao.BizDao;
 import org.bear.commonservice.util.ConvertUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.servlet.support.RequestContext;
 
 
 
@@ -26,7 +29,6 @@ public class AppServiceImple implements org.bear.api.app.AppService {
 	private AppDao appDao;
 	@Autowired
 	private BizDao bizDao;
-	
 	@Override
 	public App saveApp(App app) throws AvroRemoteException, GlobalException {
 		return ConvertUtils.toAvroApp(appDao.save(ConvertUtils.toApp(null, app)));
