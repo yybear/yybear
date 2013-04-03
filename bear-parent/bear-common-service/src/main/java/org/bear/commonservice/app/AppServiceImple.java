@@ -12,6 +12,7 @@ import org.bear.api.type.GlobalException;
 import org.bear.commonservice.dao.AppDao;
 import org.bear.commonservice.dao.BizDao;
 import org.bear.commonservice.util.ConvertUtils;
+import org.bear.global.type.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.support.RequestContext;
 
@@ -31,7 +32,8 @@ public class AppServiceImple implements org.bear.api.app.AppService {
 	private BizDao bizDao;
 	@Override
 	public App saveApp(App app) throws AvroRemoteException, GlobalException {
-		return ConvertUtils.toAvroApp(appDao.save(ConvertUtils.toApp(null, app)));
+		org.bear.commonservice.model.App localApp = ConvertUtils.toApp(null, app);
+		return ConvertUtils.toAvroApp(appDao.save(localApp));
 	}
 
 	@Override
@@ -78,8 +80,9 @@ public class AppServiceImple implements org.bear.api.app.AppService {
 	@Override
 	public List<Biz> getAppBizs(int appId) throws AvroRemoteException,
 			GlobalException {
-		
-		return null;
+		org.bear.commonservice.model.App localApp = new org.bear.commonservice.model.App();
+		localApp.setId(appId);
+		return ConvertUtils.toBizsList(bizDao.findByApp(localApp));
 	}
 
 	@Override

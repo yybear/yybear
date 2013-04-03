@@ -47,6 +47,13 @@ public class ConvertUtils {
         if (tb.getStatus() != null) {
             biz.setStatus(Status.values()[tb.getStatus().ordinal()]);
         }
+        if(tb.getId() > 0)
+        	biz.setId(tb.getId());
+        if(tb.getAppId() > 0) {
+        	org.bear.commonservice.model.App localApp = new org.bear.commonservice.model.App();
+        	localApp.setId(tb.getAppId());
+        	biz.setApp(localApp);
+        }
         return biz;
     }
 

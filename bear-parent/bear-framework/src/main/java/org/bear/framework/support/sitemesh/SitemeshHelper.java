@@ -23,9 +23,9 @@ public class SitemeshHelper {
             content = new InMemoryContent();
         }
         ContentProperty cp = content.getExtractedProperties();
-        context.setAttribute("_body", cp.getChild("body").getValue());
-        context.setAttribute("_title", cp.getChild("title").getValue());
-        context.setAttribute("_head", cp.getChild("head").getValue());
+        //context.setAttribute("_body", cp.getChild("body").getValue());
+        //context.setAttribute("_title", cp.getChild("title").getValue());
+        //context.setAttribute("_head", cp.getChild("head").getValue());
         Map<String, String> metaMap = new HashMap<String, String>();
         for (ContentProperty cp1 : cp.getChild("meta").getChildren()) {
             metaMap.put(cp1.getName(), cp1.getValue());

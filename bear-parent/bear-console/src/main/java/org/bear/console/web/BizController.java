@@ -7,6 +7,7 @@ import org.bear.api.app.App;
 import org.bear.api.app.AppService;
 import org.bear.api.app.Biz;
 import org.bear.api.app.BizConfig;
+import org.bear.api.type.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -63,6 +64,8 @@ public class BizController extends BaseController {
     @RequestMapping(value = "edit", method = RequestMethod.POST)
     public String save(@ModelAttribute("biz") Biz biz, RedirectAttributes ra) throws Exception {
         try {
+        	if(biz.getStatus() == null)
+        		biz.setStatus(Status.ENABLED);
             appService.saveBiz(biz);
         } catch (Exception e) {
             failed(ra, e.getMessage());

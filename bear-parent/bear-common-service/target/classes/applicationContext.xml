@@ -68,6 +68,16 @@
         </property>
     </bean>
     
+    <bean id="threadResourceManager" class="org.bear.framework.support.spring.tx.DefaultThreadResourceManager">
+        <property name="providers">
+            <list>
+                <bean class="org.bear.framework.support.spring.tx.JpaResourceProvider">
+                    <property name="entityManagerFactory" ref="entityManagerFactory"/>
+                </bean>
+            </list>
+        </property>
+    </bean>
+    
 	<bean id="shortUrlService" class="org.bear.commonservice.shorturl.ShortUrlServiceImpl">
 		<property name="cacheManager" ref="csCacheManager"></property>
 	</bean>

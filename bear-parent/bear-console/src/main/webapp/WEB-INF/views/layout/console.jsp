@@ -7,14 +7,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Any Console - ${_title}</title>
+    <title>Any Console - <sitemesh:write property='title'/></title>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
     <link href="${ctx}/static/css/console.css" type="text/css" media="screen" rel="stylesheet"/>
     <link href="${ctx}/static/css/jquery.validationEngine.css" type="text/css" media="screen" rel="stylesheet"/>
     <script src="${ctx}/static/js/jquery.js" type="text/javascript"></script>
     <script src="${ctx}/static/js/jquery.validationEngine.js" type="text/javascript"></script>
     <script src="${ctx}/static/js/console.js" type="text/javascript"></script>
-    ${_head}
+    <sitemesh:write property='head'/>
 </head>
 <body>
 <div id="container">
@@ -62,7 +62,7 @@
                 <div class="error">${msg}</div>
             </c:otherwise>
         </c:choose>
-        ${_body}
+        <sitemesh:write property='body'/>
     </div>
 </div>
 </body>

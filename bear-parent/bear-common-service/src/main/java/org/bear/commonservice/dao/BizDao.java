@@ -1,5 +1,8 @@
 package org.bear.commonservice.dao;
 
+import java.util.List;
+
+import org.bear.commonservice.model.App;
 import org.bear.commonservice.model.Biz;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -13,5 +16,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface BizDao extends JpaRepository<Biz, Integer>{
-	
+	public List<Biz> findByApp(App app);
 }

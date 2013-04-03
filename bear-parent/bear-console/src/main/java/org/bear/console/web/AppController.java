@@ -3,6 +3,7 @@ package org.bear.console.web;
 import org.apache.http.HttpRequest;
 import org.bear.api.app.App;
 import org.bear.api.app.AppService;
+import org.bear.api.type.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -56,6 +57,8 @@ public class AppController extends BaseController{
     @RequestMapping(value = "edit", method = RequestMethod.POST)
     public String save(@ModelAttribute("app") App app, RedirectAttributes ra) throws Exception {
         try {
+        	if(app.getStatus() == null)
+        		app.setStatus(Status.ENABLED);
             appService.saveApp(app);
         } catch (Exception e) {
             failed(ra, e.getMessage());
