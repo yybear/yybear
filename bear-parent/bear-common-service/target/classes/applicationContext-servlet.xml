@@ -20,12 +20,16 @@
         <property name="serviceInterface" value="org.bear.api.app.AppService"/>
         <property name="serviceRegistry" ref="serviceRegistry"></property>
     </bean>
-    <mvc:interceptors>
+    <bean name="/bizConfigService" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+        <property name="service" ref="bizConfigService"/>
+        <property name="serviceInterface" value="org.bear.framework.config.BizConfigService"/>
+    </bean>
+    <!-- <mvc:interceptors>
         <bean class="org.bear.framework.security.web.SecContextInterceptor">
             <property name="excludes" value="/static/**"/>
             <property name="userProvider">
             	<bean class="org.bear.framework.security.impl.DefaultUserProviderImpl"/>
             </property>
         </bean>
-    </mvc:interceptors>
+    </mvc:interceptors> -->
 </beans>

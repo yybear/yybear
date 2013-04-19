@@ -20,6 +20,11 @@
 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
 	</context:component-scan>
 	<jpa:repositories base-package="org.bear.commonservice.dao"/>
+	
+	<bean class="org.bear.framework.message.NLS">
+        <property name="messageSource" ref="messageSource"/>
+    </bean>
+    
 	<!-- entityManagerFactory -->
 	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 		<property name="dataSource" ref="dataSource"/>
@@ -91,8 +96,9 @@
         <property name="defaultEncoding" value="UTF-8"/>
     </bean>
     
-    <bean class="org.bear.framework.message.NLS">
-        <property name="messageSource" ref="messageSource"/>
+    <bean id="redisTemplate" class="org.bear.framework.support.redis.NSRedisTemplate"/>
+    <bean id="bizConfigService" class="org.bear.commonservice.app.BizConfigServiceImpl">
+        <property name="redis" ref="redisTemplate"/>
     </bean>
 	
 </beans>

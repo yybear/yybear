@@ -76,7 +76,7 @@
       "doc" : "* 应用的key,必须唯一"
     }, {
       "name" : "name",
-      "type" : "string",
+      "type" : [ "null", "string" ],
       "doc" : "* 应用的名称"
     }, {
       "name" : "status",
@@ -101,7 +101,7 @@
       "doc" : "* 业务的key,必须唯一"
     }, {
       "name" : "name",
-      "type" : "string",
+      "type" : [ "null", "string" ],
       "doc" : "* 业务的名称"
     }, {
       "name" : "status",
@@ -118,19 +118,19 @@
       "doc" : "* 业务的编号\r\n\t\t *\r\n\t\t * @readonly"
     }, {
       "name" : "bizKey",
-      "type" : "string",
+      "type" : [ "null", "string" ],
       "doc" : "* 业务的key"
     }, {
       "name" : "bizName",
-      "type" : "string",
+      "type" : [ "null", "string" ],
       "doc" : "* 业务的名称"
     }, {
       "name" : "configKey",
-      "type" : "string",
+      "type" : [ "null", "string" ],
       "doc" : "* 配置key\r\n\t\t *\r\n\t\t * @readonly"
     }, {
       "name" : "configValue",
-      "type" : "string",
+      "type" : [ "null", "string" ],
       "doc" : "* 配置值"
     } ]
   } ],

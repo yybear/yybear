@@ -9,7 +9,7 @@
 
     <context:annotation-config/>
 
-    <context:component-scan base-package="org.bear.file.web"/>
+    <context:component-scan base-package="org.bear.filestore.web"/>
 
     <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
         <property name="useSuffixPatternMatch" value="false"/>
@@ -20,6 +20,7 @@
             <list>
                 <bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter"/>
                 <bean class="org.springframework.http.converter.StringHttpMessageConverter"/>
+                <bean class="org.springframework.http.converter.xml.XmlAwareFormHttpMessageConverter"></bean>
                 <ref bean="jsonMessageConverter"/>
             </list>
         </property>
@@ -35,14 +36,26 @@
 
     <mvc:default-servlet-handler/>
 
-    <!-- <mvc:interceptors>
-        <bean class="sanyuan.any123.framework.security.web.SecContextInterceptor">
+    <mvc:interceptors>
+        <!-- <bean class="org.bear.framework.security.web.SecContextInterceptor">
             <property name="excludes" value="/static/**"/>
-        </bean>
-        <bean class="sanyuan.any123.filestore.web.FileInterceptor">
+        </bean> -->
+        <bean class="org.bear.filestore.web.FileInterceptor">
             <property name="excludes" value="/api/**,/static/**"/>
         </bean>
-    </mvc:interceptors> -->
+    </mvc:interceptors>
+    
+    <bean id="clientHandleFactory" class="org.bear.filestore.handle.impl.ClientHandleFactoryImpl">
+        <property name="clientHandles">
+            <map>
+                <entry key="json">
+                    <bean class="org.bear.filestore.handle.impl.JsonClientHandle">
+                        <property name="converter" ref="jsonMessageConverter"/>
+                    </bean>
+                </entry>
+            </map>
+        </property>
+    </bean>
 
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/views/"/>

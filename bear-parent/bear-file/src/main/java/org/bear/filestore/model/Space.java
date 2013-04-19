@@ -10,7 +10,7 @@ import org.bear.global.type.Status;
 import java.util.Set;
 
 /**
- * .
+ * 存储空间配置.
  * <p/>
  *
  * @author <a href="mailto:gan.qingx@qq.com">gan qing</a>

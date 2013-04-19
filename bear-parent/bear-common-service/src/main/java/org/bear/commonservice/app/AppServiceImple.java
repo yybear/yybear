@@ -1,6 +1,8 @@
 package org.bear.commonservice.app;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
 
@@ -14,7 +16,10 @@ import org.bear.commonservice.dao.BizDao;
 import org.bear.commonservice.util.ConvertUtils;
 import org.bear.global.type.Status;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.support.RequestContext;
+
+import com.google.common.collect.Lists;
 
 
 
@@ -88,27 +93,65 @@ public class AppServiceImple implements org.bear.api.app.AppService {
 	@Override
 	public BizConfig getBizConfig(String bizKey, String configKey)
 			throws AvroRemoteException, GlobalException {
-		// TODO Auto-generated method stub
-		return null;
+		org.bear.commonservice.model.Biz biz = bizDao.findByKey(bizKey);
+		String configValue = biz.getAttributes().get(configKey);
+		
+		return toBizConfig(ConvertUtils.toAvroBiz(biz), configKey, configValue);
 	}
 
 	@Override
 	public BizConfig getBizConfigById(int bizId, String configKey)
 			throws AvroRemoteException, GlobalException {
-		// TODO Auto-generated method stub
-		return null;
+		org.bear.commonservice.model.Biz biz = bizDao.findOne(bizId);
+		String configValue = biz.getAttributes().get(configKey);
+		
+		return toBizConfig(ConvertUtils.toAvroBiz(biz), configKey, configValue);
 	}
 
 	@Override
 	public Void saveBizConfig(BizConfig bizConfig) throws AvroRemoteException,
 			GlobalException {
+		org.bear.commonservice.model.Biz biz = bizDao.findByKey(bizConfig.getBizKey());
+		if ("__del__".equals(bizConfig.getConfigValue())) {
+            biz.getAttributes().remove(bizConfig.getConfigKey());
+        } else {
+            biz.getAttributes().put(bizConfig.getConfigKey(), bizConfig.getConfigValue());
+        }
+		bizDao.save(biz);
 		return null;
 	}
 
 	@Override
 	public List<BizConfig> getBizConfigs(String configKey)
 			throws AvroRemoteException, GlobalException {
-		return null;
+		
+		List<BizConfig> configs = Lists.newArrayList();
+        for (org.bear.commonservice.model.Biz biz :  bizDao.findAll()) {
+            if (biz.getAttributes().containsKey(configKey)) {
+                configs.add(toBizConfig(ConvertUtils.toAvroBiz(biz), configKey, biz.getAttributes().get(configKey)));
+            }
+        }
+        return configs;
 	}
 
+	private BizConfig toBizConfig(Biz biz, String configKey, String configValue) {
+        BizConfig bizConfig = new BizConfig();
+        bizConfig.setBizId(biz.getId());
+        bizConfig.setBizKey(biz.getKey());
+        bizConfig.setBizName(biz.getName());
+        bizConfig.setConfigKey(configKey);
+        bizConfig.setConfigValue(configValue);
+        return bizConfig;
+    }
+	
+	private org.bear.commonservice.model.Biz toBiz(BizConfig config) {
+		org.bear.commonservice.model.Biz biz = new org.bear.commonservice.model.Biz();
+		biz.setKey(config.getBizKey());
+		biz.setName(config.getBizName());
+		biz.setStatus(Status.ENABLED);
+		Map<String,String> attributes = new HashMap<String, String>();
+		attributes.put(config.getConfigKey(), config.getConfigValue());
+		biz.setAttributes(attributes);
+        return biz;
+    }
 }

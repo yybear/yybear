@@ -21,7 +21,7 @@ protocol AppService{
 		/**
 		 * 应用的名称
 		 */
-		string name;
+		union { null, string } name;
 	
 		/**
 		 * 应用的状态
@@ -53,7 +53,7 @@ protocol AppService{
 		/**
 		 * 业务的名称
 		 */
-		string name;
+		union { null, string } name;
 	
 		/**
 		 * 业务的状态
@@ -75,24 +75,24 @@ protocol AppService{
 		/**
 		 * 业务的key
 		 */
-		string bizKey;
+		union { null, string } bizKey;
 		
 		/**
 		 * 业务的名称
 		 */
-		string bizName;
+		union { null, string } bizName;
 	
 		/**
 		 * 配置key
 		 *
 		 * @readonly
 		 */
-		string configKey;
+		union { null, string } configKey;
 	
 		/**
 		 * 配置值
 		 */
-		string configValue;
+		union { null, string } configValue;
 	}
 	
 	/**

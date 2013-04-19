@@ -66,18 +66,94 @@
 	</bean>
 	<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
 
-	<bean id="avroFileStoreService" class="org.bear.filestore.service.impl.FileStoreManageImpl"></bean>
-	
+	<bean id="avroFileStoreService" class="org.bear.filestore.service.impl.AvroFileStoreServiceImpl"></bean>
+	<bean id="fileStoreService" class="org.bear.filestore.service.impl.FileStoreManageImpl"></bean>
+	<bean id="mimeTypeService" class="org.bear.filestore.service.impl.MimeTypeManagerImpl"/>
 	<bean id="imageTransformFactory" class="org.bear.filestore.image.ImageTransformFactory">
 		<property name="transformProvider" value="org.bear.filestore.image.impl.GMImageTransform"></property>
 	</bean>
+	
+	<bean id="thumbStorage" class="org.bear.filestore.fs.FileSystemStorage">
+        <property name="useXsendfile" value="${useXsendfile}"/>
+        <property name="directory" value="${storage1.path}"/>
+    </bean>
+	
+	<bean id="bizConfigService" class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+        <property name="serviceUrl" value="${cs.url}/bizConfigService"/>
+        <property name="serviceInterface" value="org.bear.framework.config.BizConfigService"/>
+    </bean>
+	
+	<bean id="spaceService" class="org.bear.filestore.service.impl.SpaceManagerImpl">
+        <property name="bizConfigService" ref="bizConfigService"/>
+    </bean>
 	
 	<bean id="storage" class="org.bear.filestore.fs.FileSystemStorage" init-method="init">
          <property name="useXsendfile" value="${useXsendfile}"/>
          <property name="directory" value="${storage1.path}"/>
     </bean>
     
+    <bean id="threadResourceManager" class="org.bear.framework.support.spring.tx.DefaultThreadResourceManager">
+        <property name="providers">
+            <list>
+                <bean class="org.bear.framework.support.spring.tx.JpaResourceProvider">
+                    <property name="entityManagerFactory" ref="entityManagerFactory"/>
+                </bean>
+                <!-- <bean class="org.bear.framework.support.spring.tx.RedisResourceProvider">
+                    <property name="connectionFactory" ref="redisConnectionFactory"/>
+                </bean> -->
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="taskExecutor" class="org.bear.framework.support.spring.tx.ThreadResourceSupportTaskExecutor">
+        <property name="corePoolSize" value="10"/>
+        <property name="maxPoolSize" value="100"/>
+        <property name="queueCapacity" value="1000"/>
+        <property name="threadResourceManager" ref="threadResourceManager"/>
+    </bean>
+    
+    <bean id="videoService" class="org.bear.filestore.service.impl.VideoManagerImpl">
+        <property name="executor" ref="taskExecutor"/>
+    </bean>
+    
+    <bean id="identityService" class="org.bear.framework.support.avro.AvroHttpProxyFactoryBean">
+        <property name="serviceUrl" value="${ids.url}"/>
+        <property name="serviceInterface" value="org.bear.api.identity.IdentityService"/>
+    </bean>
+    
     <bean id="encryptService" class="org.bear.framework.encrypt.impl.DESEncryptServiceImpl">
         <property name="key" value="xCC8lCEFSfnPT22RFZCmzA=="/>
+    </bean>
+    <bean id="abstractSpaceHandle" abstract="true" class="org.bear.filestore.handle.impl.AbstractFileSpaceHandle">
+        <property name="fileStoreService" ref="fileStoreService"/>
+        <property name="mimeTypeService" ref="mimeTypeService"/>
+    </bean>
+    <bean id="spaceHandleChain" class="org.bear.filestore.handle.impl.DefaultSpaceHandleChain">
+        <property name="handles">
+            <list>
+                <bean class="org.bear.filestore.handle.impl.SpaceCheckSpaceHandle"/>
+                <bean class="org.bear.filestore.handle.impl.ParseFileSpaceHandle">
+                    <property name="fileStoreService" ref="fileStoreService"/>
+                </bean>
+                <!-- <bean class="org.bear.filestore.handle.impl.AccessScopeCheckSpaceHandle">
+                    <property name="fileStoreService" ref="fileStoreService"/>
+                    <property name="identityService" ref="identityService"/>
+                </bean> -->
+                <bean class="org.bear.filestore.handle.impl.ImageSpaceHandle" parent="abstractSpaceHandle">
+                    <property name="imageTransformFactory" ref="imageTransformFactory"/>
+                    <property name="thumbStorage" ref="thumbStorage"/>
+                </bean>
+                <bean class="org.bear.filestore.handle.impl.AvatarSpaceHandle" parent="abstractSpaceHandle">
+                    <property name="imageTransformFactory" ref="imageTransformFactory"/>
+                    <property name="thumbStorage" ref="thumbStorage"/>
+                </bean>
+                <bean class="org.bear.filestore.handle.impl.VideoSpaceHandle" parent="abstractSpaceHandle">
+                    <property name="imageTransformFactory" ref="imageTransformFactory"/>
+                    <property name="thumbStorage" ref="thumbStorage"/>
+                    <property name="videoService" ref="videoService"/>
+                </bean>
+                <bean class="org.bear.filestore.handle.impl.BinSpaceHandle" parent="abstractSpaceHandle"/>
+            </list>
+        </property>
     </bean>
 </beans>
