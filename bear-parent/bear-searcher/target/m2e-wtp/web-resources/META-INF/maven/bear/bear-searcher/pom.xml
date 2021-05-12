@@ -16,7 +16,7 @@
 	<url>http://maven.apache.org</url>
 	
 	<properties>
-		<solr.version>4.0.0-BETA</solr.version>
+		<solr.version>8.8.2</solr.version>
 	</properties>
 	<dependencies>
 		<dependency>
